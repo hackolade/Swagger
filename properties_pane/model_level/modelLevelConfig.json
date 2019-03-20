@@ -1,0 +1,648 @@
+/*
+* Copyright © 2016-2017 by IntegrIT S.A. dba Hackolade.  All rights reserved.
+*
+* The copyright to the computer software herein is the property of IntegrIT S.A.
+* The software may be used and/or copied only with the written permission of 
+* IntegrIT S.A. or in accordance with the terms and conditions stipulated in 
+* the agreement/contract under which the software has been supplied. 
+
+
+In order to define custom properties for any object's properties pane, you may copy/paste from the following,
+making sure that you maintain a proper JSON format.
+
+			{
+				"propertyName": "Simple text",
+				"propertyKeyword": "simpletextProp",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>"
+			},
+			{
+				"propertyName": "Text area",
+				"propertyKeyword": "textareaProp",
+				"propertyValidate": false,
+				"propertyTooltip": "Popup for multi-line text entry",
+				"propertyType": "details",
+				"template": "textarea"
+			},
+			{
+				"propertyName": "Dropdown selection",
+				"propertyKeyword": "dropdownProp",
+				"shouldValidate": false,
+				"propertyTooltip": "Select from list of options",
+				"propertyType": "select",
+				"options": [
+					"Option 1",
+					"Option 2",
+					"Option 3",
+					"Option 4"
+				]
+			},
+			{
+				"propertyName": "Numeric",
+				"propertyKeyword": "numericProp",
+				"propertyValidate": true,
+				"propertyType": "numeric",
+				"valueType": "number",
+				"allowNegative": false,
+				"sampleGen": "&containerName|&entityName|&random|<value>"
+			},
+			{
+				"propertyName": "Checkbox",
+				"propertyKeyword": "checkboxProp",
+				"shouldValidate": false,
+				"propertyType": "checkbox"
+			},
+			{
+				"propertyName": "Group",
+				"propertyType": "group",
+				"propertyKeyword": "grpProp",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "Simple Grp Text",
+						"propertyKeyword": "simpleGrpText",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Group Number",
+						"propertyKeyword": "grpNumber",
+						"propertyValidate": true,
+						"propertyType": "numeric",
+						"valueType": "number",
+						"allowNegative": false
+					}
+				]
+			}
+
+*/
+
+[
+	{
+		"lowerTab": "Details",
+		"structure": [
+			{
+				"propertyName": "Target",
+				"propertyKeyword": "dbVendor",
+				"shouldValidate": false,
+				"propertyTooltip": "DB vendor",
+				"propertyType": "select",
+				"options": [
+					"Swagger"
+				],
+				"disabledOption": true
+			},
+			{
+				"propertyName": "Target version",
+				"propertyKeyword": "dbVersion",
+				"shouldValidate": false,
+				"propertyTooltip": "DB version",
+				"propertyType": "select",
+				"options": [
+					"2.0"
+				],
+				"disabledOption": false
+			},
+			{
+				"propertyName": "info",
+				"propertyKeyword": "info",
+				"propertyType": "empty"
+			},
+			{
+				"labelName": "info:",
+				"propertyName": "title",
+				"propertyKeyword": "title",
+				"shouldValidate": false,
+				"propertyType": "text"
+			},
+			{
+				"propertyName": "terms of service",
+				"propertyKeyword": "termsOfService",
+				"shouldValidate": false,
+				"propertyType": "text"
+			},
+			{
+				"propertyName": "contact",
+				"propertyType": "group",
+				"propertyKeyword": "contact",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"groupItemLimit": 1,
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "contactName",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "url",
+						"propertyKeyword": "contactURL",
+						"shouldValidate": true,
+						"propertyType": "text",
+						"propertyFormat": "uri"
+					},
+					{
+						"propertyName": "email",
+						"propertyKeyword": "contactemail",
+						"propertyFormat": "email",
+						"shouldValidate": true,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "contactExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				]
+			},
+			{
+				"propertyName": "license",
+				"propertyType": "group",
+				"propertyKeyword": "license",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "licenseName",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "url",
+						"propertyKeyword": "licenseURL",
+						"shouldValidate": true,
+						"propertyType": "text",
+						"propertyFormat": "uri"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "contactExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				]
+			},
+			{
+				"propertyName": "version",
+				"propertyKeyword": "version",
+				"shouldValidate": false,
+				"propertyType": "text"
+			},
+			{
+				"propertyName": "extensions",
+				"propertyType": "group",
+				"propertyKeyword": "infoExtensions",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern",
+						"propertyKeyword": "extensionPattern",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "value",
+						"propertyKeyword": "extensionValue",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
+				"propertyName": "host",
+				"propertyKeyword": "host",
+				"shouldValidate": false,
+				"propertyType": "text"
+			},
+			{
+				"propertyName": "basePath",
+				"propertyKeyword": "basePath",
+				"shouldValidate": true,
+				"propertyType": "text",
+				"regex": "^\/\\w+"
+			},
+			{
+				"propertyName": "schemes",
+				"propertyKeyword": "schemes",
+				"shouldValidate": false,
+				"propertyTooltip": "Select from list of options",
+				"propertyType": "multipleCheckboxSelect",
+				"options": [
+					"http",
+					"https",
+					"ws",
+					"wss"
+				]
+			},
+			{
+				"propertyName": "consumes",
+				"propertyType": "group",
+				"propertyKeyword": "consumes",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "mime type def",
+						"propertyKeyword": "consumesMimeTypeDef",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					}
+				]
+			},
+			{
+				"propertyName": "produces",
+				"propertyType": "group",
+				"propertyKeyword": "produces",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "mime type def",
+						"propertyKeyword": "producesMimeTypeDef",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					}
+				]
+			},
+			{
+				"propertyName": "security definitions",
+				"propertyType": "group",
+				"propertyKeyword": "securityDefinitions",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern {name}",
+						"propertyKeyword": "securityDefinitionsName",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "type",
+						"propertyKeyword": "securitySchemeType",
+						"shouldValidate": false,
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"basic",
+							"apiKey",
+							"oauth2"
+						]
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "securitySchemeDescription",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					},
+					{
+						"propertyName": "name",
+						"propertyKeyword": "securitySchemeName",
+						"shouldValidate": false,
+						"propertyType": "text",
+						"sampleGen": "&containerName|&entityName|&random|<value>",
+						"dependency": {
+							"key": "securitySchemeType",
+							"value": "apiKey"
+						}
+					},
+					{
+						"propertyName": "in",
+						"propertyKeyword": "securitySchemeIn",
+						"shouldValidate": false,
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"query",
+							"header"
+						],
+						"dependency": {
+							"key": "securitySchemeType",
+							"value": "apiKey"
+						}
+					},
+					{
+						"propertyName": "flow",
+						"propertyKeyword": "securitySchemeFlow",
+						"shouldValidate": false,
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"implicit",
+							"password",
+							"application",
+							"accessCode"
+						],
+						"dependency": {
+							"key": "securitySchemeType",
+							"value": "oauth2"
+						}
+					},
+					{
+						"propertyName": "authorizationUrl",
+						"propertyKeyword": "securitySchemeAuthorizationUrl",
+						"shouldValidate": false,
+						"propertyType": "text",
+						"sampleGen": "&containerName|&entityName|&random|<value>",
+						"dependency": [[{
+							"key": "securitySchemeFlow",
+							"value": "implicit"
+						}, {
+							"key": "securitySchemeFlow",
+							"value": "accessCode"
+						}], [{
+							"key": "securitySchemeType",
+							"value": "oauth2"
+						}]]
+					},
+					{
+						"propertyName": "tokenUrl",
+						"propertyKeyword": "securitySchemeTokenUrl",
+						"shouldValidate": false,
+						"propertyType": "text",
+						"sampleGen": "&containerName|&entityName|&random|<value>",
+						"dependency": [{
+							"key": "securitySchemeFlow",
+							"value": "password"
+						},
+						{
+							"key": "securitySchemeFlow",
+							"value": "application"
+						},
+						{
+							"key": "securitySchemeFlow",
+							"value": "accessCode"
+						}]
+					},
+					{
+						"propertyName": "scopes",
+						"propertyType": "group",
+						"propertyKeyword": "securitySchemeScopes",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern {name}",
+								"propertyKeyword": "securitySchemeScopesName",
+								"shouldValidate": false,
+								"propertyTooltip": "",
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "description",
+								"propertyKeyword": "securitySchemeScopesDescription",
+								"shouldValidate": false,
+								"propertyTooltip": "",
+								"propertyType": "text"
+							}
+						],
+						"dependency": {
+							"key": "securitySchemeType",
+							"value": "oauth2"
+						}
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				]
+			},
+			{
+				"propertyName": "security",
+				"propertyType": "group",
+				"propertyKeyword": "security",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern {name}",
+						"propertyKeyword": "securityRequirementName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "securityRequirementDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "multipleText"
+					}
+				]
+			},
+			{
+				"propertyName": "tags",
+				"propertyType": "group",
+				"propertyKeyword": "tags",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "tagName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "tagDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "externalDocs",
+						"propertyType": "group",
+						"propertyKeyword": "externalDocs",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "url",
+								"propertyKeyword": "tagExternalDocsUrl",
+								"shouldValidate": false,
+								"propertyTooltip": "",
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "description",
+								"propertyKeyword": "tagExternalDocsDescription",
+								"shouldValidate": false,
+								"propertyTooltip": "",
+								"propertyType": "text"
+							}
+						]
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				]
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"propertyFormat": "uri"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				]
+			},
+			{
+				"propertyName": "extensions",
+				"propertyType": "group",
+				"propertyKeyword": "scopesExtensions",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern",
+						"propertyKeyword": "extensionPattern",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "value",
+						"propertyKeyword": "extensionValue",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
+				"propertyName": "Comments",
+				"propertyKeyword": "comments",
+				"shouldValidate": false,
+				"propertyTooltip": "comments",
+				"propertyType": "details",
+				"template": "textarea"
+			}
+		]
+	}
+]

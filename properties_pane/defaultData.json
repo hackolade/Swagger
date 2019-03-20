@@ -1,0 +1,43 @@
+{
+	"model": {
+		"modelName": "New resource model",
+		"dbVersion": "2.0",
+		"dbVendor": "Swagger",
+		"securityDefinitions": {
+			"securitySchemeType": "",
+			"securitySchemeIn": "query",
+			"securitySchemeFlow": "implicit"
+		}
+	},
+	"container": {
+		"name": "/path"
+	},
+	"collection": {
+		"collectionName": "get",
+		"entityType": "request",
+		"snippet": "requestStructure"
+	},
+	"nestedCollection": {
+		"collectionName": "200",
+		"entityType": "response",
+		"snippet": "responseStructure"
+	},
+	"field": {
+		"name": "New field"
+	},
+	"patternField": {
+		"name": "^New Pattern Field$"
+	},
+	"multipleField": {
+		"primaryKey": false
+	},
+	"subschema": {},
+	"arrayItem": {},
+	"choice": {},
+	"relationship": {},
+	"user": {},
+	"view": {
+		"viewOn": "",
+		"pipeline": ""
+	}
+}

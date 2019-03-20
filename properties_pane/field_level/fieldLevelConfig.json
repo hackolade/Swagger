@@ -1,0 +1,1241 @@
+/*
+* Copyright © 2016-2017 by IntegrIT S.A. dba Hackolade.  All rights reserved.
+*
+* The copyright to the computer software herein is the property of IntegrIT S.A.
+* The software may be used and/or copied only with the written permission of 
+* IntegrIT S.A. or in accordance with the terms and conditions stipulated in 
+* the agreement/contract under which the software has been supplied. 
+
+
+In order to define custom properties for any object's properties pane, you may copy/paste from the following,
+making sure that you maintain a proper JSON format.
+
+			{
+				"propertyName": "Simple text",
+				"propertyKeyword": "simpletextProp",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>"
+			},
+			{
+				"propertyName": "Text area",
+				"propertyKeyword": "textareaProp",
+				"propertyValidate": false,
+				"propertyTooltip": "Popup for multi-line text entry",
+				"propertyType": "details",
+				"template": "textarea"
+			},
+			{
+				"propertyName": "Dropdown selection",
+				"propertyKeyword": "dropdownProp",
+				"shouldValidate": false,
+				"propertyTooltip": "Select from list of options",
+				"propertyType": "select",
+				"options": [
+					"Option 1",
+					"Option 2",
+					"Option 3",
+					"Option 4"
+				]
+			},
+			{
+				"propertyName": "Numeric",
+				"propertyKeyword": "numericProp",
+				"propertyValidate": true,
+				"propertyType": "numeric",
+				"valueType": "number",
+				"allowNegative": false,
+				"sampleGen": "&containerName|&entityName|&random|<value>"
+			},
+			{
+				"propertyName": "Checkbox",
+				"propertyKeyword": "checkboxProp",
+				"shouldValidate": false,
+				"propertyType": "checkbox"
+			},
+			{
+				"propertyName": "Group",
+				"propertyType": "group",
+				"propertyKeyword": "grpProp",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "Simple Grp Text",
+						"propertyKeyword": "simpleGrpText",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Group Number",
+						"propertyKeyword": "grpNumber",
+						"propertyValidate": true,
+						"propertyType": "numeric",
+						"valueType": "number",
+						"allowNegative": false
+					}
+				]
+			},
+			{
+				"propertyName": "Field List",
+				"propertyKeyword": "keyList",
+				"shouldValidate": false,
+				"propertyType": "fieldList",
+				"template": "orderedList"
+			}, 
+			{
+				"propertyName": "List with attribute",
+				"propertyKeyword": "keyListOrder",
+				"shouldValidate": false,
+				"propertyType": "fieldList",
+				"template": "orderedList",
+				"attributeList": [
+					"ascending",
+					"descending"
+				]
+			}
+
+*/
+{
+	"lowerTab": "JsonDetails",
+	"structure": {
+		"parameter": [
+			{
+				"fieldName": "Name",
+				"fieldKeyword": "name",
+				"fieldType": "text",
+				"disabled": true
+			},
+			{
+				"fieldName": "Type",
+				"fieldKeyword": "type",
+				"fieldType": "text",
+				"disabled": true
+			},
+			{
+				"fieldName": "Comments",
+				"fieldKeyword": "comments",
+				"fieldType": "text",
+				"dependency": {
+					"key": "name",
+					"exists": false
+				}
+			},
+			{
+				"fieldName": "Description",
+				"fieldKeyword": "description",
+				"fieldType": "text",
+				"dependency": {
+					"key": "name",
+					"exists": false
+				}
+			}
+		],
+		"string": [
+			"name",
+			"schemaId",
+			"type",
+			{
+				"propertyName": "Format",
+				"propertyKeyword": "format",
+				"shouldValidate": false,
+				"propertyType": "select",
+				"options": [
+					"",
+					"byte",
+					"binary",
+					"date",
+					"date-time",
+					"password"
+				]
+			},
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, { 
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"default",
+			"minLength",
+			"maxLength",
+			"pattern",
+			"enum",
+			{
+				"propertyName": "Example",
+				"propertyKeyword": "sample",
+				"propertyType": "text",
+				"shouldValidate": true
+			},
+			{
+				"propertyName": "discriminator",
+				"propertyKeyword": "discriminator",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"enableForReference": true
+			},
+			{
+				"propertyName": "readOnly",
+				"propertyKeyword": "readOnly",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [[{
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}], [{
+					"level": "root",
+					"key": "entityType",
+					"value": "request"
+				}]],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "xml",
+				"propertyType": "group",
+				"propertyKeyword": "xml",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "xmlName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "namespace",
+						"propertyKeyword": "xmlNamespace",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "prefix",
+						"propertyKeyword": "xmlPrefix",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "attribute",
+						"propertyKeyword": "xmlAttribute",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "wrapped",
+						"propertyKeyword": "xmlWrapped",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"regex": "^([A-Za-z][A-Za-z0-9+.-]*:/{0,3})?[A-Za-z0-9{}\\[\\]._~%!$&\\'()*+,;=:@/-]*([?][A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?(#[A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?$"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			"comments"
+		],
+		"number": [
+			"name",
+			"schemaId",
+			"type",
+			{
+				"propertyName": "Format",
+				"propertyKeyword": "mode",
+				"shouldValidate": false,
+				"propertyType": "select",
+				"options": [
+					"float",
+					"double"
+				]
+			},
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"default",
+			"unit",
+			"minimum",
+			"exclusiveMinimum",
+			"maximum",
+			"exclusiveMaximum",
+			"multipleOf",
+			"divisibleBy",
+			"enum",
+			{
+				"propertyName": "Example",
+				"propertyKeyword": "sample",
+				"propertyType": "text",
+				"shouldValidate": true
+			},
+			{
+				"propertyName": "discriminator",
+				"propertyKeyword": "discriminator",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"enableForReference": true
+			},
+			{
+				"propertyName": "readOnly",
+				"propertyKeyword": "readOnly",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [[{
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}], [{
+					"level": "root",
+					"key": "entityType",
+					"value": "request"
+				}]],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "xml",
+				"propertyType": "group",
+				"propertyKeyword": "xml",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "xmlName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "namespace",
+						"propertyKeyword": "xmlNamespace",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "prefix",
+						"propertyKeyword": "xmlPrefix",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "attribute",
+						"propertyKeyword": "xmlAttribute",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "wrapped",
+						"propertyKeyword": "xmlWrapped",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"regex": "^([A-Za-z][A-Za-z0-9+.-]*:/{0,3})?[A-Za-z0-9{}\\[\\]._~%!$&\\'()*+,;=:@/-]*([?][A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?(#[A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?$"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			"comments"
+		],
+		"integer": [
+			"name",
+			"schemaId",
+			"type",
+			{
+				"propertyName": "format",
+				"propertyKeyword": "mode",
+				"shouldValidate": false,
+				"propertyType": "select",
+				"options": [
+					"int32",
+					"int64"
+				]
+			},
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"default",
+			"unit",
+			"minimum",
+			"exclusiveMinimum",
+			"maximum",
+			"exclusiveMaximum",
+			"multipleOf",
+			"divisibleBy",
+			"enum",
+			{
+				"propertyName": "Example",
+				"propertyKeyword": "sample",
+				"propertyType": "text",
+				"shouldValidate": true
+			},
+			{
+				"propertyName": "discriminator",
+				"propertyKeyword": "discriminator",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"enableForReference": true
+			},
+			{
+				"propertyName": "readOnly",
+				"propertyKeyword": "readOnly",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [[{
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}], [{
+					"level": "root",
+					"key": "entityType",
+					"value": "request"
+				}]],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "xml",
+				"propertyType": "group",
+				"propertyKeyword": "xml",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "xmlName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "namespace",
+						"propertyKeyword": "xmlNamespace",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "prefix",
+						"propertyKeyword": "xmlPrefix",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "attribute",
+						"propertyKeyword": "xmlAttribute",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "wrapped",
+						"propertyKeyword": "xmlWrapped",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"regex": "^([A-Za-z][A-Za-z0-9+.-]*:/{0,3})?[A-Za-z0-9{}\\[\\]._~%!$&\\'()*+,;=:@/-]*([?][A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?(#[A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?$"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			"comments"
+		],
+		"boolean": [
+			"name",
+			"schemaId",
+			"type",
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"default",
+			{
+				"propertyName": "Example",
+				"propertyKeyword": "sample",
+				"propertyType": "text",
+				"shouldValidate": true
+			},
+			"comments"
+		],
+		"file": [
+			"name",
+			"schemaId",
+			"type",
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"default",
+			{
+				"propertyName": "Example",
+				"propertyKeyword": "sample",
+				"propertyType": "text",
+				"shouldValidate": true
+			},
+			"comments"
+		],
+		"___1": [],
+		"array": [
+			"name",
+			"schemaId",
+			"refPath",
+			"type",
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"required",
+			"minItems",
+			"maxItems",
+			"uniqueItems",
+			"additionalItems",
+			{
+				"propertyName": "discriminator",
+				"propertyKeyword": "discriminator",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"enableForReference": true
+			},
+			{
+				"propertyName": "readOnly",
+				"propertyKeyword": "readOnly",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [[{
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}], [{
+					"level": "root",
+					"key": "entityType",
+					"value": "request"
+				}]],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "xml",
+				"propertyType": "group",
+				"propertyKeyword": "xml",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "xmlName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "namespace",
+						"propertyKeyword": "xmlNamespace",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "prefix",
+						"propertyKeyword": "xmlPrefix",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "attribute",
+						"propertyKeyword": "xmlAttribute",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "wrapped",
+						"propertyKeyword": "xmlWrapped",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"regex": "^([A-Za-z][A-Za-z0-9+.-]*:/{0,3})?[A-Za-z0-9{}\\[\\]._~%!$&\\'()*+,;=:@/-]*([?][A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?(#[A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?$"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "collectionFormat",
+				"propertyKeyword": "collectionFormat",
+				"shouldValidate": false,
+				"propertyTooltip": "Select from list of options",
+				"propertyType": "select",
+				"options": [
+					"csv",
+					"ssv",
+					"tsv",
+					"pipes"
+				],
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "header"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "path"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "collectionFormat",
+				"propertyKeyword": "collectionFormat",
+				"shouldValidate": false,
+				"propertyTooltip": "Select from list of options",
+				"propertyType": "select",
+				"options": [
+					"csv",
+					"ssv",
+					"tsv",
+					"pipes",
+					"multi"
+				],
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, {
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"comments"
+		],
+		"object": [
+			"name",
+			"sampleName",
+			"schemaId",
+			"refPath",
+			"type",
+			{
+				"propertyKeyword": "description",
+				"enableForReference": true
+			},
+			"required",
+			{
+				"propertyName": "allowEmptyValue",
+				"propertyKeyword": "allowEmptyValue",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [{
+					"level": "parent",
+					"key": "name",
+					"value": "query"
+				}, { 
+					"level": "parent",
+					"key": "name",
+					"value": "formData"
+				}],
+				"enableForReference": true
+			},
+			"minProperties",
+			"maxProperties",
+			"additionalProperties",
+			{
+				"propertyName": "discriminator",
+				"propertyKeyword": "discriminator",
+				"shouldValidate": false,
+				"propertyType": "text",
+				"sampleGen": "&containerName|&entityName|&random|<value>",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"enableForReference": true
+			},
+			{
+				"propertyName": "readOnly",
+				"propertyKeyword": "readOnly",
+				"shouldValidate": false,
+				"propertyType": "checkbox",
+				"dependency": [[{
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				}], [{
+					"level": "root",
+					"key": "entityType",
+					"value": "request"
+				}]],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "xml",
+				"propertyType": "group",
+				"propertyKeyword": "xml",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "name",
+						"propertyKeyword": "xmlName",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "namespace",
+						"propertyKeyword": "xmlNamespace",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "prefix",
+						"propertyKeyword": "xmlPrefix",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "attribute",
+						"propertyKeyword": "xmlAttribute",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "wrapped",
+						"propertyKeyword": "xmlWrapped",
+						"shouldValidate": false,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			{
+				"propertyName": "externalDocs",
+				"propertyType": "group",
+				"propertyKeyword": "externalDocs",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"level": "parent",
+					"key": "name",
+					"value": "body"
+				},
+				"structure": [
+					{
+						"propertyName": "url",
+						"propertyKeyword": "externalDocsUrl",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"propertyType": "text",
+						"regex": "^([A-Za-z][A-Za-z0-9+.-]*:/{0,3})?[A-Za-z0-9{}\\[\\]._~%!$&\\'()*+,;=:@/-]*([?][A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?(#[A-Za-z0-9._~%!$&\\'()*+,;=:@/?-]*)?$"
+					},
+					{
+						"propertyName": "description",
+						"propertyKeyword": "externalDocsDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "extensions",
+						"propertyType": "group",
+						"propertyKeyword": "scopesExtensions",
+						"shouldValidate": true,
+						"propertyTooltip": "",
+						"structure": [
+							{
+								"propertyName": "pattern",
+								"propertyKeyword": "extensionPattern",
+								"shouldValidate": false,
+								"propertyType": "text"
+							},
+							{
+								"propertyName": "value",
+								"propertyKeyword": "extensionValue",
+								"propertyValidate": false,
+								"propertyTooltip": "Popup for multi-line text entry",
+								"propertyType": "details",
+								"template": "textarea"
+							}
+						]
+					}
+				],
+				"enableForReference": true
+			},
+			"comments"
+		]
+	}
+}

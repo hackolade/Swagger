@@ -1,0 +1,6 @@
+{
+	"extension": "txt",
+	"filterName": "Plain text",
+	"namePrefix": "Elasticsearch Mapping",
+	"hasUpdateScript": true
+}

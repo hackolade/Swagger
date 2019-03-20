@@ -1,0 +1,37 @@
+{
+	"name": "array",
+	"erdAbbreviation": "<arr>",
+	"dtdAbbreviation": "[...]",
+	"parentType": "array",
+	"sample": [],
+	"useSample": true,
+	"default": true,
+	"defaultValues": {
+		"properties": [],
+		"primaryKey": false,
+		"relationshipType": "",
+		"parentRelationship": "",
+		"childRelationships": [],
+		"foreignCollection": "",
+		"foreignField": [],
+		"additionalItems": true,
+		"minItems": "",
+		"maxItems": "",
+		"uniqueItems": false,
+		"subtype": "noFile" 
+	},
+	"subtypes": {
+		"noFile": {
+			"childValueType": [
+				"string",
+				"number",
+				"integer",
+				"boolean",
+				"array",
+				"object",
+				"reference",
+				"multiple"
+			]
+		}
+	}
+}

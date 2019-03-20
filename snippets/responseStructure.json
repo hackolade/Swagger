@@ -1,0 +1,16 @@
+{
+	"name": "responseStructure",
+	"properties": [{
+		"name": "headers",
+		"type": "parameter",
+		"subtype": "noFile"
+	}, {
+		"name": "body",
+		"subtype": "file",
+		"type": "parameter",
+		"properties": [{
+			"name": "schema",
+			"type": "object"
+		}]
+	}]
+}

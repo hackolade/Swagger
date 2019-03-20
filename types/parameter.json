@@ -1,0 +1,26 @@
+{
+	"name": "parameter",
+	"erdAbbreviation": "<param>",
+	"dtdAbbreviation": "{...}",
+	"parentType": "document",
+	"default": false,
+	"structureType": true,
+	"defaultValues": {
+		"structureType": true,
+		"properties": []
+	},
+	"subtypes": {
+		"noFile": {
+			"childValueType": [
+				"string",
+				"number",
+				"integer",
+				"boolean",
+				"array",
+				"object",
+				"reference",
+				"multiple"
+			]
+		}
+	}
+}

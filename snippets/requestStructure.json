@@ -1,0 +1,24 @@
+{
+	"name": "requestStructure",
+	"properties": [{
+		"name": "path",
+		"type": "parameter",
+		"subtype": "noFile"
+	}, {
+		"name": "query",
+		"type": "parameter",
+		"subtype": "noFile"
+	}, {
+		"name": "header",
+		"type": "parameter",
+		"subtype": "noFile"
+	}, {
+		"name": "body",
+		"type": "parameter",
+		"subtype": "noFile"
+	}, {
+		"name": "formData",
+		"subtype": "file",
+		"type": "parameter"
+	}]
+}
