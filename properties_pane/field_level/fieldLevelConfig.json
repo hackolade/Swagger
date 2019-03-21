@@ -160,7 +160,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -168,7 +168,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"default",
@@ -188,11 +192,15 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -200,11 +208,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "readOnly",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [[{
+				"dependency": [[[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
 				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]], [{
 					"level": "root",
 					"key": "entityType",
 					"value": "request"
@@ -217,11 +229,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "name",
@@ -288,11 +304,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "url",
@@ -361,7 +381,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -369,7 +389,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"default",
@@ -393,11 +417,15 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -405,11 +433,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "readOnly",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [[{
+				"dependency": [[[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
 				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]], [{
 					"level": "root",
 					"key": "entityType",
 					"value": "request"
@@ -422,11 +454,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "name",
@@ -493,11 +529,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "url",
@@ -566,7 +606,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -574,7 +614,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"default",
@@ -598,11 +642,15 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -610,11 +658,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "readOnly",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [[{
+				"dependency": [[[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
 				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]], [{
 					"level": "root",
 					"key": "entityType",
 					"value": "request"
@@ -627,11 +679,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "name",
@@ -698,11 +754,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "url",
@@ -761,7 +821,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -769,7 +829,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"default",
@@ -795,7 +859,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -803,7 +867,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"default",
@@ -830,7 +898,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -838,7 +906,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"required",
@@ -852,11 +924,15 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -864,11 +940,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "readOnly",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [[{
+				"dependency": [[[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
 				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]], [{
 					"level": "root",
 					"key": "entityType",
 					"value": "request"
@@ -881,11 +961,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "name",
@@ -952,11 +1036,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "url",
@@ -1011,7 +1099,7 @@ making sure that you maintain a proper JSON format.
 					"tsv",
 					"pipes"
 				],
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "header"
@@ -1023,7 +1111,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -1039,7 +1131,7 @@ making sure that you maintain a proper JSON format.
 					"pipes",
 					"multi"
 				],
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -1047,7 +1139,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"comments"
@@ -1068,7 +1164,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "allowEmptyValue",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [{
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "query"
@@ -1076,7 +1172,11 @@ making sure that you maintain a proper JSON format.
 					"level": "parent",
 					"key": "name",
 					"value": "formData"
-				}],
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			"minProperties",
@@ -1088,11 +1188,15 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"enableForReference": true
 			},
 			{
@@ -1100,11 +1204,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "readOnly",
 				"shouldValidate": false,
 				"propertyType": "checkbox",
-				"dependency": [[{
+				"dependency": [[[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
 				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]], [{
 					"level": "root",
 					"key": "entityType",
 					"value": "request"
@@ -1117,11 +1225,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "name",
@@ -1188,11 +1300,15 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
-				"dependency": {
+				"dependency": [[{
 					"level": "parent",
 					"key": "name",
 					"value": "body"
-				},
+				}], [{
+					"level": "parent",
+					"key": "structureType",
+					"value": true
+				}]],
 				"structure": [
 					{
 						"propertyName": "url",
