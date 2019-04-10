@@ -1,10 +1,12 @@
 {
-  "name": "swagger",
+  "name": "Swagger",
   "version": "1.0.0",
   "description": "",
   "author": "Hackolade",
   "dependencies": {
-    "swagger-parser": "^6.0.5"
+    "js-yaml": "^3.13.0",
+    "node-uuid": "^1.4.7"
   },
+  "type": "file",
   "installed": true
 }

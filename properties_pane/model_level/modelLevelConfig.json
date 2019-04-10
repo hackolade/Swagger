@@ -200,7 +200,7 @@ making sure that you maintain a proper JSON format.
 					{
 						"propertyName": "extensions",
 						"propertyType": "group",
-						"propertyKeyword": "contactExtensions",
+						"propertyKeyword": "licenseExtensions",
 						"shouldValidate": true,
 						"propertyTooltip": "",
 						"structure": [
@@ -224,12 +224,12 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "version",
-				"propertyKeyword": "version",
+				"propertyKeyword": "modelVersion",
 				"shouldValidate": false,
 				"propertyType": "text"
 			},
 			{
-				"propertyName": "extensions",
+				"propertyName": "info extensions",
 				"propertyType": "group",
 				"propertyKeyword": "infoExtensions",
 				"shouldValidate": true,
@@ -391,16 +391,29 @@ making sure that you maintain a proper JSON format.
 						"shouldValidate": false,
 						"propertyType": "text",
 						"sampleGen": "&containerName|&entityName|&random|<value>",
-						"dependency": [[{
-							"key": "securitySchemeFlow",
-							"value": "implicit"
-						}, {
-							"key": "securitySchemeFlow",
-							"value": "accessCode"
-						}], [{
-							"key": "securitySchemeType",
-							"value": "oauth2"
-						}]]
+						"dependency": {
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values" : [
+										{	
+											"key": "securitySchemeFlow",
+											"value": "implicit"
+										},
+										{	
+											"key": "securitySchemeFlow",
+											"value": "accessCode"
+										}
+									]
+								},
+								{
+									"key": "securitySchemeType",
+									"value": "oauth2"
+								}
+								
+							]
+						}
 					},
 					{
 						"propertyName": "tokenUrl",
@@ -408,18 +421,23 @@ making sure that you maintain a proper JSON format.
 						"shouldValidate": false,
 						"propertyType": "text",
 						"sampleGen": "&containerName|&entityName|&random|<value>",
-						"dependency": [{
-							"key": "securitySchemeFlow",
-							"value": "password"
-						},
-						{
-							"key": "securitySchemeFlow",
-							"value": "application"
-						},
-						{
-							"key": "securitySchemeFlow",
-							"value": "accessCode"
-						}]
+						"dependency": {
+							"type": "or",
+							"values": [
+								{
+									"key": "securitySchemeFlow",
+									"value": "password"
+								},
+								{
+									"key": "securitySchemeFlow",
+									"value": "application"
+								},
+								{
+									"key": "securitySchemeFlow",
+									"value": "accessCode"
+								}
+							]
+						}
 					},
 					{
 						"propertyName": "scopes",
@@ -489,7 +507,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "description",
-						"propertyKeyword": "securityRequirementDescription",
+						"propertyKeyword": "securityRequirementOperation",
 						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "multipleText"
@@ -615,7 +633,7 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "extensions",
 				"propertyType": "group",
-				"propertyKeyword": "scopesExtensions",
+				"propertyKeyword": "extensions",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [

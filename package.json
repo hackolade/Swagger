@@ -27,6 +27,7 @@
             "enableJsonType": false,
             "disableNamingConvention": {
                 "entityLevel": true,
+                "containerLevel": true,
                 "fieldLevel": {
                     "parameter": true
                 }

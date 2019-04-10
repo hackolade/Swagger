@@ -1,0 +1,117 @@
+const getExtensions = require('./extensionsHelper');
+
+function mapExternalDocs(docs) {
+	if (docs && docs.length > 0) {
+		return Object.assign({}, {
+			description: docs[0].externalDocsDescription,
+			url: docs[0].externalDocsUrl
+		}, getExtensions(docs[0].scopesExtensions));
+	}
+}
+
+function mapExternalTagDocs(docs) {
+	if (docs && docs.length > 0) {
+		return {
+			description: docs[0].tagExternalDocsDescription,
+			url: docs[0].tagExternalDocsUrl
+		};
+	}
+}
+
+function mapTags(tags = []) {
+	return tags.map(tag => ({
+		name: tag.tagName,
+		description: tag.tagDescription,
+		externalDocs: mapExternalTagDocs(tag.externalDocs)
+	}));
+}
+
+function mapSecurity(security = []) {
+	return security
+		.map(securityRequirement => {
+			if (!securityRequirement.securityRequirementName) {
+				return null;
+			}
+			return {
+				[securityRequirement.securityRequirementName]:
+					securityRequirement.securityRequirementOperation || []
+			};
+		})
+		.filter(securityRequirement => securityRequirement);
+}
+
+function mapSecurityDefinitions(securityDefinitions = []) {
+	const getScopes = (scopes = []) => {
+		return scopes.reduce((acc, scope) => {
+			acc[scope.securitySchemeScopesName] = scope.securitySchemeScopesDescription;
+			return acc;
+		}, {});
+	};
+
+	const getPropsForType = (type, data) => {
+		if (!type || !data) {
+			return null;
+		}
+		switch (type) {
+			case 'basic':
+				return {
+					description: data.securitySchemeDescription
+				};
+			case 'apiKey':
+				return {
+					description: data.securitySchemeDescription,
+					name: data.securitySchemeName || '',
+					in: data.securitySchemeIn
+				};
+			case 'oauth2':
+				return Object.assign({}, {
+					description: data.securitySchemeDescription,
+					flow: data.securitySchemeFlow,
+					scopes: getScopes(data.securitySchemeScopes)
+				}, getParamsForFlow(data.securitySchemeFlow, data));
+			default:
+				return null;
+		}
+	};
+
+	const getParamsForFlow = (flow, data) => {
+		const authorizationUrl = data.securitySchemeAuthorizationUrl || '';
+		const tokenUrl = data.securitySchemeTokenUrl || '';
+
+		switch(flow) {
+			case 'implicit':
+				return { authorizationUrl }
+			case 'password':
+			case 'application':
+				return { tokenUrl }
+			case 'accessCode':
+				return { authorizationUrl, tokenUrl }
+			default:
+				return null;
+		}
+	}
+
+	const modelSecurityDefinitions = securityDefinitions.reduce((acc, secDef) => {
+		acc[secDef.securityDefinitionsName] = Object.assign(
+			{},
+			{ type: secDef.securitySchemeType },
+			getPropsForType(secDef.securitySchemeType, secDef),
+			getExtensions(secDef.scopesExtensions)
+		);
+		return acc;
+	}, {});
+
+	return modelSecurityDefinitions;
+}
+
+function mapArrayFieldByName(dataArray, fieldName) {
+	return dataArray && dataArray.map(dataItem => dataItem[fieldName]);
+}
+
+module.exports = {
+	mapExternalDocs,
+	mapTags,
+	mapSecurity,
+	mapSecurityDefinitions,
+	mapArrayFieldByName
+};

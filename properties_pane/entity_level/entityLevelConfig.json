@@ -147,7 +147,8 @@ making sure that you maintain a proper JSON format.
 					"502",
 					"503",
 					"504",
-					"505"
+					"505",
+					"default"
 				],
 				"dependency": {
 					"key": "entityType",
@@ -304,7 +305,7 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "extensions",
 				"propertyType": "group",
-				"propertyKeyword": "operationExtensions",
+				"propertyKeyword": "extensions",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [

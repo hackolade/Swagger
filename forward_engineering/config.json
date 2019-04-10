@@ -1,6 +1,12 @@
 {
-	"extension": "txt",
-	"filterName": "Plain text",
-	"namePrefix": "Elasticsearch Mapping",
-	"hasUpdateScript": true
+	"extension": "json",
+	"filterName": "application/json",
+	"namePrefix": "Swagger Doc",
+	"hasUpdateScript": false,
+	"validation": true,
+	"level": {
+		"entity": false,
+		"container": false,
+		"model": true
+	}
 }
