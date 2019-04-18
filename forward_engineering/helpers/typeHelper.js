@@ -41,6 +41,9 @@ function getTypeProps(data) {
 				xml: getXml(data.xml)
 			};
 		case 'object':
+			if (!properties && !additionalProperties) {
+				return null;
+			}
 			return {
 				type,
 				required,

@@ -1,6 +1,6 @@
 {
 	"name": "Swagger",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"versionDate": "2019-04-18",
 	"author": "hackolade",
 	"engines": {
@@ -28,7 +28,11 @@
 				"plugin": true 
 			},
 			"disableDenormalization": true,
-			"enableForwardEngineering": true,
+			"enableForwardEngineering": {
+				"jsonDocument": false,
+				"jsonSchema": false,
+				"plugin": true
+			},
 			"disablePatternField": false,
 			"disableChoices": {
 				"anyOf": true,
