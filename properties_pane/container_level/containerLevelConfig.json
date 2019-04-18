@@ -100,6 +100,29 @@ making sure that you maintain a proper JSON format.
 				"propertyTooltip": "comments",
 				"propertyType": "details",
 				"template": "textarea"
+			},
+			{
+				"propertyName": "extensions",
+				"propertyType": "group",
+				"propertyKeyword": "extensions",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern",
+						"propertyKeyword": "extensionPattern",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "value",
+						"propertyKeyword": "extensionValue",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			}
 		]
 	}

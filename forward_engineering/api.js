@@ -1,3 +1,4 @@
+const yaml = require('js-yaml');
 const validationHelper = require('./helpers/validationHelper');
 const getInfo = require('./helpers/infoHelper');
 const getPaths = require('./helpers/pathHelper');
@@ -51,18 +52,34 @@ module.exports = {
 
 			const extensions = getExtensions(data.modelData[0].scopesExtensions);
 			const filteredSwaggerSchema = utils.removeEmptyObjectFields(Object.assign({}, swaggerSchema, extensions), filtrationConfig);
-
-			cb(null, JSON.stringify(filteredSwaggerSchema, null, 4));
+			
+			switch (data.targetScriptOptions.format) {
+				case 'yaml':
+					cb(null, yaml.safeDump(filteredSwaggerSchema));
+					break;
+				case 'json':
+				default:
+					cb(null, JSON.stringify(filteredSwaggerSchema, null, 2));
+			}
 		} catch (err) {
 			cb(err);
 		}
 	},
 
 	validate(data, logger, cb) {
-		const { script } = data;
+		const { script, targetScriptOptions } = data;
 
 		try {
-			const parsedScript = JSON.parse(script);
+			let parsedScript = {};
+
+			switch (targetScriptOptions.format) {
+				case 'yaml':
+					parsedScript = yaml.safeLoad(script);
+					break;
+				case 'json':
+				default:
+					parsedScript = JSON.parse(script);
+			}
 
 			validationHelper.validate(parsedScript)
 				.then((messages) => {

@@ -23,7 +23,28 @@
 		"snippet": "responseStructure"
 	},
 	"field": {
-		"name": "New field"
+		"name": "New field",
+		"required": {
+			"valueDependencies": [{
+				"value": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "name",
+							"value": "path"
+						},
+						{
+							"level": "parent",
+							"key": "structureType",
+							"value": true
+						}
+					]
+				}
+			}],
+			"value": false
+		}
 	},
 	"patternField": {
 		"name": "^New Pattern Field$"

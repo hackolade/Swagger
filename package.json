@@ -1,42 +1,58 @@
 {
-    "name": "Swagger",
-    "version": "0.0.2",
-    "versionDate": "2019-03-20",
-    "author": "hackolade",
-    "engines": {
-        "hackolade": "2.2.4",
-        "hackoladePlugin": "1.0.0"
-    },
-    "contributes": {
-        "target": {
-            "applicationTarget": "SWAGGER",
-            "title": "Swagger",
-            "versions": [
-                "2.0"
-            ]
-        },
-        "features": {
-            "nestedCollections": {
-                "level": 1
-            },
-            "disableMultipleTypes": false,
-            "enableReverseEngineering": true,
-            "enableForwardEngineering": true,
-            "disablePatternField": false,
-			"disableChoices": true,
-            "enableJsonType": false,
-            "disableNamingConvention": {
-                "entityLevel": true,
-                "containerLevel": true,
-                "fieldLevel": {
-                    "parameter": true
-                }
-            },
-            "disableChildren": {
-                "entityLevel": true
-            }
-        }
-    },
-    "description": "Hackolade plugin for Swagger",
-    "disabled": false
+	"name": "Swagger",
+	"version": "0.1.0",
+	"versionDate": "2019-04-18",
+	"author": "hackolade",
+	"engines": {
+		"hackolade": "3.0.0",
+		"hackoladePlugin": "1.0.0"
+	},
+	"contributes": {
+		"target": {
+			"applicationTarget": "SWAGGER",
+			"title": "Swagger",
+			"versions": [
+				"2.0"
+			]
+		},
+		"features": {
+			"nestedCollections": {
+				"level": 1
+			},
+			"disableMultipleTypes": false,
+			"enableReverseEngineering": {
+				"jsonDocument": false,
+				"jsonSchema": false,
+				"ddl": false,
+				"xsd": false,
+				"plugin": true 
+			},
+			"disableDenormalization": true,
+			"enableForwardEngineering": true,
+			"disablePatternField": false,
+			"disableChoices": {
+				"anyOf": true,
+				"oneOf": true,
+				"not": true
+			},
+			"enableJsonType": false,
+			"disableNamingConvention": {
+				"entityLevel": true,
+				"containerLevel": true,
+				"fieldLevel": {
+					"parameter": true
+				}
+			},
+			"disableChildren": {
+				"entityLevel": true
+			},
+			"disableDefinitions": {
+				"internal": true
+			},
+			"disableRelationships": true,
+			"disableJsonPreview": true
+		}
+	},
+	"description": "Hackolade plugin for Swagger",
+	"disabled": false
 }

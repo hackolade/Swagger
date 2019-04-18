@@ -326,6 +326,33 @@ making sure that you maintain a proper JSON format.
 				]
 			},
 			{
+				"propertyName": "examples",
+				"propertyType": "group",
+				"propertyKeyword": "examples",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"dependency": {
+					"key": "entityType",
+					"value": "response"
+				},
+				"structure": [
+					{
+						"propertyName": "mime type",
+						"propertyKeyword": "examplesMimeType",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "value",
+						"propertyKeyword": "examplesValue",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Comments",
 				"propertyKeyword": "comments",
 				"shouldValidate": false,

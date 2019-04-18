@@ -1,7 +1,16 @@
+const getExtensions = require('./extensionsHelper');
+
 function getType(data) {
 	if (!data) {
 		return null;
 	}
+
+	if (data.allOf) {
+		return {
+			allOf: data.allOf.map(getType)
+		};
+	}
+
 	if (Array.isArray(data.type)) {
 		return getType(Object.assign({}, data, { type: data.type[0] }));
 	}
@@ -16,22 +25,32 @@ function getType(data) {
 }
 
 function getTypeProps(data) {
-	const { type, properties, items, required } = data;
+	const { type, properties, items, required, additionalProperties } = data;
 
 	switch (type) {
 		case 'array':
 			return {
 				type,
-				items: getArrayItemsType(items)
+				items: getArrayItemsType(items),
+				collectionFormat: data.collectionFormat,
+				minItems: data.minItems,
+				maxItems: data.maxItems,
+				uniqueItems: data.uniqueItems,
+				discriminator: data.discriminator,
+				readOnly: data.readOnly,
+				xml: getXml(data.xml)
 			};
 		case 'object':
-			if (!properties) {
-				return null;
-			}
 			return {
 				type,
 				required,
-				properties: getObjectProperties(properties)
+				properties: getObjectProperties(properties),
+				minProperties: data.minProperties,
+				maxProperties: data.maxProperties,
+				additionalProperties: data.additionalProperties,
+				discriminator: data.discriminator,
+				readOnly: data.readOnly,
+				xml: getXml(data.xml)
 			};
 		case 'parameter':
 			if (!properties || properties.length === 0) {
@@ -54,20 +73,32 @@ function getArrayItemsType(items) {
 	return Object.assign({}, items ? getType(items) : {});
 }
 
-function getObjectProperties(properties) {
+function getObjectProperties(properties = {}) {
 	return Object.keys(properties).reduce((acc, propName) => {
 		acc[propName] = getType(properties[propName]);
 		return acc;
 	}, {});
 }
 
+function getXml(data) {
+	if (!data) {
+		return undefined;
+	}
+
+	return Object.assign({}, {
+		name: data.xmlName,
+		namespace: data.xmlNamespace,
+		prefix: data.xmlPrefix,
+		attribute: data.xmlAttribute,
+		wrapped: data.xmlWrapped
+	}, getExtensions(data.scopesExtensions));
+}
+
 function getPrimitiveTypeProps(data) {
 	return {
 		type: data.type,
 		format: data.format || data.mode,
-		minItems: data.minItems,
-		maxItems: data.maxItems,
-		uniqueItems: data.uniqueItems,
+		description: data.description,
 		exclusiveMinimum: data.exclusiveMinimum,
 		exclusiveMaximum: data.exclusiveMaximum,
 		minimum: data.minimum,
@@ -77,7 +108,9 @@ function getPrimitiveTypeProps(data) {
 		default: data.default,
 		minLength: data.minLength,
 		maxLength: data.maxLength,
-		multipleOf: data.multipleOf
+		multipleOf: data.multipleOf,
+		xml: getXml(data.xml),
+		example: data.example
 	};
 }
 

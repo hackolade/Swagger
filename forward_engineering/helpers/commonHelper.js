@@ -1,19 +1,19 @@
 const getExtensions = require('./extensionsHelper');
 
 function mapExternalDocs(docs) {
-	if (docs && docs.length > 0) {
+	if (docs) {
 		return Object.assign({}, {
-			description: docs[0].externalDocsDescription,
-			url: docs[0].externalDocsUrl
-		}, getExtensions(docs[0].scopesExtensions));
+			description: docs.externalDocsDescription,
+			url: docs.externalDocsUrl
+		}, getExtensions(docs.scopesExtensions));
 	}
 }
 
 function mapExternalTagDocs(docs) {
-	if (docs && docs.length > 0) {
+	if (docs) {
 		return {
-			description: docs[0].tagExternalDocsDescription,
-			url: docs[0].tagExternalDocsUrl
+			description: docs.tagExternalDocsDescription,
+			url: docs.tagExternalDocsUrl
 		};
 	}
 }

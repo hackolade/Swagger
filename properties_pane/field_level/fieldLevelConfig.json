@@ -193,8 +193,8 @@ making sure that you maintain a proper JSON format.
 			"pattern",
 			"enum",
 			{
-				"propertyName": "Example",
-				"propertyKeyword": "sample",
+				"propertyName": "example",
+				"propertyKeyword": "example",
 				"propertyType": "text",
 				"shouldValidate": true
 			},
@@ -250,22 +250,32 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "xml",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -326,12 +336,11 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -389,8 +398,7 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			"comments"
 		],
@@ -455,8 +463,8 @@ making sure that you maintain a proper JSON format.
 			"divisibleBy",
 			"enum",
 			{
-				"propertyName": "Example",
-				"propertyKeyword": "sample",
+				"propertyName": "example",
+				"propertyKeyword": "example",
 				"propertyType": "text",
 				"shouldValidate": true
 			},
@@ -511,22 +519,33 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "xml",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -587,12 +606,11 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -650,8 +668,7 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			"comments"
 		],
@@ -716,8 +733,8 @@ making sure that you maintain a proper JSON format.
 			"divisibleBy",
 			"enum",
 			{
-				"propertyName": "Example",
-				"propertyKeyword": "sample",
+				"propertyName": "example",
+				"propertyKeyword": "example",
 				"propertyType": "text",
 				"shouldValidate": true
 			},
@@ -773,22 +790,32 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "xml",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -849,12 +876,11 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -912,8 +938,7 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			"comments"
 		],
@@ -960,8 +985,8 @@ making sure that you maintain a proper JSON format.
 			},
 			"default",
 			{
-				"propertyName": "Example",
-				"propertyKeyword": "sample",
+				"propertyName": "example",
+				"propertyKeyword": "example",
 				"propertyType": "text",
 				"shouldValidate": true
 			},
@@ -1009,8 +1034,8 @@ making sure that you maintain a proper JSON format.
 			},
 			"default",
 			{
-				"propertyName": "Example",
-				"propertyKeyword": "sample",
+				"propertyName": "example",
+				"propertyKeyword": "example",
 				"propertyType": "text",
 				"shouldValidate": true
 			},
@@ -1113,22 +1138,32 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "xml",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -1189,12 +1224,11 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -1252,8 +1286,7 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "collectionFormat",
@@ -1394,17 +1427,27 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -1416,44 +1459,68 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyType": "checkbox",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
-						},
-						{
-							"level": "root",
-							"key": "entityType",
-							"value": "request"
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								},
+								{
+									"level": "root",
+									"key": "entityType",
+									"value": "request"
+								}
+							]
 						}
-					]},
+					]
+				},
 				"enableForReference": true
 			},
 			{
 				"propertyName": "xml",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "xml",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"inDepthParentSearch": true,
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"inDepthParentSearch": true,
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"inDepthParentSearch": true,
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -1514,27 +1581,36 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
 							"level": "parent",
-							"key": "name",
-							"value": "body"
+							"key": "type",
+							"value": "definitions" 
 						},
 						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
 						}
 					]
 				},
@@ -1577,10 +1653,71 @@ making sure that you maintain a proper JSON format.
 							}
 						]
 					}
-				],
-				"enableForReference": true
+				]
+			},
+			{
+				"propertyName": "example",
+				"propertyKeyword": "example",
+				"propertyType": "details",
+				"template": "textarea",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions" 
+						},
+						{
+							"type": "and",
+							"values": [
+								{
+									"level": "parent",
+									"key": "name",
+									"value": "body"
+								},
+								{
+									"level": "parent",
+									"key": "structureType",
+									"value": true
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "extensions",
+				"propertyType": "group",
+				"propertyKeyword": "scopesExtensions",
+				"shouldValidate": true,
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "pattern",
+						"propertyKeyword": "extensionPattern",
+						"shouldValidate": false,
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "value",
+						"propertyKeyword": "extensionValue",
+						"propertyValidate": false,
+						"propertyTooltip": "Popup for multi-line text entry",
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			"comments"
-		]
+		],
+		"choice": [{
+			"fieldName": "choice",
+			"fieldKeyword": "choice",
+			"fieldType": "select",
+			"options": [
+				"allOf"
+			]
+		}]
 	}
 }

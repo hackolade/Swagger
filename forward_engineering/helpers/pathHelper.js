@@ -2,15 +2,14 @@ const typeHelper = require('./typeHelper');
 const commonHelper = require('./commonHelper');
 const getExtensions = require('./extensionsHelper');
 
-const JSON_MIME_TYPE = 'application/json';
-
 function getPaths(containers) {
 	const paths = {};
 	containers.forEach(container => {
-		const { name } = container.containerData[0];
+		const { name, extensions } = container.containerData[0];
 		const collections = container.entities.map(collectionId => JSON.parse(container.jsonSchema[collectionId]));
+		const containerExtensions = getExtensions(extensions);
 
-		paths[name] = getRequestData(collections, container.jsonData);
+		paths[name] = Object.assign({}, getRequestData(collections, container.jsonData), containerExtensions);
 	});
 
 	return paths;
@@ -72,6 +71,7 @@ function mapParameters(parameters, collectionId, jsonData) {
 }
 
 function getParameterProps(parameterType, parameters, collectionId, jsonData) {
+	const isSchemaWithRef = (typeProps = {}) => typeProps.$ref || (typeProps.items && typeProps.items.$ref);
 	if (!parameters[parameterType].properties) {
 		return null;
 	}
@@ -80,14 +80,14 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData) {
 			name: propName,
 			in: parameterType,
 			description: parameters[parameterType].properties[propName].description,
-			required: parameters[parameterType].required && parameters[parameterType].required.includes(propName)
+			required: (parameters[parameterType].required && parameters[parameterType].required.includes(propName)) || false
 		};
 		const typeProps = typeHelper.getType(parameters[parameterType].properties[propName]);
 
 		if (parameterType === 'body') {
 			return Object.assign({}, parameterProps, {
-				schema: Object.assign({}, typeProps, !typeProps.$ref && {
-					example: getExamples(collectionId, jsonData)
+				schema: Object.assign({}, typeProps, !isSchemaWithRef(typeProps) && {
+					example: getRequestExample(collectionId, jsonData)
 				})
 			});
 		}
@@ -104,7 +104,7 @@ function mapResponses(collections, collectionId, jsonData) {
 			description: collection.description || '',
 			headers: mapResponseHeaders(collection.properties.headers),
 			schema: typeHelper.getType(collection.properties.body),
-			examples: getExamples(collection.GUID, jsonData)
+			examples: getResponseExamples(collection.examples)
 		}, getExtensions(collection.operationExtensions)))
 		.reduce((acc, response) => {
 			const { responseCode } = response;
@@ -126,7 +126,7 @@ function mapResponseHeaders(data) {
 	}, {});
 }
 
-function getExamples(collectionId, jsonData) {
+function getRequestExample(collectionId, jsonData) {
 	if (!jsonData || !jsonData[collectionId]) {
 		return null;
 	}
@@ -134,9 +134,14 @@ function getExamples(collectionId, jsonData) {
 	if (!body || Object.keys(body).length === 0) {
 		return null;
 	}
-	return {
-		[JSON_MIME_TYPE]: body
-	};
+	return body;
+}
+
+function getResponseExamples(data = []) {
+	return data.reduce((acc, example) => {
+		acc[example.examplesMimeType] = example.examplesValue;
+		return acc;
+	}, {});
 }
 
 module.exports = getPaths;

@@ -13,27 +13,27 @@ function getInfo(data) {
 	return Object.assign({}, info, extensions);
 }
 
-function getContact(contacts) {
-	if (!contacts || contacts.length === 0) {
+function getContact(contact) {
+	if (!contact) {
 		return null;
 	}
 
 	return Object.assign({}, {
-		name: contacts[0].contactName,
-		url: contacts[0].contactURL,
-		email: contacts[0].contactemail
-	}, getExtensions(contacts[0].contactExtensions));
+		name: contact.contactName,
+		url: contact.contactURL,
+		email: contact.contactemail
+	}, getExtensions(contact.contactExtensions));
 }
 
 function getLicense(license) {
-	if (!license || license.length === 0) {
+	if (!license) {
 		return null;
 	}
 
 	return Object.assign({}, {
-		name: license[0].licenseName,
-		url: license[0].licenseURL
-	}, getExtensions(license[0].contactExtensions));
+		name: license.licenseName,
+		url: license.licenseURL
+	}, getExtensions(license.contactExtensions));
 }
 
 module.exports = getInfo;

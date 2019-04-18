@@ -85,6 +85,16 @@ making sure that you maintain a proper JSON format.
 		"lowerTab": "Details",
 		"structure": [
 			{
+				"propertyName": "Author",
+				"propertyKeyword": "author",
+				"hidden": true
+			},
+			{
+				"propertyName": "Version",
+				"propertyKeyword": "version",
+				"hidden": true
+			},
+			{
 				"propertyName": "Target",
 				"propertyKeyword": "dbVendor",
 				"shouldValidate": false,
@@ -126,7 +136,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "contact",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "contact",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -179,7 +189,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "license",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "license",
 				"shouldValidate": true,
 				"propertyTooltip": "",
@@ -262,7 +272,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "basePath",
 				"shouldValidate": true,
 				"propertyType": "text",
-				"regex": "^\/\\w+"
+				"regex": "^\/[\\w\/%-]*$"
 			},
 			{
 				"propertyName": "schemes",
@@ -537,7 +547,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "externalDocs",
-						"propertyType": "group",
+						"propertyType": "block",
 						"propertyKeyword": "externalDocs",
 						"shouldValidate": true,
 						"propertyTooltip": "",
@@ -585,7 +595,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "externalDocs",
-				"propertyType": "group",
+				"propertyType": "block",
 				"propertyKeyword": "externalDocs",
 				"shouldValidate": true,
 				"propertyTooltip": "",
