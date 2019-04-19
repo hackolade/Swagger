@@ -1,7 +1,7 @@
 {
 	"name": "Swagger",
-	"version": "0.1.1",
-	"versionDate": "2019-04-18",
+	"version": "0.1.2",
+	"versionDate": "2019-04-19",
 	"author": "hackolade",
 	"engines": {
 		"hackolade": "3.0.0",
@@ -21,16 +21,16 @@
 			},
 			"disableMultipleTypes": false,
 			"enableReverseEngineering": {
-				"jsonDocument": false,
-				"jsonSchema": false,
+				"jsonDocument": true,
+				"jsonSchema": true,
 				"ddl": false,
 				"xsd": false,
 				"plugin": true 
 			},
 			"disableDenormalization": true,
 			"enableForwardEngineering": {
-				"jsonDocument": false,
-				"jsonSchema": false,
+				"jsonDocument": true,
+				"jsonSchema": true,
 				"plugin": true
 			},
 			"disablePatternField": false,
@@ -54,9 +54,9 @@
 				"internal": true
 			},
 			"disableRelationships": true,
-			"disableJsonPreview": true
+			"disableJsonPreview": false
 		}
 	},
-	"description": "Hackolade plugin for Swagger",
+	"description": "Hackolade plugin for Swagger API",
 	"disabled": false
 }
