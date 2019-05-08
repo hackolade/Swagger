@@ -337,13 +337,13 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "consumes",
 				"propertyType": "group",
 				"propertyKeyword": "consumes",
-				"shouldValidate": true,
+				"shouldValidate": false,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "mime type def",
 						"propertyKeyword": "consumesMimeTypeDef",
-						"shouldValidate": false,
+						"shouldValidate": true,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					}
@@ -353,13 +353,13 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "produces",
 				"propertyType": "group",
 				"propertyKeyword": "produces",
-				"shouldValidate": true,
+				"shouldValidate": false,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "mime type def",
 						"propertyKeyword": "producesMimeTypeDef",
-						"shouldValidate": false,
+						"shouldValidate": true,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					}

@@ -4,6 +4,10 @@
 	"namePrefix": "Swagger Doc",
 	"hasUpdateScript": false,
 	"validation": true,
+	"splitView": {
+		"swaggerUIView": true,
+		"openedByDefault": true
+	},
 	"level": {
 		"entity": false,
 		"container": false,
