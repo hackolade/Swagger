@@ -1,5 +1,5 @@
 /*
-* Copyright © 2016-2017 by IntegrIT S.A. dba Hackolade.  All rights reserved.
+* Copyright © 2016-2019 by IntegrIT S.A. dba Hackolade.  All rights reserved.
 *
 * The copyright to the computer software herein is the property of IntegrIT S.A.
 * The software may be used and/or copied only with the written permission of 
@@ -13,14 +13,12 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Simple text",
 				"propertyKeyword": "simpletextProp",
-				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>"
 			},
 			{
 				"propertyName": "Text area",
 				"propertyKeyword": "textareaProp",
-				"propertyValidate": false,
 				"propertyTooltip": "Popup for multi-line text entry",
 				"propertyType": "details",
 				"template": "textarea"
@@ -28,7 +26,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Dropdown selection",
 				"propertyKeyword": "dropdownProp",
-				"shouldValidate": false,
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
 				"options": [
@@ -50,27 +47,23 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Checkbox",
 				"propertyKeyword": "checkboxProp",
-				"shouldValidate": false,
 				"propertyType": "checkbox"
 			},
 			{
 				"propertyName": "Group",
 				"propertyType": "group",
 				"propertyKeyword": "grpProp",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "Simple Grp Text",
 						"propertyKeyword": "simpleGrpText",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					},
 					{
 						"propertyName": "Group Number",
 						"propertyKeyword": "grpNumber",
-						"propertyValidate": true,
 						"propertyType": "numeric",
 						"valueType": "number",
 						"allowNegative": false
@@ -85,20 +78,17 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Block",
 				"propertyType": "block",
 				"propertyKeyword": "grpProp",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "Simple Grp Text",
 						"propertyKeyword": "simpleGrpText",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					},
 					{
 						"propertyName": "Group Number",
 						"propertyKeyword": "grpNumber",
-						"propertyValidate": true,
 						"propertyType": "numeric",
 						"valueType": "number",
 						"allowNegative": false
@@ -108,14 +98,12 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Field List",
 				"propertyKeyword": "keyList",
-				"shouldValidate": false,
 				"propertyType": "fieldList",
 				"template": "orderedList"
 			}, 
 			{
 				"propertyName": "List with attribute",
 				"propertyKeyword": "keyListOrder",
-				"shouldValidate": false,
 				"propertyType": "fieldList",
 				"template": "orderedList",
 				"attributeList": [
@@ -205,7 +193,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "schema",
 				"propertyKeyword": "pathItemSchema",
-				"shouldValidate": false,
 				"propertyType": "fieldList",
 				"template": "orderedList",
 				"dependency": {
@@ -217,13 +204,11 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "tags",
 				"propertyType": "group",
 				"propertyKeyword": "tags",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "tag",
 						"propertyKeyword": "tag",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					}
@@ -232,14 +217,12 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "summary",
 				"propertyKeyword": "summary",
-				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>"
 			},
 			{
 				"propertyName": "description",
 				"propertyKeyword": "description",
-				"propertyValidate": false,
 				"propertyTooltip": "Popup for multi-line text entry",
 				"propertyType": "details",
 				"template": "textarea"
@@ -248,7 +231,6 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "externalDocs",
 				"propertyType": "group",
 				"propertyKeyword": "externalDocs",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
@@ -262,7 +244,6 @@ making sure that you maintain a proper JSON format.
 					{
 						"propertyName": "description",
 						"propertyKeyword": "externalDocsDescription",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					}
@@ -271,7 +252,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "operationId",
 				"propertyKeyword": "operationId",
-				"shouldValidate": false,
 				"propertyType": "text",
 				"sampleGen": "&containerName|&entityName|&random|<value>"
 			},
@@ -279,7 +259,6 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "consumes",
 				"propertyType": "group",
 				"propertyKeyword": "consumes",
-				"shouldValidate": false,
 				"propertyTooltip": "",
 				"structure": [
 					{
@@ -295,7 +274,6 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "produces",
 				"propertyType": "group",
 				"propertyKeyword": "produces",
-				"shouldValidate": false,
 				"propertyTooltip": "",
 				"structure": [
 					{
@@ -310,7 +288,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "schemes",
 				"propertyKeyword": "schemes",
-				"shouldValidate": false,
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "multipleCheckboxSelect",
 				"options": [
@@ -323,27 +300,23 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "deprecated",
 				"propertyKeyword": "deprecated",
-				"shouldValidate": false,
 				"propertyType": "checkbox"
 			},
 			{
 				"propertyName": "security",
 				"propertyType": "group",
 				"propertyKeyword": "security",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "pattern {name}",
 						"propertyKeyword": "securityRequirementName",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "text"
 					},
 					{
 						"propertyName": "operation",
 						"propertyKeyword": "securityRequirementOperation",
-						"shouldValidate": false,
 						"propertyTooltip": "",
 						"propertyType": "multipleText"
 					}
@@ -353,22 +326,20 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "extensions",
 				"propertyType": "group",
 				"propertyKeyword": "extensions",
-				"shouldValidate": true,
 				"propertyTooltip": "",
 				"structure": [
 					{
 						"propertyName": "pattern",
 						"propertyKeyword": "extensionPattern",
-						"shouldValidate": false,
 						"propertyType": "text"
 					},
 					{
 						"propertyName": "value",
 						"propertyKeyword": "extensionValue",
-						"propertyValidate": false,
 						"propertyTooltip": "Popup for multi-line text entry",
 						"propertyType": "details",
-						"template": "textarea"
+						"template": "textarea",
+						"markdown": false
 					}
 				]
 			},
@@ -376,7 +347,6 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "examples",
 				"propertyType": "group",
 				"propertyKeyword": "examples",
-				"shouldValidate": false,
 				"propertyTooltip": "",
 				"dependency": {
 					"key": "entityType",
@@ -392,17 +362,16 @@ making sure that you maintain a proper JSON format.
 					{
 						"propertyName": "value",
 						"propertyKeyword": "examplesValue",
-						"propertyValidate": false,
 						"propertyTooltip": "Popup for multi-line text entry",
 						"propertyType": "details",
-						"template": "textarea"
+						"template": "textarea",
+						"markdown": false
 					}
 				]
 			},
 			{
 				"propertyName": "Comments",
 				"propertyKeyword": "comments",
-				"shouldValidate": false,
 				"propertyTooltip": "comments",
 				"propertyType": "details",
 				"template": "textarea",
