@@ -115,7 +115,7 @@
 	"TOOLTIPS___FOREIGN_FIELD": "foreign field",
 	"TOOLTIPS___PARENT_COLLECTION": "parent request",
 	"TOOLTIPS___PARENT_FIELD": "parent field",
-	"TOOLTIPS___CHILD_COLLECTION": "child request",
+	"TOOLTIPS___CHILD_COLLECTION": "child response",
 	"TOOLTIPS___CHILD_FIELD": "child field",
 	"TOOLTIPS___VIEW_ON": "view on",
 	"TOOLTIPS___PIPELINE": "pipeline",
