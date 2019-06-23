@@ -147,7 +147,7 @@ This plugin is for Swagger 2 only.  If instead you need OpenAPI 3, you need a se
 
 <span class="rvts6">It is easy to maintain the metadata for a request in the properties pane:</span>
 
-<img src="lib/OpenAPI - Request Properties.png" width="25%" height="25%">
+<img src="lib/Swagger - Request properties.png" width="25%" height="25%">
 
 <span class="rvts6">  
 </span>
