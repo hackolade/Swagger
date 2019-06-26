@@ -330,7 +330,9 @@ const getModelData = (schema) => {
 const getDefinitions = (schemaDefinitions = {}, fieldOrder) => {
     const definitionsSchema = { properties: schemaDefinitions };
     const handledDefinitions = handleSchemaProps(definitionsSchema, fieldOrder);
-    return JSON.stringify(handledDefinitions);
+    return JSON.stringify({
+        definitions: handledDefinitions.properties
+    });
 };
 
 const getModelContent = (pathData, fieldOrder) => {
