@@ -21,6 +21,29 @@
 				"reference",
 				"multiple"
 			]
+		},
+		"noObjectAndFile": {
+			"childValueType": [
+				"string",
+				"number",
+				"integer",
+				"boolean",
+				"array",
+				"reference",
+				"multiple"
+			]
+		},
+		"noObject": {
+			"childValueType": [
+				"string",
+				"number",
+				"integer",
+				"boolean",
+				"array",
+				"file",
+				"reference",
+				"multiple"
+			]
 		}
 	}
 }
