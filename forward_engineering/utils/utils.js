@@ -34,6 +34,23 @@ function removeEmptyObjectFields(inputObj, filtrationConfig = {}) {
 		);
 }
 
+const prepareName = (name) => {
+	return (name || '').replace(/\ /ig, '_');
+};
+
+const prepareReferenceName = (ref) => {
+	const refParts = ref.split('/');
+	const name = refParts.pop();
+	const preparedName = prepareName(name);
+
+	refParts.push(preparedName);
+
+	return refParts.join('/');
+};
+
+
 module.exports = {
 	removeEmptyObjectFields,
+	prepareName,
+	prepareReferenceName
 };
