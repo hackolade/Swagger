@@ -1,4 +1,5 @@
 const getExtensions = require('./extensionsHelper');
+const { prepareReferenceName } = require('../utils/utils');
 
 function getType(data) {
 	if (!data) {
@@ -17,7 +18,9 @@ function getType(data) {
 
 	if (data.$ref) {
 		return {
-			$ref: getRef(data.$ref)
+			$ref: prepareReferenceName(
+				getRef(data.$ref)
+			)
 		};
 	}
 	

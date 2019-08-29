@@ -3,22 +3,22 @@
 	"properties": [{
 		"name": "path",
 		"type": "parameter",
-		"subtype": "noFile"
+		"subtype": "noObjectAndFile"
 	}, {
 		"name": "query",
 		"type": "parameter",
-		"subtype": "noFile"
+		"subtype": "noObjectAndFile"
 	}, {
 		"name": "header",
 		"type": "parameter",
-		"subtype": "noFile"
+		"subtype": "noObjectAndFile"
 	}, {
 		"name": "body",
 		"type": "parameter",
 		"subtype": "noFile"
 	}, {
 		"name": "formData",
-		"subtype": "file",
+		"subtype": "noObject",
 		"type": "parameter"
 	}]
 }
