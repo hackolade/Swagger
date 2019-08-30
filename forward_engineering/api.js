@@ -5,6 +5,7 @@ const getPaths = require('./helpers/pathHelper');
 const getDefinitions = require('./helpers/definitionsHelper');
 const commonHelper = require('./helpers/commonHelper');
 const getExtensions = require('./helpers/extensionsHelper');
+const convertReferences = require('./helpers/convertReferences');
 const utils = require('./utils/utils');
 const filtrationConfig = require('./utils/filtrationConfig');
 
@@ -24,6 +25,7 @@ module.exports = {
 				securityDefinitions: modelSecurityDefinitions
 			} = data.modelData[0];
 
+			data = convertReferences(data);
 			const info = getInfo(data.modelData[0]);
 			const paths = getPaths(data.containers);
 			const consumes = commonHelper.mapArrayFieldByName(modelConsumes, 'consumesMimeTypeDef');
