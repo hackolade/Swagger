@@ -209,7 +209,7 @@ making sure that you maintain a proper JSON format.
 			"enum",
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
+				"propertyKeyword": "sample",
 				"propertyType": "text"
 			},
 			{
@@ -462,8 +462,9 @@ making sure that you maintain a proper JSON format.
 			"enum",
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
-				"propertyType": "text"
+				"propertyKeyword": "sample",
+				"propertyType": "numeric",
+				"valueType": "number"
 			},
 			{
 				"propertyName": "discriminator",
@@ -715,8 +716,9 @@ making sure that you maintain a proper JSON format.
 			"enum",
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
-				"propertyType": "text"
+				"propertyKeyword": "sample",
+				"propertyType": "numeric",
+				"valueType": "integer"
 			},
 			{
 				"propertyName": "discriminator",
@@ -951,8 +953,13 @@ making sure that you maintain a proper JSON format.
 			"default",
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
-				"propertyType": "text"
+				"propertyKeyword": "sample",
+				"propertyType": "select",
+				"options": [
+					"",
+					"true",
+					"false"
+				]
 			},
 			"comments"
 		],
@@ -998,7 +1005,7 @@ making sure that you maintain a proper JSON format.
 			"default",
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
+				"propertyKeyword": "sample",
 				"propertyType": "text"
 			},
 			"comments"
@@ -1587,7 +1594,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "example",
-				"propertyKeyword": "example",
+				"propertyKeyword": "sample",
 				"propertyType": "details",
 				"template": "textarea",
 				"markdown": false,

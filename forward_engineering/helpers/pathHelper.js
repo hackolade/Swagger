@@ -86,9 +86,7 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData) {
 
 		if (parameterType === 'body') {
 			return Object.assign({}, parameterProps, {
-				schema: Object.assign({}, typeProps, !isSchemaWithRef(typeProps) && {
-					example: getRequestExample(collectionId, jsonData)
-				})
+				schema: Object.assign({}, typeProps)
 			});
 		}
 

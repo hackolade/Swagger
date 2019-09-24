@@ -116,7 +116,7 @@ function getPrimitiveTypeProps(data) {
 		maxLength: data.maxLength,
 		multipleOf: data.multipleOf,
 		xml: getXml(data.xml),
-		example: data.example
+		example: data.sample
 	};
 }
 

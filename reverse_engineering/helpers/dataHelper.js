@@ -207,11 +207,16 @@ const handleSchemaProps = (schema, fieldOrder) => {
         return schema;
     }
 
+    const getPropName = (property) => {
+        return property === 'example' ? 'sample' : property;
+    } 
+
     const fixedSchema = setMissedType(schema);
     const reorderedSchema = commonHelper.reorderFields(fixedSchema, fieldOrder);
 
     return Object.keys(reorderedSchema).reduce((accumulator, property) => {
-        accumulator[property] = (() => {
+        const propName = getPropName(property);
+        accumulator[propName] = (() => {
             if (['properties', 'patternProperties'].includes(property)) {
                 return Object.keys(reorderedSchema[property]).reduce((accum, key) => {
                     accum[key] = handleSchemaProps(reorderedSchema[property][key], fieldOrder);
