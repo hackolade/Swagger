@@ -1,7 +1,7 @@
 {
 	"name": "Swagger",
-	"version": "0.1.11",
-	"versionDate": "2019-10-07",
+	"version": "0.1.12",
+	"versionDate": "2019-10-09",
 	"author": "hackolade",
 	"engines": {
 		"hackolade": "3.0.0",
@@ -54,7 +54,9 @@
 				"internal": true
 			},
 			"disableRelationships": true,
-			"disableJsonPreview": false
+			"disableJsonPreview": false,
+			"enableErdToggle": true,
+			"enableStackedNestedCollections": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
