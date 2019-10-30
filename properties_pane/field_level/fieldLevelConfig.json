@@ -322,7 +322,7 @@ making sure that you maintain a proper JSON format.
 					{
 						"propertyName": "extensions",
 						"propertyType": "group",
-						"propertyKeyword": "scopesExtensions",
+						"propertyKeyword": "xmlExtensions",
 						"propertyTooltip": "",
 						"structure": [
 							{
