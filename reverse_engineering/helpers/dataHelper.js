@@ -184,7 +184,7 @@ const handleSchemaProps = (schema, fieldOrder) => {
         xmlPrefix: data.prefix,
         xmlAttribute: data.attribute,
         xmlWrapped: data.wrapped,
-        xmlExtensions: getExtensions(data)
+        scopesExtensions: getExtensions(data)
     });
 
     const handleSchemaProperty = (property, data) => {
