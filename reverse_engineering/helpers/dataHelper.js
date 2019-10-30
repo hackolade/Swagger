@@ -178,19 +178,20 @@ const getContainers = (pathData) => {
 };
 
 const handleSchemaProps = (schema, fieldOrder) => {
-    const handleSchemaXml = (data) => ({
+    const extensionKeyByType = type => type === 'string' ? 'xmlExtensions' : 'scopesExtensions';
+    const handleSchemaXml = (data, type) => ({
         xmlName: data.name,
         xmlNamespace: data.namespace,
         xmlPrefix: data.prefix,
         xmlAttribute: data.attribute,
         xmlWrapped: data.wrapped,
-        scopesExtensions: getExtensions(data)
+        [extensionKeyByType(type)]: getExtensions(data)
     });
 
-    const handleSchemaProperty = (property, data) => {
+    const handleSchemaProperty = (property, data, type) => {
         switch(property) {
             case 'xml':
-                return handleSchemaXml(data);
+                return handleSchemaXml(data, type);
             case 'additionalProperties':
                 return Boolean(data);
             default:
@@ -227,7 +228,7 @@ const handleSchemaProps = (schema, fieldOrder) => {
             } else if (property === 'allOf') {
                 return schema.property;
             } else {
-                return handleSchemaProperty(property, reorderedSchema[property]);
+                return handleSchemaProperty(property, reorderedSchema[property], reorderedSchema.type);
             }
         })();
         return accumulator;
