@@ -4,6 +4,7 @@ const commonHelper = require('./helpers/commonHelper');
 const dataHelper = require('./helpers/dataHelper');
 const errorHelper = require('./helpers/errorHelper');
 const adaptJsonSchema = require('./helpers/adaptJsonSchema/adaptJsonSchema');
+const validationHelper = require('../forward_engineering/helpers/validationHelper');
 
 module.exports = {
 	reFromFile(data, logger, callback) {
@@ -13,15 +14,37 @@ module.exports = {
             const fieldOrder = data.fieldInference.active;
             return handleSwaggerData(swaggerSchema, fieldOrder);
         }).then(reversedData => {
-            return callback(null, reversedData.hackoladeData, reversedData.modelData, [], 'multipleSchema')
-        }).
-        catch(errorObject => {
-            const { error, title } = errorObject;
-            const handledError =  commonHelper.handleErrorObject(error, title);
-            logger.log('error', handledError, title);
-            callback(handledError);
-        });
+            return callback(null, reversedData.hackoladeData, reversedData.modelData, [], 'multipleSchema');
+        }, ({ error, swaggerSchema }) => {
+			if (!swaggerSchema) {
+				return this.handleErrors(error, logger, callback);
+			}
+
+			validationHelper.validate(filterSchema(swaggerSchema), { resolve: { external: false }})
+				.then((messages) => {
+					if (!Array.isArray(messages) || !messages.length) {
+						this.handleErrors(error, logger, callback);
+					}
+
+					const message = `${messages[0].label}: ${messages[0].title}`;
+					const errorData = error.error || {};
+
+					this.handleErrors(errorHelper.getValidationError({ stack: errorData.stack, message }), logger, callback);
+				})
+				.catch(err => {
+					this.handleErrors(error, logger, callback);
+				});
+		}).catch(errorObject => {
+            this.handleErrors(errorObject, logger, callback);
+		});
     },
+
+	handleErrors(errorObject, logger, callback) {
+		const { error, title } = errorObject;
+		const handledError =  commonHelper.handleErrorObject(error, title);
+		logger.log('error', handledError, title);
+		callback(handledError);
+	},
 
     adaptJsonSchema(data, logger, callback) {
         logger.log('info', 'Adaptation of JSON Schema started...', 'Adapt JSON Schema');
@@ -58,10 +81,10 @@ const getSwaggerSchema = (data, filePath) => new Promise((resolve, reject) => {
         if (isValidSwaggerSchema) {
             return resolve(swaggerSchemaWithModelName);
         } else {
-            return reject(errorHelper.getValidationError(new Error('Selected file is not a valid Swagger 2.0 schema')));
+            return reject({ error: errorHelper.getValidationError(new Error('Selected file is not a valid Swagger 2.0 schema')) });
         }
     } catch (error) {
-        return reject(errorHelper.getParseError(error));
+        return reject({ error: errorHelper.getParseError(error) });
     }
 });
 
@@ -92,6 +115,12 @@ const handleSwaggerData = (swaggerSchema, fieldOrder) => new Promise((resolve, r
         }, []);
         return resolve({ hackoladeData, modelData });
     } catch (error) {
-        return reject(errorHelper.getConvertError(error));
+        return reject({ error: errorHelper.getConvertError(error), swaggerSchema });
     }
 });
+
+const filterSchema = schema => {
+	delete schema.modelName;
+
+	return schema;
+};
