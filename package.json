@@ -1,7 +1,7 @@
 {
 	"name": "Swagger",
-	"version": "0.1.14",
-	"versionDate": "2019-11-16",
+	"version": "0.1.15",
+	"versionDate": "2019-12-13",
 	"author": "hackolade",
 	"engines": {
 		"hackolade": "3.0.0",
@@ -23,7 +23,10 @@
 			"enableReverseEngineering": {
 				"jsonDocument": true,
 				"jsonSchema": true,
-				"ddl": false,
+				"ddl": {
+					"model_definitions": true,
+					"entities": false
+				},
 				"xsd": false,
 				"plugin": true 
 			},
