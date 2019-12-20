@@ -59,8 +59,7 @@
 			"disableRelationships": true,
 			"disableJsonPreview": false,
 			"enableErdToggle": true,
-			"enableStackedNestedCollections": true,
-			"externalDefinitionsFromTargetSchema": true
+			"enableStackedNestedCollections": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
