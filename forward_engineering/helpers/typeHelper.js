@@ -18,7 +18,9 @@ function getType(data) {
 
 	if (data.$ref) {
 		return {
-			$ref: getRef(data.$ref)
+			$ref: prepareReferenceName(
+				getRef(data.$ref)
+			)
 		};
 	}
 	
@@ -67,38 +69,8 @@ function getTypeProps(data) {
 }
 
 function getRef(ref) {
-	if (ref.startsWith('#')) {
-		return prepareReferenceName(ref.replace('#model/', '#/'));
-	}
-
-	const [ pathToFile, relativePath] = ref.split('#/');
-	if (!relativePath) {
-		return prepareReferenceName(ref);
-	}
-
-	const hasResponse = relativePath.split('/')[2] !== 'properties';
-	const path = relativePath.replace(/\/properties/g, '').split('/');
-	if (path[0] === 'definitions') {
-		return `${pathToFile}#/${path.join('/')}`;
-	}
-
-	const bucketWithRequest = path.slice(0, 2);
-
-	if (!hasResponse) {
-		const pathToParameter = [ ...bucketWithRequest, 'parameters', '0' ];
-		const parameterSchemaPath = path.slice(4);
-		return `${pathToFile}#/paths/${[ ...pathToParameter, ...parameterSchemaPath].join('/')}`;
-	}
-
-	const response = path[2];
-	const hasHeaders = path[3] === 'headers';
-	
-	const pathToItem = hasHeaders ? path.slice(3) : path.slice(4);
-
-	const pathWithResponses = [ ...bucketWithRequest, 'responses', response, ...pathToItem ];
-
-	return `${pathToFile}#/paths/${pathWithResponses.join('/')}`;
-};
+	return ref.startsWith('#') ? ref.replace('#model/', '#/') : ref;
+}
 
 function getArrayItemsType(items) {
 	if (Array.isArray(items)) {
