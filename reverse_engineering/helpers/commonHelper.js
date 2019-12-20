@@ -44,7 +44,7 @@ const reorderFields = (data, filedOrder) => {
 };
 
 const sortObject = (obj) => {
-    return Object.keys(obj).sort().reduce((acc,key)=>{
+    return Object.keys(obj || {}).sort().reduce((acc,key)=>{
         if (Array.isArray(obj[key])){
             acc[key] = obj[key].map(sortObject);
         }
