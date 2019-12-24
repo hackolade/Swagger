@@ -77,25 +77,29 @@ function getRef(ref) {
 	}
 
 	const hasResponse = relativePath.split('/')[2] !== 'properties';
-	const path = relativePath.replace(/\/properties/g, '').split('/');
+	const path = relativePath.split('/');
 	if (path[0] === 'definitions') {
-		return `${pathToFile}#/${path.join('/')}`;
+		return `${pathToFile}#/definitions/${path.slice(2).join('/')}`;
 	}
 
-	const bucketWithRequest = path.slice(0, 2);
+	const schemaIndex = path.indexOf('schema');
+	const schemaPath = path.slice(schemaIndex);
+	const pathWithoutSlashes = path.slice(0, schemaIndex).filter(item => item !== 'properties');
+
+	const bucketWithRequest = pathWithoutSlashes.slice(0, 2);
 
 	if (!hasResponse) {
 		const pathToParameter = [ ...bucketWithRequest, 'parameters', '0' ];
-		const parameterSchemaPath = path.slice(4);
-		return `${pathToFile}#/paths/${[ ...pathToParameter, ...parameterSchemaPath].join('/')}`;
+		const parameterSchemaPath = pathWithoutSlashes.slice(4);
+		return `${pathToFile}#/paths/${[ ...pathToParameter, ...parameterSchemaPath, ...schemaPath].join('/')}`;
 	}
 
-	const response = path[2];
-	const hasHeaders = path[3] === 'headers';
+	const response = pathWithoutSlashes[2];
+	const hasHeaders = pathWithoutSlashes[3] === 'headers';
 	
-	const pathToItem = hasHeaders ? path.slice(3) : path.slice(4);
+	const pathToItem = hasHeaders ? pathWithoutSlashes.slice(3) : pathWithoutSlashes.slice(4);
 
-	const pathWithResponses = [ ...bucketWithRequest, 'responses', response, ...pathToItem ];
+	const pathWithResponses = [ ...bucketWithRequest, 'responses', response, ...pathToItem, ...schemaPath ];
 
 	return `${pathToFile}#/paths/${pathWithResponses.join('/')}`;
 };
