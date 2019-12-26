@@ -83,7 +83,7 @@ function getRef(ref) {
 	}
 
 	const schemaIndex = path.indexOf('schema');
-	const schemaPath = path.slice(schemaIndex);
+	const schemaPath = schemaIndex === -1 ? [] : path.slice(schemaIndex);
 	const pathWithoutSlashes = path.slice(0, schemaIndex).filter(item => item !== 'properties');
 
 	const bucketWithRequest = pathWithoutSlashes.slice(0, 2);

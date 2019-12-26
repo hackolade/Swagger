@@ -8,7 +8,7 @@ const resolvePath = (data, callback) => {
 		path = path.slice(1);
 	}
 	if (path[0] === 'definitions') {
-		return callback(null, addPropertiesToPath(path));
+		return callback(null, `definitions${addPropertiesToPath(path.slice(1))}`);
 	}
 
 	const bucketName = path[1];
@@ -18,9 +18,9 @@ const resolvePath = (data, callback) => {
 		const responseName = path[4];
 
 		if (path[5] === 'headers') {
-			return callback(`${bucketName}/${requestName}/${responseName}${addPropertiesToPath(path.slice(4))}`);
+			return callback(null, `${bucketName}/${requestName}/${responseName}${addPropertiesToPath(path.slice(4))}`);
 		}
-		return callback(`${bucketName}/${requestName}/${responseName}/properties/body${addPropertiesToPath(path.slice(4))}`);
+		return callback(null,`${bucketName}/${requestName}/${responseName}/properties/body${addPropertiesToPath(path.slice(4))}`);
 	}
 
 	const parameterIndex = path[4];
