@@ -5,7 +5,6 @@ const dataHelper = require('./helpers/dataHelper');
 const errorHelper = require('./helpers/errorHelper');
 const adaptJsonSchema = require('./helpers/adaptJsonSchema/adaptJsonSchema');
 const validationHelper = require('../forward_engineering/helpers/validationHelper');
-const resolveExternalDefinitionPathHelper = require('./helpers/resolveExternalDefinitionPathHelper');
 
 module.exports = {
 	reFromFile(data, logger, callback) {
@@ -62,11 +61,7 @@ module.exports = {
         } catch(e) {
             callback(commonHelper.handleErrorObject(e, 'Adapt JSON Schema'), data);
         }
-    },
-
-	resolveExternalDefinitionPath(data, logger, callback) {
-		resolveExternalDefinitionPathHelper.resolvePath(data, callback);
-	}
+    }
 };
 
 const convertSwaggerSchemaToHackolade = (swaggerSchema, fieldOrder) => {
@@ -77,7 +72,7 @@ const convertSwaggerSchemaToHackolade = (swaggerSchema, fieldOrder) => {
 };
 
 const getSwaggerSchema = (data, filePath) => new Promise((resolve, reject) => {
-    const { extension, fileName } = commonHelper.getPathData(data, filePath);
+    const { extension, fileName } = commonHelper.getPathData(filePath);
 
     try {
         const swaggerSchemaWithModelName = dataHelper.getSwaggerJsonSchema(data, fileName, extension);
