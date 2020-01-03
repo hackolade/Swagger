@@ -5,7 +5,7 @@ const add = (obj, name, value) => Object.assign({}, obj, { [name]: value });
 
 const getDefinition = (reference, definitions) => {
 	const isModel = /\#model/i.test(reference.$ref || '');
-	const isInternal = /\#\/definitions/i.test(reference.$ref || '');
+	const isInternal = /^\#\/definitions/i.test(reference.$ref || '');
 
 	if (isModel) {
 		const definitionName = reference.$ref.replace(/\#model\/definitions\//i, '');
