@@ -1,7 +1,7 @@
 {
 	"name": "Swagger",
-	"version": "0.1.15",
-	"versionDate": "2019-12-13",
+	"version": "0.1.17",
+	"versionDate": "2019-12-23",
 	"author": "hackolade",
 	"engines": {
 		"hackolade": "3.0.0",
