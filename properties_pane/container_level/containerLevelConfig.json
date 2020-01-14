@@ -136,6 +136,12 @@ making sure that you maintain a proper JSON format.
 				"template": "textarea"
 			},
 			{
+				"propertyName": "Activated",
+				"propertyKeyword": "isActivated",
+				"propertyType": "checkbox",
+				"propertyTooltip": "Deactivated item will be commented out in the schema"
+			},
+			{
 				"propertyName": "extensions",
 				"propertyType": "group",
 				"propertyKeyword": "extensions",
