@@ -66,7 +66,7 @@ module.exports = {
 				default: {
 					const schemaString = JSON.stringify(filteredSwaggerSchema, null, 2);
 					let schema = addCommentsSigns(schemaString, 'json');
-					if (!(data.options && data.options.isCalledFromFEPage)) {
+					if (!(data.options && data.options.isCalledFromFETab)) {
 						schema = removeCommentLines(schema);
 					}
 					cb(null, schema);
