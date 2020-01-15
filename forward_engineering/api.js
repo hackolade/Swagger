@@ -56,12 +56,21 @@ module.exports = {
 			const filteredSwaggerSchema = utils.removeEmptyObjectFields(Object.assign({}, swaggerSchema, extensions), filtrationConfig);
 			
 			switch (data.targetScriptOptions.format) {
-				case 'yaml':
-					cb(null, yaml.safeDump(filteredSwaggerSchema));
+				case 'yaml': {
+					const schema = yaml.safeDump(filteredSwaggerSchema, { skipInvalid: true });
+					const schemaWithComments = addCommentsSigns(schema, 'yaml');
+					cb(null, schemaWithComments);
 					break;
+				}
 				case 'json':
-				default:
-					cb(null, JSON.stringify(filteredSwaggerSchema, null, 2));
+				default: {
+					const schemaString = JSON.stringify(filteredSwaggerSchema, null, 2);
+					let schema = addCommentsSigns(schemaString, 'json');
+					if (!(data.options && data.options.isCalledFromFETab)) {
+						schema = removeCommentLines(schema);
+					}
+					cb(null, schema);
+				}
 			}
 		} catch (err) {
 			cb(err);
@@ -72,15 +81,16 @@ module.exports = {
 		const { script, targetScriptOptions } = data;
 
 		try {
+			const filteredScript = removeCommentLines(script);
 			let parsedScript = {};
 
 			switch (targetScriptOptions.format) {
 				case 'yaml':
-					parsedScript = yaml.safeLoad(script);
+					parsedScript = yaml.safeLoad(filteredScript);
 					break;
 				case 'json':
 				default:
-					parsedScript = JSON.parse(script);
+					parsedScript = JSON.parse(filteredScript);
 			}
 
 			validationHelper.validate(parsedScript)
@@ -97,3 +107,46 @@ module.exports = {
 		}
 	}
 };
+
+const addCommentsSigns = (string, format) => {
+	const commentsStart = /hackoladeCommentStart\d+/i;
+	const commentsEnd = /hackoladeCommentEnd\d+/i;
+	const innerCommentStart = /hackoladeInnerCommentStart/i;
+	const innerCommentEnd = /hackoladeInnerCommentEnd/i;
+	
+	const { result } = string.split('\n').reduce(({ isCommented, result }, line, index, array) => {
+		if (commentsStart.test(line) || innerCommentStart.test(line)) {
+			return { isCommented: true, result: result };
+		}
+		if (commentsEnd.test(line)) {
+			return { isCommented: false, result };
+		}
+		if (innerCommentEnd.test(line)) {
+			if (format === 'json') {
+				array[index + 1] = '# ' + array[index + 1];
+			}
+			return { isCommented: false, result };
+		}
+
+		const isNextLineInnerCommentStart = index + 1 < array.length && innerCommentStart.test(array[index + 1]);
+		if (isCommented || isNextLineInnerCommentStart) {
+			result = result + '# ' + line + '\n';
+		} else {
+			result = result + line + '\n';
+		}
+
+		return { isCommented, result };
+	}, { isCommented: false, result: '' });
+
+	return result;
+}
+
+const removeCommentLines = (scriptString) => {
+	const isCommentedLine = /\s*#/i;
+
+	return scriptString
+		.split('\n')
+		.filter(line => !isCommentedLine.test(line))
+		.join('\n')
+		.replace(/(.*?),\s*(\}|])/g, '$1$2');
+}
