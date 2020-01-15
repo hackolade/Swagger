@@ -8,7 +8,7 @@ const resolvePath = (data, callback) => {
 		path = path.slice(1);
 	}
 	if (path[0] === 'definitions') {
-		return callback(null, `definitions${addPropertiesToPath(path.slice(1))}`);
+		return callback(null, `definitions/properties/${path.slice(1).join('/')}`);
 	}
 
 	const bucketName = path[1];
@@ -18,9 +18,10 @@ const resolvePath = (data, callback) => {
 		const responseName = path[4];
 
 		if (path[5] === 'headers') {
-			return callback(null, `${bucketName}/${requestName}/${responseName}${addPropertiesToPath(path.slice(4))}`);
+			return callback(null, `${bucketName}/${requestName}/${responseName}/properties/${path.slice(5).join('/')}`);
 		}
-		return callback(null,`${bucketName}/${requestName}/${responseName}/properties/body${addPropertiesToPath(path.slice(4))}`);
+
+		return callback(null,`${bucketName}/${requestName}/${responseName}/properties/body/properties/${path.slice(5).join('/')}`);
 	}
 
 	const parameterIndex = path[4];
@@ -36,13 +37,11 @@ const resolvePath = (data, callback) => {
 		);
 		const paramIn = parameter.in || 'path';
 
-		return callback(null, `${bucketName}/${requestName}/properties/${paramIn}/properties/${parameter.name}${addPropertiesToPath(path.slice(5))}`);
+		return callback(null, `${bucketName}/${requestName}/properties/${paramIn}/properties/${parameter.name}/properties/${path.slice(5).join('/')}`);
 	} catch (err) {
 		callback(err, data.path || '');
 	}
 };
-
-const addPropertiesToPath = path => path.length ? '/properties/' + path.join('/properties/') : '';
 
 const restoreSlashes = (str = '') => str.replace(/%2F/g, '/');
 
