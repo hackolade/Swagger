@@ -10,17 +10,20 @@
 		}
 	},
 	"container": {
-		"name": "/path"
+		"name": "/path",
+		"isActivated": true
 	},
 	"collection": {
 		"collectionName": "get",
 		"entityType": "request",
-		"snippet": "requestStructure"
+		"snippet": "requestStructure",
+		"isActivated": true
 	},
 	"nestedCollection": {
 		"collectionName": "200",
 		"entityType": "response",
-		"snippet": "responseStructure"
+		"snippet": "responseStructure",
+		"isActivated": true
 	},
 	"field": {
 		"name": "New field",
