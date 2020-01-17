@@ -4,18 +4,24 @@ const getExtensions = require('./extensionsHelper');
 
 function getPaths(containers) {
 	const paths = {};
-	containers.forEach(container => {
-		const { name, extensions } = container.containerData[0];
+	containers.forEach((container, index) => {
+		const { name, extensions, isActivated } = container.containerData[0];
 		const collections = container.entities.map(collectionId => JSON.parse(container.jsonSchema[collectionId]));
 		const containerExtensions = getExtensions(extensions);
 
-		paths[name] = Object.assign({}, getRequestData(collections, container.jsonData), containerExtensions);
+		if (!isActivated) {
+			paths[`hackoladeCommentStart${index}`] = true; 
+		}
+		paths[name] = Object.assign({}, getRequestData(collections, container.jsonData, isActivated), containerExtensions);
+		if (!isActivated) {
+			paths[`hackoladeCommentEnd${index}`] = true;
+		}
 	});
 
 	return paths;
 }
 
-function getRequestData(collections, jsonData) {
+function getRequestData(collections, jsonData, isPathActivated = true) {
 	return collections
 		.filter(collection => collection.entityType === 'request')
 		.map(
@@ -33,7 +39,8 @@ function getRequestData(collections, jsonData) {
 				schemes,
 				security,
 				GUID: collectionId,
-				operationExtensions
+				operationExtensions,
+				isActivated
 			}) => Object.assign({}, {
 				tags: commonHelper.mapArrayFieldByName(tags, 'tag'),
 				summary,
@@ -45,15 +52,25 @@ function getRequestData(collections, jsonData) {
 				schemes,
 				deprecated,
 				parameters: mapParameters(properties, collectionId, jsonData),
-				responses: mapResponses(collections, collectionId, jsonData),
+				responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
 				security: commonHelper.mapSecurity(security),
-				methodName: collectionName
+				methodName: collectionName,
+				isActivated
 			}, getExtensions(operationExtensions))
 		)
-		.reduce((acc, collection) => {
-			const { methodName } = collection;
+		.reduce((acc, collection, index) => {
+			const { methodName, isActivated } = collection;
 			delete collection.methodName;
+			delete collection.isActivated;
+
+			const shouldCommentedFlagBeInserted = !isActivated && isPathActivated;
+			if (shouldCommentedFlagBeInserted) {
+				acc[`hackoladeCommentStart${index}`] = true; 
+			}
 			acc[methodName] = collection;
+			if (shouldCommentedFlagBeInserted) {
+				acc[`hackoladeCommentEnd${index}`] = true; 
+			}
 			return acc;
 		}, {});
 }
@@ -94,19 +111,28 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData) {
 	});
 }
 
-function mapResponses(collections, collectionId, jsonData) {
+function mapResponses(collections, collectionId, isParentActivated) {
 	const result = collections
 		.filter(collection => collection.entityType === 'response' && collection.parentCollection === collectionId)
-		.map(collection => Object.assign({}, {
-			responseCode: collection.collectionName,
-			description: collection.description || '',
-			headers: mapResponseHeaders(collection.properties.headers),
-			schema: typeHelper.getType(collection.properties.body),
-			examples: getResponseExamples(collection.examples)
-		}, getExtensions(collection.operationExtensions)))
-		.reduce((acc, response) => {
-			const { responseCode } = response;
-			delete response.responseCode;
+		.map(collection => {
+			const shouldResponseBeCommented = !collection.isActivated && isParentActivated;
+			const response = {};
+			if (shouldResponseBeCommented) {
+				response[`hackoladeInnerCommentStart`] = true;
+			}
+			Object.assign(response, {
+				description: collection.description || '',
+				headers: mapResponseHeaders(collection.properties.headers),
+				schema: typeHelper.getType(collection.properties.body),
+				examples: getResponseExamples(collection.examples)
+			}, getExtensions(collection.operationExtensions));
+			if (shouldResponseBeCommented) {
+				response[`hackoladeInnerCommentEnd`] = true;
+			}
+			const responseCode = collection.collectionName;
+			return { response, responseCode };
+		})
+		.reduce((acc, { response, responseCode }) => {
 			acc[responseCode] = response;
 			return acc;
 		}, {});

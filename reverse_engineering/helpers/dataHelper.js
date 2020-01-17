@@ -276,7 +276,8 @@ const handleRequestData = (requestData, request, fieldOrder) => {
         type: 'object',
         entityType: REQUEST,
         collectionName: request,
-        properties: parametersData
+        properties: parametersData,
+        isActivated: true
     }, entityData);
     return { jsonSchema, responses };
 };
@@ -307,7 +308,8 @@ const handleResponseData = (responseObj, response, request, fieldOrder) => {
         entityType: RESPONSE,
         collectionName: response,
         parentCollection: request,
-        properties: responseData
+        properties: responseData,
+        isActivated: true
     }, entityData);
     return jsonSchema;
 };
