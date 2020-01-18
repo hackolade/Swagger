@@ -72,7 +72,7 @@ module.exports = {
 const convertSwaggerSchemaToHackolade = (swaggerSchema, fieldOrder) => {
     const modelData = dataHelper.getModelData(swaggerSchema);
     const definitions = dataHelper.getDefinitions(swaggerSchema.definitions, fieldOrder);
-    const modelContent = dataHelper.getModelContent(swaggerSchema.paths, fieldOrder);
+    const modelContent = dataHelper.getModelContent(swaggerSchema.paths || {}, fieldOrder);
     return { modelData, modelContent, definitions };
 };
 
