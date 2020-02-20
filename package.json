@@ -1,7 +1,7 @@
 {
 	"name": "Swagger",
-	"version": "0.1.20",
-	"versionDate": "2020-01-18",
+	"version": "0.1.21",
+	"versionDate": "2020-02-20",
 	"author": "hackolade",
 	"engines": {
 		"hackolade": "3.0.0",
@@ -21,13 +21,22 @@
 			},
 			"disableMultipleTypes": false,
 			"enableReverseEngineering": {
-				"jsonDocument": true,
-				"jsonSchema": true,
-				"ddl": {
-					"model_definitions": true,
-					"entities": false
+				"jsonDocument": {
+					"entities": false,
+					"model_definitions": true
 				},
-				"xsd": false,
+				"jsonSchema": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"ddl": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"xsd": {
+					"entities": false,
+					"model_definitions": true
+				},
 				"plugin": true 
 			},
 			"disableDenormalization": true,
