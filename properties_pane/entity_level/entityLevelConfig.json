@@ -211,6 +211,12 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Activated",
+				"propertyKeyword": "isActivated",
+				"propertyType": "checkbox",
+				"propertyTooltip": "Deactivated item will be commented out in the schema"
+			},
+			{
 				"propertyName": "schema",
 				"propertyKeyword": "pathItemSchema",
 				"propertyType": "fieldList",
