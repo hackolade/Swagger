@@ -30,6 +30,8 @@ function getType(data) {
 function getTypeProps(data) {
 	const { type, properties, items, required, additionalProperties } = data;
 
+    const extensions = getExtensions(data.scopesExtensions);
+
 	switch (type) {
 		case 'array':
 			return {
@@ -41,7 +43,8 @@ function getTypeProps(data) {
 				uniqueItems: data.uniqueItems,
 				discriminator: data.discriminator,
 				readOnly: data.readOnly,
-				xml: getXml(data.xml)
+				xml: getXml(data.xml),
+				...extensions
 			};
 		case 'object':
 			if (!properties && !additionalProperties) {
@@ -56,7 +59,8 @@ function getTypeProps(data) {
 				additionalProperties: data.additionalProperties,
 				discriminator: data.discriminator,
 				readOnly: data.readOnly,
-				xml: getXml(data.xml)
+				xml: getXml(data.xml),
+				...extensions
 			};
 		case 'parameter':
 			if (!properties || properties.length === 0) {
@@ -150,7 +154,8 @@ function getPrimitiveTypeProps(data) {
 		maxLength: data.maxLength,
 		multipleOf: data.multipleOf,
 		xml: getXml(data.xml),
-		example: data.sample
+		example: data.sample,
+		...getExtensions(data.scopesExtensions)
 	};
 }
 
