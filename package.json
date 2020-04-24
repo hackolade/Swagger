@@ -1,10 +1,10 @@
 {
 	"name": "Swagger",
-	"version": "0.1.19",
-	"versionDate": "2020-01-16",
+	"version": "0.1.22",
+	"versionDate": "2020-03-06",
 	"author": "hackolade",
 	"engines": {
-		"hackolade": "3.0.0",
+		"hackolade": "3.6.8",
 		"hackoladePlugin": "1.0.0"
 	},
 	"contributes": {
@@ -21,13 +21,22 @@
 			},
 			"disableMultipleTypes": false,
 			"enableReverseEngineering": {
-				"jsonDocument": true,
-				"jsonSchema": true,
-				"ddl": {
-					"model_definitions": true,
-					"entities": false
+				"jsonDocument": {
+					"entities": false,
+					"model_definitions": true
 				},
-				"xsd": false,
+				"jsonSchema": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"ddl": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"xsd": {
+					"entities": false,
+					"model_definitions": true
+				},
 				"plugin": true 
 			},
 			"disableDenormalization": true,
@@ -60,7 +69,8 @@
 			"disableJsonPreview": false,
 			"enableErdToggle": true,
 			"enableStackedNestedCollections": true,
-			"externalDefinitionsFromTargetSchema": true
+			"externalDefinitionsFromTargetSchema": true,
+			"apiTarget": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
