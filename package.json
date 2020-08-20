@@ -1,10 +1,10 @@
 {
 	"name": "Swagger",
-	"version": "0.1.14",
-	"versionDate": "2019-11-16",
+	"version": "0.1.23",
+	"versionDate": "2020-04-24",
 	"author": "hackolade",
 	"engines": {
-		"hackolade": "3.0.0",
+		"hackolade": "3.6.8",
 		"hackoladePlugin": "1.0.0"
 	},
 	"contributes": {
@@ -21,20 +21,30 @@
 			},
 			"disableMultipleTypes": false,
 			"enableReverseEngineering": {
-				"jsonDocument": true,
-				"jsonSchema": true,
-				"ddl": {
-					"model_definitions": true,
-					"entities": false
+				"jsonDocument": {
+					"entities": false,
+					"model_definitions": true
 				},
-				"xsd": false,
+				"jsonSchema": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"ddl": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"xsd": {
+					"entities": false,
+					"model_definitions": true
+				},
 				"plugin": true 
 			},
 			"disableDenormalization": true,
 			"enableForwardEngineering": {
 				"jsonDocument": true,
 				"jsonSchema": true,
-				"plugin": true
+				"plugin": true,
+				"apiSchema": false
 			},
 			"disablePatternField": false,
 			"disableChoices": {
@@ -59,7 +69,9 @@
 			"disableRelationships": true,
 			"disableJsonPreview": false,
 			"enableErdToggle": true,
-			"enableStackedNestedCollections": true
+			"enableStackedNestedCollections": true,
+			"externalDefinitionsFromTargetSchema": true,
+			"apiTarget": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",

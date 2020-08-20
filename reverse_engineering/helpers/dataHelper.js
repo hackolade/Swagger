@@ -15,7 +15,7 @@ const getExtensions = (schema) => {
     const isExtension = (keyword) => keyword.substring(0, 2) === EXTENSION_SYMBOL;
     const getExtension = (keyword, data) => ({
         extensionPattern: keyword,
-        extensionValue: data
+        extensionValue: typeof data === 'object' ? JSON.stringify(data) : data
     });
     
     return Object.keys(schema).reduce((accumulator, key) => {
@@ -276,7 +276,8 @@ const handleRequestData = (requestData, request, fieldOrder) => {
         type: 'object',
         entityType: REQUEST,
         collectionName: request,
-        properties: parametersData
+        properties: parametersData,
+        isActivated: true
     }, entityData);
     return { jsonSchema, responses };
 };
@@ -307,7 +308,8 @@ const handleResponseData = (responseObj, response, request, fieldOrder) => {
         entityType: RESPONSE,
         collectionName: response,
         parentCollection: request,
-        properties: responseData
+        properties: responseData,
+        isActivated: true
     }, entityData);
     return jsonSchema;
 };

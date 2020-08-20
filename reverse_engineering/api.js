@@ -5,6 +5,7 @@ const dataHelper = require('./helpers/dataHelper');
 const errorHelper = require('./helpers/errorHelper');
 const adaptJsonSchema = require('./helpers/adaptJsonSchema/adaptJsonSchema');
 const validationHelper = require('../forward_engineering/helpers/validationHelper');
+const resolveExternalDefinitionPathHelper = require('./helpers/resolveExternalDefinitionPathHelper');
 
 module.exports = {
 	reFromFile(data, logger, callback) {
@@ -61,18 +62,22 @@ module.exports = {
         } catch(e) {
             callback(commonHelper.handleErrorObject(e, 'Adapt JSON Schema'), data);
         }
-    }
+    },
+
+	resolveExternalDefinitionPath(data, logger, callback) {
+		resolveExternalDefinitionPathHelper.resolvePath(data, callback);
+	}
 };
 
 const convertSwaggerSchemaToHackolade = (swaggerSchema, fieldOrder) => {
     const modelData = dataHelper.getModelData(swaggerSchema);
     const definitions = dataHelper.getDefinitions(swaggerSchema.definitions, fieldOrder);
-    const modelContent = dataHelper.getModelContent(swaggerSchema.paths, fieldOrder);
+    const modelContent = dataHelper.getModelContent(swaggerSchema.paths || {}, fieldOrder);
     return { modelData, modelContent, definitions };
 };
 
 const getSwaggerSchema = (data, filePath) => new Promise((resolve, reject) => {
-    const { extension, fileName } = commonHelper.getPathData(filePath);
+    const { extension, fileName } = commonHelper.getPathData(data, filePath);
 
     try {
         const swaggerSchemaWithModelName = dataHelper.getSwaggerJsonSchema(data, fileName, extension);
@@ -113,7 +118,17 @@ const handleSwaggerData = (swaggerSchema, fieldOrder) => new Promise((resolve, r
                 })
             ];
         }, []);
-        return resolve({ hackoladeData, modelData });
+		if (hackoladeData.length) {
+			return resolve({ hackoladeData, modelData });
+		}
+
+		return resolve({
+			hackoladeData: [{
+				objectNames: {},
+				doc: { modelDefinitions: definitions }
+			}],
+			modelData
+		});
     } catch (error) {
         return reject({ error: errorHelper.getConvertError(error), swaggerSchema });
     }
