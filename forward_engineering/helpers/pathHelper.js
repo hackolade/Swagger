@@ -1,6 +1,7 @@
 const typeHelper = require('./typeHelper');
 const commonHelper = require('./commonHelper');
 const getExtensions = require('./extensionsHelper');
+const { commentDeactivatedItemInner } = require('./commentsHelper');
 
 function getPaths(containers) {
 	const paths = {};
@@ -51,7 +52,7 @@ function getRequestData(collections, jsonData, isPathActivated = true) {
 				produces: commonHelper.mapArrayFieldByName(produces, 'producesMimeTypeDef'),
 				schemes,
 				deprecated,
-				parameters: mapParameters(properties, collectionId, jsonData),
+				parameters: mapParameters(properties, collectionId, jsonData, isPathActivated && isActivated),
 				responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
 				security: commonHelper.mapSecurity(security),
 				methodName: collectionName,
@@ -75,19 +76,19 @@ function getRequestData(collections, jsonData, isPathActivated = true) {
 		}, {});
 }
 
-function mapParameters(parameters, collectionId, jsonData) {
+function mapParameters(parameters, collectionId, jsonData, isParentActivated) {
 	if (!parameters) {
 		return null;
 	}
 	return Object.keys(parameters)
 		.map(parameterType => {
-			return getParameterProps(parameterType, parameters, collectionId, jsonData);
+			return getParameterProps(parameterType, parameters, collectionId, jsonData, isParentActivated);
 		})
 		.filter(param => param)
 		.reduce((acc, param) => acc.concat(param), [])
 }
 
-function getParameterProps(parameterType, parameters, collectionId, jsonData) {
+function getParameterProps(parameterType, parameters, collectionId, jsonData, isParentActivated) {
 	const isSchemaWithRef = (typeProps = {}) => typeProps.$ref || (typeProps.items && typeProps.items.$ref);
 	if (!parameters[parameterType].properties) {
 		return null;
@@ -99,15 +100,16 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData) {
 			description: parameters[parameterType].properties[propName].description,
 			required: (parameters[parameterType].required && parameters[parameterType].required.includes(propName)) || false
 		};
-		const typeProps = typeHelper.getType(parameters[parameterType].properties[propName]);
+	const isActivated = parameters[parameterType].properties[propName].isActivated;
+		const typeProps = typeHelper.getType(parameters[parameterType].properties[propName], isActivated && isParentActivated);
 
 		if (parameterType === 'body') {
-			return Object.assign({}, parameterProps, {
+			return commentDeactivatedItemInner(Object.assign({}, parameterProps, {
 				schema: Object.assign({}, typeProps)
-			});
+			}), isActivated, isParentActivated);
 		}
 
-		return Object.assign({}, parameterProps, typeProps);
+		return commentDeactivatedItemInner(Object.assign({}, parameterProps, typeProps), isActivated, isParentActivated);
 	});
 }
 
@@ -116,16 +118,24 @@ function mapResponses(collections, collectionId, isParentActivated) {
 		.filter(collection => collection.entityType === 'response' && collection.parentCollection === collectionId)
 		.map(collection => {
 			const shouldResponseBeCommented = !collection.isActivated && isParentActivated;
+			const isResponseActivated = collection.isActivated && isParentActivated;
 			const response = {};
 			if (shouldResponseBeCommented) {
 				response[`hackoladeInnerCommentStart`] = true;
 			}
-			Object.assign(response, {
-				description: collection.description || '',
-				headers: mapResponseHeaders(collection.properties.headers),
-				schema: typeHelper.getType(collection.properties.body),
-				examples: getResponseExamples(collection.examples)
-			}, getExtensions(collection.operationExtensions));
+			Object.assign(
+				response,
+				{
+					description: collection.description || '',
+					headers: mapResponseHeaders(collection.properties.headers, isResponseActivated),
+					schema: typeHelper.getType(
+							collection.properties.body,
+							isResponseActivated
+						),
+					examples: getResponseExamples(collection.examples),
+				},
+				getExtensions(collection.operationExtensions)
+			);
 			if (shouldResponseBeCommented) {
 				response[`hackoladeInnerCommentEnd`] = true;
 			}
@@ -139,13 +149,25 @@ function mapResponses(collections, collectionId, isParentActivated) {
 	return result;
 }
 
-function mapResponseHeaders(data) {
+function mapResponseHeaders(data, isParentActivated) {
 	if (!data || !data.properties) {
 		return null;
 	}
 
 	return Object.keys(data.properties).reduce((headers, name) => {
-		headers[name] = Object.assign({}, { description: data.properties[name].description }, typeHelper.getType(data.properties[name]));
+		const isActivated = data.properties[name].isActivated;
+		headers[name] = commentDeactivatedItemInner(
+			Object.assign(
+				{},
+				{ description: data.properties[name].description },
+				typeHelper.getType(
+					data.properties[name],
+					isActivated && isParentActivated
+				)
+			),
+			isActivated,
+			isParentActivated
+		);
 		return headers;
 	}, {});
 }

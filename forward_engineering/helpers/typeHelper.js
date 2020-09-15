@@ -1,34 +1,37 @@
 const getExtensions = require('./extensionsHelper');
 const { prepareReferenceName } = require('../utils/utils');
+const { commentDeactivatedItemInner } = require('./commentsHelper');
 
-function getType(data) {
+function getType(data, isParentActivated = false) {
 	if (!data) {
 		return null;
 	}
 
 	if (data.allOf) {
 		return {
-			allOf: data.allOf.map(getType)
+			allOf: data.allOf.map(item => getType(item, isParentActivated)) // FIXME:
 		};
 	}
 
 	if (Array.isArray(data.type)) {
-		return getType(Object.assign({}, data, { type: data.type[0] }));
+		return getType(Object.assign({}, data, { type: data.type[0] }), isParentActivated);
 	}
 
 	if (data.$ref) {
-		return {
-			$ref: prepareReferenceName(
-				getRef(data.$ref)
-			)
-		};
+		return commentDeactivatedItemInner(
+			{
+				$ref: prepareReferenceName(getRef(data.$ref)),
+			},
+			data.isActivated,
+			isParentActivated
+		);
 	}
 	
-	return getTypeProps(data);
+	return commentDeactivatedItemInner(getTypeProps(data, isParentActivated), data.isActivated, isParentActivated);
 }
 
-function getTypeProps(data) {
-	const { type, properties, items, required, additionalProperties } = data;
+function getTypeProps(data, isParentActivated) {
+	const { type, properties, items, required, additionalProperties, isActivated } = data;
 
     const extensions = getExtensions(data.scopesExtensions);
 
@@ -36,7 +39,7 @@ function getTypeProps(data) {
 		case 'array':
 			return {
 				type,
-				items: getArrayItemsType(items),
+				items: getArrayItemsType(items, isActivated && isParentActivated),
 				collectionFormat: data.collectionFormat,
 				minItems: data.minItems,
 				maxItems: data.maxItems,
@@ -53,7 +56,7 @@ function getTypeProps(data) {
 			return {
 				type,
 				required,
-				properties: getObjectProperties(properties),
+				properties: getObjectProperties(properties, isActivated && isParentActivated),
 				minProperties: data.minProperties,
 				maxProperties: data.maxProperties,
 				additionalProperties: data.additionalProperties,
@@ -66,7 +69,7 @@ function getTypeProps(data) {
 			if (!properties || properties.length === 0) {
 				return null;
 			}
-			return getType(properties[Object.keys(properties)[0]]);
+			return getType(properties[Object.keys(properties)[0]], isActivated && isParentActivated);
 		default:
 			return getPrimitiveTypeProps(data);
 	}
@@ -110,16 +113,20 @@ function getRef(ref) {
 	return `${pathToFile}#/paths/${pathWithResponses.join('/')}`;
 };
 
-function getArrayItemsType(items) {
+function getArrayItemsType(items, isParentActivated) {
 	if (Array.isArray(items)) {
-		return Object.assign({}, items.length > 0 ? getType(items[0]) : {});
+		return Object.assign({}, items.length > 0 ? getType(items[0], isParentActivated) : {}); // FIXME:
 	}
-	return Object.assign({}, items ? getType(items) : {});
+	return Object.assign({}, items ? getType(items, isParentActivated) : {});
 }
 
-function getObjectProperties(properties = {}) {
+function getObjectProperties(properties = {}, isParentActivated) {
 	return Object.keys(properties).reduce((acc, propName) => {
-		acc[propName] = getType(properties[propName]);
+		acc[propName] = commentDeactivatedItemInner(
+			getType(properties[propName], isParentActivated),
+			properties[propName].isActivated,
+			isParentActivated
+		);
 		return acc;
 	}, {});
 }
@@ -160,5 +167,5 @@ function getPrimitiveTypeProps(data) {
 }
 
 module.exports = {
-	getType
+	getType,
 };
