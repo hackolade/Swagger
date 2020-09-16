@@ -51,7 +51,6 @@ const updateSwaggerPath = (pathToFile, relativePath) => {
 	const bucketWithRequest = pathWithoutSlashes.slice(0, 2);
 
 	if (!hasResponse) {
-		debugger;
 		const pathToParameter = [ ...bucketWithRequest, 'parameters', '0' ];
 		const parameterSchemaPath = pathWithoutSlashes.slice(4);
 		return `${pathToFile}#/paths/${[ ...pathToParameter, ...parameterSchemaPath, ...schemaPath].join('/')}`;
