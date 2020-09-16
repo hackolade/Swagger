@@ -71,7 +71,8 @@
 			"enableErdToggle": true,
 			"enableStackedNestedCollections": true,
 			"externalDefinitionsFromTargetSchema": true,
-			"apiTarget": true
+			"apiTarget": true,
+			"FEScriptCommentsSupported": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
