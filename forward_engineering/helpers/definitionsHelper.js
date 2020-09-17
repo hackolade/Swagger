@@ -1,5 +1,6 @@
 const typeHelper = require('./typeHelper');
 const { prepareName } = require('../utils/utils');
+const { activateItem } = require('./commonHelper');
 
 function getDefinitions(definitions, containers) {
 	const internalDefinitions = getInternalDefinitions(containers);
@@ -21,7 +22,7 @@ function getModelDefinitions(definitions) {
 	return Object.keys(parsedDefinitions.properties).reduce((acc, key) => {
 		const name = prepareName(key);
 		
-		acc[name] = typeHelper.getType(parsedDefinitions.properties[key]);
+		acc[name] = typeHelper.getType(activateItem(parsedDefinitions.properties[key]), true);
 
 		return acc;
 	}, {});
@@ -52,7 +53,7 @@ function getCollectionInternalDefinitions(definitions) {
 		const name = prepareName(key);
 
 		return Object.assign({}, acc, {
-			[name]: typeHelper.getType(definitions.properties[key])
+			[name]: typeHelper.getType(activateItem(definitions.properties[key]), true)
 		});
 	}, {});
 }

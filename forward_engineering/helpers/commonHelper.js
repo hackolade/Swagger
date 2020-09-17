@@ -108,10 +108,21 @@ function mapArrayFieldByName(dataArray, fieldName) {
 	return dataArray && dataArray.map(dataItem => dataItem[fieldName]);
 }
 
+function activateItem(item) {
+	if (!item || typeof item !== 'object') {
+		return item;
+	}
+	return {
+		...item,
+		isActivated: true
+	};
+}
+
 module.exports = {
 	mapExternalDocs,
 	mapTags,
 	mapSecurity,
 	mapSecurityDefinitions,
-	mapArrayFieldByName
+	mapArrayFieldByName,
+	activateItem,
 };
