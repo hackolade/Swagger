@@ -1,9 +1,9 @@
 const typeHelper = require('./typeHelper');
 const { prepareName } = require('../utils/utils');
 
-function getDefinitions(data) {
-	const internalDefinitions = getInternalDefinitions(data.containers);
-	const modelDefinitions = getModelDefinitions(data.modelDefinitions);
+function getDefinitions(definitions, containers) {
+	const internalDefinitions = getInternalDefinitions(containers);
+	const modelDefinitions = getModelDefinitions(JSON.stringify(definitions));
 
 	return Object.assign({}, internalDefinitions, modelDefinitions);
 }
