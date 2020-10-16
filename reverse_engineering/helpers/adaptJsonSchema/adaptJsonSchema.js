@@ -3,7 +3,6 @@ const mapJsonSchema = require('./mapJsonSchema');
 const convertToString = (jsonSchema) => {
 	return Object.assign({}, jsonSchema, {
 		type: 'string',
-		default: null
 	});
 };
 
