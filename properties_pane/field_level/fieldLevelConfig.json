@@ -1324,6 +1324,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"enableForReference": true
 			},
+			{
+				"propertyName": "example",
+				"propertyKeyword": "sample",
+				"propertyType": "details",
+				"template": "textAreaJson"
+			},
 			"comments"
 		],
 		"object": [
@@ -1596,33 +1602,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "example",
 				"propertyKeyword": "sample",
 				"propertyType": "details",
-				"template": "textarea",
-				"markdown": false,
-				"dependency": {
-					"type": "or",
-					"values": [
-						{
-							"level": "parent",
-							"key": "type",
-							"value": "definitions" 
-						},
-						{
-							"type": "and",
-							"values": [
-								{
-									"level": "parent",
-									"key": "name",
-									"value": "body"
-								},
-								{
-									"level": "parent",
-									"key": "structureType",
-									"value": true
-								}
-							]
-						}
-					]
-				}
+				"template": "textAreaJson"
 			},
 			{
 				"propertyName": "extensions",
