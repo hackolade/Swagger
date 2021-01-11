@@ -9,7 +9,7 @@ function getType(data, isParentActivated = false) {
 
 	if (data.allOf) {
 		return {
-			allOf: data.allOf.map(item => getType(item, isParentActivated)) // FIXME:
+			allOf: data.allOf.map(item => getType(item, isParentActivated))
 		};
 	}
 
@@ -47,6 +47,7 @@ function getTypeProps(data, isParentActivated) {
 				discriminator: data.discriminator,
 				readOnly: data.readOnly,
 				xml: getXml(data.xml),
+				example: parseExample(data.sample) || getArrayItemsExample(items),
 				...extensions
 			};
 		case 'object':
@@ -63,6 +64,7 @@ function getTypeProps(data, isParentActivated) {
 				discriminator: data.discriminator,
 				readOnly: data.readOnly,
 				xml: getXml(data.xml),
+				example: parseExample(data.sample),
 				...extensions
 			};
 		case 'parameter':
@@ -126,6 +128,30 @@ function getPrimitiveTypeProps(data) {
 		example: data.sample,
 		...getExtensions(data.scopesExtensions)
 	};
+}
+
+function parseExample(data) {
+	try {
+		return JSON.parse(data);
+	} catch(err) {
+		return data;
+	}
+}
+
+function getArrayItemsExample(items) {
+	const supportedDataTypes = ['object', 'string', 'number', 'integer', 'boolean'];
+	if (Array.isArray(items) && items.length > 1) {
+		const itemsExample = items.filter(item => item.isActivated !== false).reduce((acc, item) => {
+			if (supportedDataTypes.includes(item.type) && item.sample) {
+				const example = item.type === 'object' ? parseExample(item.sample) : item.sample;
+				return acc.concat(example);
+			}
+			return acc;
+		}, []);
+		if (itemsExample.length > 1) {
+			return itemsExample;
+		}
+	}
 }
 
 module.exports = {
