@@ -153,6 +153,11 @@ making sure that you maintain a proper JSON format.
 			"name",
 			"schemaId",
 			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
+			{
 				"propertyKeyword": "description",
 				"enableForReference": true
 			},
@@ -405,6 +410,11 @@ making sure that you maintain a proper JSON format.
 		"number": [
 			"name",
 			"schemaId",
+			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
 			{
 				"propertyKeyword": "description",
 				"enableForReference": true
@@ -660,6 +670,11 @@ making sure that you maintain a proper JSON format.
 			"name",
 			"schemaId",
 			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
+			{
 				"propertyKeyword": "description",
 				"enableForReference": true
 			},
@@ -914,6 +929,11 @@ making sure that you maintain a proper JSON format.
 			"name",
 			"schemaId",
 			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
+			{
 				"propertyKeyword": "description",
 				"enableForReference": true
 			},
@@ -968,6 +988,11 @@ making sure that you maintain a proper JSON format.
 			"schemaId",
 			"type",
 			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
+			{
 				"propertyKeyword": "description",
 				"enableForReference": true
 			},
@@ -1015,6 +1040,11 @@ making sure that you maintain a proper JSON format.
 			"name",
 			"schemaId",
 			"refPath",
+			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
 			{
 				"propertyKeyword": "description",
 				"enableForReference": true
@@ -1337,6 +1367,11 @@ making sure that you maintain a proper JSON format.
 			"sampleName",
 			"schemaId",
 			"refPath",
+			{
+				"propertyName": "Title",
+				"propertyKeyword": "title",
+				"propertyType": "text"
+			},
 			{
 				"propertyKeyword": "description",
 				"enableForReference": true

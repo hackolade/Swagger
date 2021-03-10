@@ -39,6 +39,8 @@ function getTypeProps(data, isParentActivated) {
 		case 'array':
 			return {
 				type,
+				title: data.title,
+				description: data.description,
 				items: getArrayItemsType(items, isActivated && isParentActivated),
 				collectionFormat: data.collectionFormat,
 				minItems: data.minItems,
@@ -57,6 +59,8 @@ function getTypeProps(data, isParentActivated) {
 			return {
 				type,
 				required,
+				title: data.title,
+				description: data.description,
 				properties: getObjectProperties(properties, isActivated && isParentActivated),
 				minProperties: data.minProperties,
 				maxProperties: data.maxProperties,
@@ -113,6 +117,7 @@ function getPrimitiveTypeProps(data) {
 	return {
 		type: data.type,
 		format: data.format || data.mode,
+		title: data.title,
 		description: data.description,
 		exclusiveMinimum: data.exclusiveMinimum,
 		exclusiveMaximum: data.exclusiveMaximum,
