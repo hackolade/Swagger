@@ -81,7 +81,12 @@ module.exports = {
 				}
 			}
 		} catch (err) {
-			cb(err);
+			const preparedError = {
+				message: err.message,
+				stack: err.stack,
+			}
+			logger.log('error', preparedError, 'FE error')
+			cb(preparedError);
 		}
 	},
 
