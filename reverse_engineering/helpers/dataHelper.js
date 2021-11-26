@@ -210,9 +210,22 @@ const handleSchemaProps = (schema, fieldOrder) => {
 
     const getPropName = (property) => {
         return property === 'example' ? 'sample' : property;
-    } 
+    }
 
-    const fixedSchema = setMissedType(schema);
+    const convertFormatToMode = schema => {
+        switch (schema.type) {
+            case 'number':
+            case 'integer': {
+                const { format, ...schemaData } = schema;
+
+                return { ...schemaData, mode: format };
+            }
+            default:
+                return schema;
+        }
+    };
+
+    const fixedSchema = convertFormatToMode(setMissedType(schema));
     const reorderedSchema = commonHelper.reorderFields(fixedSchema, fieldOrder);
 
     return Object.keys(reorderedSchema).reduce((accumulator, property) => {
