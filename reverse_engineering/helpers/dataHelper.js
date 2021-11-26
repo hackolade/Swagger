@@ -1,6 +1,7 @@
 
 const commonHelper = require('./commonHelper');
 const propertiesConfig = require('../propertiesConfig');
+const jsonComment = require('comment-json');
 
 const PARAMETER_TYPES = ['path', 'query', 'header', 'body', 'formData'];
 const PARAMETER = 'parameter';
@@ -364,7 +365,7 @@ const getModelContent = (pathData, fieldOrder) => {
 
 const getSwaggerJsonSchema = (data, fileName, extension) => {
     const schema = extension !== '.json' ? commonHelper.convertYamlToJson(data) : data;
-    const swaggerSchema = typeof schema === 'string' ? JSON.parse(schema) : schema;
+    const swaggerSchema = typeof schema === 'string' ? jsonComment.parse(schema.replace(/^\s*#.+$/mg, '')) : schema;
     const swaggerSchemaWithModelName = Object.assign({}, swaggerSchema, {
         modelName: fileName
     });
