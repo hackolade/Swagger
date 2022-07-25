@@ -72,7 +72,8 @@
 			"enableStackedNestedCollections": true,
 			"externalDefinitionsFromTargetSchema": true,
 			"apiTarget": true,
-			"FEScriptCommentsSupported": true
+			"FEScriptCommentsSupported": true,
+			"openModelDefinitionsTabIfNoCollections": true
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
