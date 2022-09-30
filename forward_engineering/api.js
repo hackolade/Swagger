@@ -27,16 +27,20 @@ module.exports = {
 				securityDefinitions: modelSecurityDefinitions
 			} = data.modelData[0];
 
+			const resolveApiExternalRefs = data.options?.additionalOptions?.find(
+				option => option.id === 'resolveApiExternalRefs',
+			)?.value;
+
 			data = convertReferences(data);
 			const info = getInfo(data.modelData[0]);
 			const externalDefinitions = JSON.parse(data.externalDefinitions || '{}').properties || {};
-			const containers = handleRefInContainers(data.containers, externalDefinitions);
+			const containers = handleRefInContainers(data.containers, externalDefinitions, resolveApiExternalRefs);
 			const paths = getPaths(containers);
 			const consumes = commonHelper.mapArrayFieldByName(modelConsumes, 'consumesMimeTypeDef');
 			const produces = commonHelper.mapArrayFieldByName(modelProduces, 'producesMimeTypeDef');
 
 			const modelDefinitions = JSON.parse(data.modelDefinitions) || {};
-			const definitionsWithHandledReferences = mapJsonSchema(modelDefinitions, handleRef(externalDefinitions));
+			const definitionsWithHandledReferences = mapJsonSchema(modelDefinitions, handleRef(externalDefinitions, resolveApiExternalRefs));
 
 			const definitions = getDefinitions(definitionsWithHandledReferences, containers);
 			const externalDocs = commonHelper.mapExternalDocs(modelExternalDocs);
@@ -169,13 +173,13 @@ const removeCommentLines = (scriptString) => {
 		.replace(/(.*?),\s*(\}|])/g, '$1$2');
 }
 
-const handleRefInContainers = (containers, externalDefinitions) => {
+const handleRefInContainers = (containers, externalDefinitions, resolveApiExternalRefs) => {
 	return containers.map(container => {
 		try {
 			const updatedSchemas = Object.keys(container.jsonSchema).reduce((schemas, id) => {
 				const json = container.jsonSchema[id];
 				try {
-					const updatedSchema = mapJsonSchema(JSON.parse(json), handleRef(externalDefinitions));
+					const updatedSchema = mapJsonSchema(JSON.parse(json), handleRef(externalDefinitions, resolveApiExternalRefs));
 
 					return {
 						...schemas,
@@ -197,11 +201,11 @@ const handleRefInContainers = (containers, externalDefinitions) => {
 };
 
 
-const handleRef = externalDefinitions => field => {
+const handleRef = (externalDefinitions, resolveApiExternalRefs) => field => {
 	if (!field.$ref) {
 		return field;
 	}
-	const ref = handleReferencePath(externalDefinitions, field);
+	const ref = handleReferencePath(externalDefinitions, field, resolveApiExternalRefs);
 
 	if (!ref.$ref) {
 		return ref;

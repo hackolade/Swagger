@@ -1,11 +1,11 @@
 const mapJsonSchema = require('../../reverse_engineering/helpers/adaptJsonSchema/mapJsonSchema');
 
-const handleReferencePath = (externalDefinitions, { $ref: ref }) => {
+const handleReferencePath = (externalDefinitions, { $ref: ref }, resolveApiExternalRefs) => {
 	if (ref.startsWith('#')) {
 		return { $ref: ref.replace('#model/', '#/') };
 	}
 
-	const [ pathToFile, relativePath] = ref.split('#/');
+	const [pathToFile, relativePath] = ref.split('#/');
 	if (!relativePath) {
 		return { $ref: ref };
 	}
@@ -15,9 +15,7 @@ const handleReferencePath = (externalDefinitions, { $ref: ref }) => {
 		return { $ref: ref };
 	}
 
-	if (externalDefinition.fileType === 'targetSchema') {
-		return { $ref: updateSwaggerPath(pathToFile, relativePath) };
-	} else if (externalDefinition.fileType === 'hackoladeSchema') {
+	if (externalDefinition.fileType === 'hackoladeSchema' || resolveApiExternalRefs) {
 		return mapJsonSchema(externalDefinition, field => {
 			if (!field.$ref || field.type === 'reference') {
 				return field;
@@ -28,11 +26,13 @@ const handleReferencePath = (externalDefinitions, { $ref: ref }) => {
 
 			return definition;
 		});
+	} else if (externalDefinition.fileType === 'targetSchema') {
+		return { $ref: updateSwaggerPath(pathToFile, relativePath) };
 	} else if (externalDefinition.fileType === 'jsonSchema') {
-		return { $ref: fixJsonSchemaPath(pathToFile, relativePath) };;
+		return { $ref: fixJsonSchemaPath(pathToFile, relativePath) };
 	}
 
-	return  { $ref: ref };
+	return { $ref: ref };
 };
 
 const fixJsonSchemaPath = (pathToFile, relativePath) => {
@@ -41,7 +41,7 @@ const fixJsonSchemaPath = (pathToFile, relativePath) => {
 		return `${pathToFile}#/${relativePath}`;
 	}
 
-	return `${pathToFile}#/${namePath.slice(1).join('/')}`; 
+	return `${pathToFile}#/${namePath.slice(1).join('/')}`;
 };
 
 const findExternalDefinition = (externalDefinitions, pathToFile, relativePath) => {
@@ -49,15 +49,11 @@ const findExternalDefinition = (externalDefinitions, pathToFile, relativePath) =
 
 	const definitionName = Object.keys(externalDefinitions).find(name => {
 		const definition = externalDefinitions[name];
-		return (
-			definition.fieldRelativePath === '#/' + relativePath && 
-			definition.link === pathToFile
-		);
+		return definition.fieldRelativePath === '#/' + relativePath && definition.link === pathToFile;
 	});
 
 	return externalDefinitions[definitionName];
 };
-
 
 const updateSwaggerPath = (pathToFile, relativePath) => {
 	const hasResponse = relativePath.split('/')[2] !== 'properties';
@@ -73,17 +69,17 @@ const updateSwaggerPath = (pathToFile, relativePath) => {
 	const bucketWithRequest = pathWithoutSlashes.slice(0, 2);
 
 	if (!hasResponse) {
-		const pathToParameter = [ ...bucketWithRequest, 'parameters', '0' ];
+		const pathToParameter = [...bucketWithRequest, 'parameters', '0'];
 		const parameterSchemaPath = pathWithoutSlashes.slice(4);
-		return `${pathToFile}#/paths/${[ ...pathToParameter, ...parameterSchemaPath, ...schemaPath].join('/')}`;
+		return `${pathToFile}#/paths/${[...pathToParameter, ...parameterSchemaPath, ...schemaPath].join('/')}`;
 	}
 
 	const response = pathWithoutSlashes[2];
 	const hasHeaders = pathWithoutSlashes[3] === 'headers';
-	
+
 	const pathToItem = hasHeaders ? pathWithoutSlashes.slice(3) : pathWithoutSlashes.slice(4);
 
-	const pathWithResponses = [ ...bucketWithRequest, 'responses', response, ...pathToItem, ...schemaPath ];
+	const pathWithResponses = [...bucketWithRequest, 'responses', response, ...pathToItem, ...schemaPath];
 
 	return `${pathToFile}#/paths/${pathWithResponses.join('/')}`;
 };
