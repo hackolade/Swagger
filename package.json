@@ -73,7 +73,11 @@
 			"externalDefinitionsFromTargetSchema": true,
 			"apiTarget": true,
 			"FEScriptCommentsSupported": true,
-			"openModelDefinitionsTabIfNoCollections": true
+			"openModelDefinitionsTabIfNoCollections": true,
+			"erdView": {
+				"enabled": true,
+				"propertyNames": []
+			}
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
