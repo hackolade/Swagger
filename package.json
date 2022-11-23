@@ -66,7 +66,10 @@
 			"disableDefinitions": {
 				"internal": true
 			},
-			"disableRelationships": true,
+			"disableRelationships": false,
+			"relationships": {
+				"definitionRelationships": true
+			},
 			"disableJsonPreview": false,
 			"enableErdToggle": true,
 			"enableStackedNestedCollections": true,
