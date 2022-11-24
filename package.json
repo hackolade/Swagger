@@ -66,14 +66,21 @@
 			"disableDefinitions": {
 				"internal": true
 			},
-			"disableRelationships": true,
+			"disableRelationships": false,
+			"relationships": {
+				"definitionRelationships": true
+			},
 			"disableJsonPreview": false,
 			"enableErdToggle": true,
 			"enableStackedNestedCollections": true,
 			"externalDefinitionsFromTargetSchema": true,
 			"apiTarget": true,
 			"FEScriptCommentsSupported": true,
-			"openModelDefinitionsTabIfNoCollections": true
+			"openModelDefinitionsTabIfNoCollections": true,
+			"erdDefinitions": {
+				"enabled": true,
+				"propertyNames": []
+			}
 		}
 	},
 	"description": "Hackolade plugin for Swagger API",
