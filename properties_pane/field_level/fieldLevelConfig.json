@@ -282,6 +282,96 @@ making sure that you maintain a proper JSON format.
 				"enableForReference": true
 			},
 			{
+				"propertyName": "Foreign definition",
+				"propertyKeyword": "foreignCollection",
+				"propertyType": "selecthashed",
+				"template": "definitions",
+				"disableForDefinitions": false,
+				"withEmptyOption": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Foreign field",
+				"propertyKeyword": "foreignField",
+				"propertyType": "detailshashed",
+				"template": "collectiontree",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship type",
+				"propertyKeyword": "relationshipType",
+				"propertyType": "select",
+				"options": ["", "Foreign Key", "Foreign Master"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship name",
+				"propertyKeyword": "relationshipName",
+				"propertyType": "text",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Cardinality",
+				"propertyKeyword": "cardinality",
+				"propertyType": "select",
+				"options": ["1", "n", "0..1", "0..n", "1..n"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
 				"propertyName": "xml",
 				"propertyType": "block",
 				"propertyKeyword": "xml",
@@ -554,6 +644,96 @@ making sure that you maintain a proper JSON format.
 						}
 					]},
 				"enableForReference": true
+			},
+			{
+				"propertyName": "Foreign definition",
+				"propertyKeyword": "foreignCollection",
+				"propertyType": "selecthashed",
+				"template": "definitions",
+				"disableForDefinitions": false,
+				"withEmptyOption": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Foreign field",
+				"propertyKeyword": "foreignField",
+				"propertyType": "detailshashed",
+				"template": "collectiontree",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship type",
+				"propertyKeyword": "relationshipType",
+				"propertyType": "select",
+				"options": ["", "Foreign Key", "Foreign Master"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship name",
+				"propertyKeyword": "relationshipName",
+				"propertyType": "text",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Cardinality",
+				"propertyKeyword": "cardinality",
+				"propertyType": "select",
+				"options": ["1", "n", "0..1", "0..n", "1..n"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
 			},
 			{
 				"propertyName": "xml",
@@ -833,6 +1013,96 @@ making sure that you maintain a proper JSON format.
 				"enableForReference": true
 			},
 			{
+				"propertyName": "Foreign definition",
+				"propertyKeyword": "foreignCollection",
+				"propertyType": "selecthashed",
+				"template": "definitions",
+				"disableForDefinitions": false,
+				"withEmptyOption": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Foreign field",
+				"propertyKeyword": "foreignField",
+				"propertyType": "detailshashed",
+				"template": "collectiontree",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship type",
+				"propertyKeyword": "relationshipType",
+				"propertyType": "select",
+				"options": ["", "Foreign Key", "Foreign Master"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship name",
+				"propertyKeyword": "relationshipName",
+				"propertyType": "text",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Cardinality",
+				"propertyKeyword": "cardinality",
+				"propertyType": "select",
+				"options": ["1", "n", "0..1", "0..n", "1..n"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
 				"propertyName": "xml",
 				"propertyType": "block",
 				"propertyKeyword": "xml",
@@ -1036,6 +1306,96 @@ making sure that you maintain a proper JSON format.
 				"enableForReference": true
 			},
 			"default",
+			{
+				"propertyName": "Foreign definition",
+				"propertyKeyword": "foreignCollection",
+				"propertyType": "selecthashed",
+				"template": "definitions",
+				"disableForDefinitions": false,
+				"withEmptyOption": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Foreign field",
+				"propertyKeyword": "foreignField",
+				"propertyType": "detailshashed",
+				"template": "collectiontree",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship type",
+				"propertyKeyword": "relationshipType",
+				"propertyType": "select",
+				"options": ["", "Foreign Key", "Foreign Master"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Relationship name",
+				"propertyKeyword": "relationshipName",
+				"propertyType": "text",
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
+			{
+				"propertyName": "Cardinality",
+				"propertyKeyword": "cardinality",
+				"propertyType": "select",
+				"options": ["1", "n", "0..1", "0..n", "1..n"],
+				"disableForDefinitions": false,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"level": "parent",
+							"key": "type",
+							"value": "definitions",
+							"inDepthParentSearch": true
+						}
+					]
+				}
+			},
 			{
 				"propertyName": "example",
 				"propertyKeyword": "sample",
