@@ -13,5 +13,11 @@
 		"default": "",
 		"enum": [],
 		"sample": ""
-	}
+	},
+	"descriptor": [
+		{
+			"schema": {},
+			"mode": "binary"
+		}
+	]
 }
