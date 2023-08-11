@@ -1,5 +1,5 @@
 {
-    "menu_label": "Swagger File",
+    "menu_label": "Swagger File...",
     "name": "swagger",
     "extensions": [
         "json",
