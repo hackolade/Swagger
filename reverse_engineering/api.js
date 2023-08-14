@@ -3,7 +3,7 @@
 const commonHelper = require('./helpers/commonHelper');
 const dataHelper = require('./helpers/dataHelper');
 const errorHelper = require('./helpers/errorHelper');
-const adaptJsonSchema = require('./helpers/adaptJsonSchema/adaptJsonSchema');
+const { adaptJsonSchema } = require('./helpers/adaptJsonSchema/adaptJsonSchema');
 const validationHelper = require('../forward_engineering/helpers/validationHelper');
 const resolveExternalDefinitionPathHelper = require('./helpers/resolveExternalDefinitionPathHelper');
 
@@ -47,22 +47,7 @@ module.exports = {
 		callback(handledError);
 	},
 
-    adaptJsonSchema(data, logger, callback) {
-        logger.log('info', 'Adaptation of JSON Schema started...', 'Adapt JSON Schema');
-        try {
-            const jsonSchema = JSON.parse(data.jsonSchema);
-
-            const adaptedJsonSchema = adaptJsonSchema(jsonSchema);
-
-            logger.log('info', 'Adaptation of JSON Schema finished.', 'Adapt JSON Schema');
-
-            callback(null, {
-                jsonSchema: JSON.stringify(adaptedJsonSchema)
-            });
-        } catch(e) {
-            callback(commonHelper.handleErrorObject(e, 'Adapt JSON Schema'), data);
-        }
-    },
+    adaptJsonSchema,
 
 	resolveExternalDefinitionPath(data, logger, callback) {
 		resolveExternalDefinitionPathHelper.resolvePath(data, callback);
