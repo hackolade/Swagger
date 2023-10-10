@@ -79,14 +79,15 @@ const reorderFields = (data, filedOrder) => {
 };
 
 const sortObject = (obj) => {
+    if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
+        return obj;
+    }
     return Object.keys(obj || {}).sort().reduce((acc,key)=>{
         if (Array.isArray(obj[key])){
             acc[key] = obj[key].map(sortObject);
-        }
-        if (typeof obj[key] === 'object'){
+        } else if (typeof obj[key] === 'object'){
             acc[key]= sortObject(obj[key]);
-        }
-        else{
+        } else {
             acc[key] = obj[key];
         }
         return acc;
