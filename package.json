@@ -37,7 +37,7 @@
 					"entities": false,
 					"model_definitions": true
 				},
-				"plugin": true 
+				"plugin": true
 			},
 			"disableDenormalization": true,
 			"enableForwardEngineering": {
@@ -45,6 +45,13 @@
 				"jsonSchema": true,
 				"plugin": true,
 				"apiSchema": false
+			},
+			"forwardEngineering": {
+				"jsonSchema": {
+					"keepParentType": {
+						"integer": "integer"
+					}
+				}
 			},
 			"disablePatternField": false,
 			"disableChoices": {
