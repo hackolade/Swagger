@@ -1,5 +1,4 @@
-
-const cloneDeep = require('lodash.clonedeep'); 
+const cloneDeep = require('lodash.clonedeep');
 
 const add = (obj, name, value) => Object.assign({}, obj, { [name]: value });
 
@@ -56,7 +55,7 @@ const replaceReferencesInParameters = (jsonSchema, definitions) => {
 	}, {});
 
 	return Object.assign({}, jsonSchema, {
-		properties
+		properties,
 	});
 };
 
@@ -64,24 +63,27 @@ const convertReferencesInEntities = ({ entities, jsonSchemas, definitions }) => 
 	return entities.reduce((result, entityId) => {
 		const jsonSchema = JSON.parse(jsonSchemas[entityId]);
 		const internalDefinition = JSON.parse(definitions.internal[entityId]);
-		
+
 		if (jsonSchema.entityType !== 'request') {
 			return Object.assign({}, result, {
-				[entityId]: jsonSchemas[entityId]
+				[entityId]: jsonSchemas[entityId],
 			});
 		}
 
-		const replacedReferences = replaceReferencesInParameters(jsonSchema, Object.assign({}, definitions, {
-			internal: internalDefinition
-		}));
+		const replacedReferences = replaceReferencesInParameters(
+			jsonSchema,
+			Object.assign({}, definitions, {
+				internal: internalDefinition,
+			}),
+		);
 
 		return Object.assign({}, result, {
-			[entityId]: JSON.stringify(replacedReferences)
+			[entityId]: JSON.stringify(replacedReferences),
 		});
 	}, {});
 };
 
-const convertReferences = (data) => {
+const convertReferences = data => {
 	const containers = data.containers.reduce((containers, container) => {
 		const jsonSchema = convertReferencesInEntities({
 			entities: container.entities,
@@ -89,17 +91,19 @@ const convertReferences = (data) => {
 			definitions: {
 				internal: container.internalDefinitions,
 				model: JSON.parse(data.modelDefinitions),
-				external: JSON.parse(data.externalDefinitions)
-			}
+				external: JSON.parse(data.externalDefinitions),
+			},
 		});
 
-		return containers.concat(Object.assign({}, container, {
-			jsonSchema
-		}));
+		return containers.concat(
+			Object.assign({}, container, {
+				jsonSchema,
+			}),
+		);
 	}, []);
 
 	return Object.assign({}, data, {
-		containers
+		containers,
 	});
 };
 

@@ -2,10 +2,14 @@ const getExtensions = require('./extensionsHelper');
 
 function mapExternalDocs(docs) {
 	if (docs) {
-		return Object.assign({}, {
-			description: docs.externalDocsDescription,
-			url: docs.externalDocsUrl
-		}, getExtensions(docs.scopesExtensions));
+		return Object.assign(
+			{},
+			{
+				description: docs.externalDocsDescription,
+				url: docs.externalDocsUrl,
+			},
+			getExtensions(docs.scopesExtensions),
+		);
 	}
 }
 
@@ -13,7 +17,7 @@ function mapExternalTagDocs(docs) {
 	if (docs) {
 		return {
 			description: docs.tagExternalDocsDescription,
-			url: docs.tagExternalDocsUrl
+			url: docs.tagExternalDocsUrl,
 		};
 	}
 }
@@ -22,7 +26,7 @@ function mapTags(tags = []) {
 	return tags.map(tag => ({
 		name: tag.tagName,
 		description: tag.tagDescription,
-		externalDocs: mapExternalTagDocs(tag.externalDocs)
+		externalDocs: mapExternalTagDocs(tag.externalDocs),
 	}));
 }
 
@@ -33,8 +37,7 @@ function mapSecurity(security = []) {
 				return null;
 			}
 			return {
-				[securityRequirement.securityRequirementName]:
-					securityRequirement.securityRequirementOperation || []
+				[securityRequirement.securityRequirementName]: securityRequirement.securityRequirementOperation || [],
 			};
 		})
 		.filter(securityRequirement => securityRequirement);
@@ -55,20 +58,24 @@ function mapSecurityDefinitions(securityDefinitions = []) {
 		switch (type) {
 			case 'basic':
 				return {
-					description: data.securitySchemeDescription
+					description: data.securitySchemeDescription,
 				};
 			case 'apiKey':
 				return {
 					description: data.securitySchemeDescription,
 					name: data.securitySchemeName || '',
-					in: data.securitySchemeIn
+					in: data.securitySchemeIn,
 				};
 			case 'oauth2':
-				return Object.assign({}, {
-					description: data.securitySchemeDescription,
-					flow: data.securitySchemeFlow,
-					scopes: getScopes(data.securitySchemeScopes)
-				}, getParamsForFlow(data.securitySchemeFlow, data));
+				return Object.assign(
+					{},
+					{
+						description: data.securitySchemeDescription,
+						flow: data.securitySchemeFlow,
+						scopes: getScopes(data.securitySchemeScopes),
+					},
+					getParamsForFlow(data.securitySchemeFlow, data),
+				);
 			default:
 				return null;
 		}
@@ -78,25 +85,25 @@ function mapSecurityDefinitions(securityDefinitions = []) {
 		const authorizationUrl = data.securitySchemeAuthorizationUrl || '';
 		const tokenUrl = data.securitySchemeTokenUrl || '';
 
-		switch(flow) {
+		switch (flow) {
 			case 'implicit':
-				return { authorizationUrl }
+				return { authorizationUrl };
 			case 'password':
 			case 'application':
-				return { tokenUrl }
+				return { tokenUrl };
 			case 'accessCode':
-				return { authorizationUrl, tokenUrl }
+				return { authorizationUrl, tokenUrl };
 			default:
 				return null;
 		}
-	}
+	};
 
 	const modelSecurityDefinitions = securityDefinitions.reduce((acc, secDef) => {
 		acc[secDef.securityDefinitionsName] = Object.assign(
 			{},
 			{ type: secDef.securitySchemeType },
 			getPropsForType(secDef.securitySchemeType, secDef),
-			getExtensions(secDef.scopesExtensions)
+			getExtensions(secDef.scopesExtensions),
 		);
 		return acc;
 	}, {});
@@ -114,7 +121,7 @@ function activateItem(item) {
 	}
 	return {
 		...item,
-		isActivated: true
+		isActivated: true,
 	};
 }
 

@@ -9,7 +9,7 @@ function getType(data, isParentActivated = false) {
 
 	if (data.allOf) {
 		return {
-			allOf: data.allOf.map(item => getType(item, isParentActivated))
+			allOf: data.allOf.map(item => getType(item, isParentActivated)),
 		};
 	}
 
@@ -23,17 +23,17 @@ function getType(data, isParentActivated = false) {
 				$ref: prepareReferenceName(data.$ref),
 			},
 			data.isActivated,
-			isParentActivated
+			isParentActivated,
 		);
 	}
-	
+
 	return commentDeactivatedItemInner(getTypeProps(data, isParentActivated), data.isActivated, isParentActivated);
 }
 
 function getTypeProps(data, isParentActivated) {
 	const { type, properties, items, required, additionalProperties, isActivated } = data;
 
-    const extensions = getExtensions(data.scopesExtensions);
+	const extensions = getExtensions(data.scopesExtensions);
 
 	switch (type) {
 		case 'array':
@@ -50,7 +50,7 @@ function getTypeProps(data, isParentActivated) {
 				readOnly: data.readOnly,
 				xml: getXml(data.xml),
 				example: parseExample(data.sample) || getArrayItemsExample(items),
-				...extensions
+				...extensions,
 			};
 		case 'object':
 			if (!properties && !additionalProperties) {
@@ -69,7 +69,7 @@ function getTypeProps(data, isParentActivated) {
 				readOnly: data.readOnly,
 				xml: getXml(data.xml),
 				example: parseExample(data.sample),
-				...extensions
+				...extensions,
 			};
 		case 'parameter':
 			if (!properties || properties.length === 0) {
@@ -93,7 +93,7 @@ function getObjectProperties(properties = {}, isParentActivated) {
 		acc[propName] = commentDeactivatedItemInner(
 			getType(properties[propName], isParentActivated),
 			properties[propName].isActivated,
-			isParentActivated
+			isParentActivated,
 		);
 		return acc;
 	}, {});
@@ -104,13 +104,17 @@ function getXml(data) {
 		return undefined;
 	}
 
-	return Object.assign({}, {
-		name: data.xmlName,
-		namespace: data.xmlNamespace,
-		prefix: data.xmlPrefix,
-		attribute: data.xmlAttribute,
-		wrapped: data.xmlWrapped
-	}, getExtensions(data.scopesExtensions));
+	return Object.assign(
+		{},
+		{
+			name: data.xmlName,
+			namespace: data.xmlNamespace,
+			prefix: data.xmlPrefix,
+			attribute: data.xmlAttribute,
+			wrapped: data.xmlWrapped,
+		},
+		getExtensions(data.scopesExtensions),
+	);
 }
 
 function getPrimitiveTypeProps(data) {
@@ -131,14 +135,14 @@ function getPrimitiveTypeProps(data) {
 		multipleOf: data.multipleOf,
 		xml: getXml(data.xml),
 		example: data.sample,
-		...getExtensions(data.scopesExtensions)
+		...getExtensions(data.scopesExtensions),
 	};
 }
 
 function parseExample(data) {
 	try {
 		return JSON.parse(data);
-	} catch(err) {
+	} catch (err) {
 		return data;
 	}
 }
@@ -146,13 +150,15 @@ function parseExample(data) {
 function getArrayItemsExample(items) {
 	const supportedDataTypes = ['object', 'string', 'number', 'integer', 'boolean'];
 	if (Array.isArray(items) && items.length > 1) {
-		const itemsExample = items.filter(item => item.isActivated !== false).reduce((acc, item) => {
-			if (supportedDataTypes.includes(item.type) && item.sample) {
-				const example = item.type === 'object' ? parseExample(item.sample) : item.sample;
-				return acc.concat(example);
-			}
-			return acc;
-		}, []);
+		const itemsExample = items
+			.filter(item => item.isActivated !== false)
+			.reduce((acc, item) => {
+				if (supportedDataTypes.includes(item.type) && item.sample) {
+					const example = item.type === 'object' ? parseExample(item.sample) : item.sample;
+					return acc.concat(example);
+				}
+				return acc;
+			}, []);
 		if (itemsExample.length > 1) {
 			return itemsExample;
 		}

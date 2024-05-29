@@ -28,24 +28,26 @@
 	"field": {
 		"name": "New field",
 		"required": {
-			"valueDependencies": [{
-				"value": true,
-				"dependency": {
-					"type": "and",
-					"values": [
-						{
-							"level": "parent",
-							"key": "name",
-							"value": "path"
-						},
-						{
-							"level": "parent",
-							"key": "structureType",
-							"value": true
-						}
-					]
+			"valueDependencies": [
+				{
+					"value": true,
+					"dependency": {
+						"type": "and",
+						"values": [
+							{
+								"level": "parent",
+								"key": "name",
+								"value": "path"
+							},
+							{
+								"level": "parent",
+								"key": "structureType",
+								"value": true
+							}
+						]
+					}
 				}
-			}],
+			],
 			"value": false
 		}
 	},

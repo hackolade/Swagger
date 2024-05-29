@@ -1,12 +1,7 @@
 {
-  "name": "swagger",
-  "version": "1.0.0",
-  "description": "",
-  "author": "Hackolade",
-  "dependencies": {
-    "js-yaml": "^3.13.1",
-    "lodash.clonedeep": "^4.5.0",
-    "swagger-parser": "^8.0.4"
-  },
-  "installed": true
+    "name": "swagger",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Hackolade",
+    "installed": true
 }

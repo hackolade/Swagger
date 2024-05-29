@@ -123,16 +123,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collectionName",
 				"propertyTooltip": "Select from list of operations",
 				"propertyType": "select",
-				"options": [
-					"get",
-					"put",
-					"post",
-					"delete",
-					"options",
-					"head",
-					"patch",
-					"$ref"
-				],
+				"options": ["get", "put", "post", "delete", "options", "head", "patch", "$ref"],
 				"dependency": {
 					"key": "entityType",
 					"value": "request"
@@ -581,12 +572,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "schemes",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "multipleCheckboxSelect",
-				"options": [
-					"http",
-					"https",
-					"ws",
-					"wss"
-				]
+				"options": ["http", "https", "ws", "wss"]
 			},
 			{
 				"propertyName": "deprecated",

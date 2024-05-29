@@ -1,6 +1,6 @@
 const dataHelper = require('./dataHelper');
 const commonHelper = require('./commonHelper');
-const get = require('lodash.get'); 
+const get = require('lodash.get');
 
 const resolvePath = (data, callback) => {
 	let path = (data.path || '').split('/');
@@ -21,23 +21,29 @@ const resolvePath = (data, callback) => {
 			return callback(null, `${bucketName}/${requestName}/${responseName}/properties/${path.slice(5).join('/')}`);
 		}
 
-		return callback(null,`${bucketName}/${requestName}/${responseName}/properties/body/properties/${path.slice(5).join('/')}`);
+		return callback(
+			null,
+			`${bucketName}/${requestName}/${responseName}/properties/body/properties/${path.slice(5).join('/')}`,
+		);
 	}
 
 	const parameterIndex = path[4];
 
-    try {
+	try {
 		const { extension } = commonHelper.getPathData(data.content, '');
-        const swaggerSchema = dataHelper.getSwaggerJsonSchema(data.content, '', extension);
+		const swaggerSchema = dataHelper.getSwaggerJsonSchema(data.content, '', extension);
 
 		const parameter = get(
 			swaggerSchema,
 			['paths', restoreSlashes(bucketName), restoreSlashes(requestName), 'parameters', parameterIndex],
-			{}
+			{},
 		);
 		const paramIn = parameter.in || 'path';
 
-		return callback(null, `${bucketName}/${requestName}/properties/${paramIn}/properties/${parameter.name}/properties/${path.slice(5).join('/')}`);
+		return callback(
+			null,
+			`${bucketName}/${requestName}/properties/${paramIn}/properties/${parameter.name}/properties/${path.slice(5).join('/')}`,
+		);
 	} catch (err) {
 		callback(err, data.path || '');
 	}
@@ -46,5 +52,5 @@ const resolvePath = (data, callback) => {
 const restoreSlashes = (str = '') => str.replace(/%2F/g, '/');
 
 module.exports = {
-	resolvePath
+	resolvePath,
 };
