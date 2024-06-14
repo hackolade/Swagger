@@ -2,12 +2,12 @@ const getExtensions = require('./extensionsHelper');
 
 function getInfo(data) {
 	const info = {
-		description: data.description || "",
-		title: data.title || "",
-		termsOfService: data.termsOfService || "",
+		description: data.description || '',
+		title: data.title || '',
+		termsOfService: data.termsOfService || '',
 		contact: getContact(data.contact),
 		license: getLicense(data.license),
-		version: data.modelVersion || ""
+		version: data.modelVersion || '',
 	};
 	const extensions = getExtensions(data.infoExtensions);
 	return Object.assign({}, info, extensions);
@@ -18,11 +18,15 @@ function getContact(contact) {
 		return null;
 	}
 
-	return Object.assign({}, {
-		name: contact.contactName,
-		url: contact.contactURL,
-		email: contact.contactemail
-	}, getExtensions(contact.contactExtensions));
+	return Object.assign(
+		{},
+		{
+			name: contact.contactName,
+			url: contact.contactURL,
+			email: contact.contactemail,
+		},
+		getExtensions(contact.contactExtensions),
+	);
 }
 
 function getLicense(license) {
@@ -30,10 +34,14 @@ function getLicense(license) {
 		return null;
 	}
 
-	return Object.assign({}, {
-		name: license.licenseName,
-		url: license.licenseURL
-	}, getExtensions(license.contactExtensions));
+	return Object.assign(
+		{},
+		{
+			name: license.licenseName,
+			url: license.licenseURL,
+		},
+		getExtensions(license.contactExtensions),
+	);
 }
 
 module.exports = getInfo;

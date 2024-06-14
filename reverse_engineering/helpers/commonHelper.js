@@ -7,15 +7,16 @@ const ALLOWED_EXTENSIONS = ['.json', '.yaml'];
 
 const errorHelper = require('./errorHelper');
 
-const getFileData = (filePath) => new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf-8', (error, content) => {
-        if(error) {
-            reject(errorHelper.getOpeningFileError(error));
-        } else {
-            resolve(content);
-        }
-    });
-});
+const getFileData = filePath =>
+	new Promise((resolve, reject) => {
+		fs.readFile(filePath, 'utf-8', (error, content) => {
+			if (error) {
+				reject(errorHelper.getOpeningFileError(error));
+			} else {
+				resolve(content);
+			}
+		});
+	});
 
 const isJson = data => {
 	try {
@@ -38,8 +39,8 @@ const isYaml = data => {
 };
 
 const getPathData = (data, filePath) => {
-    const extension = path.extname(filePath);
-    const fileName = path.basename(filePath, extension);
+	const extension = path.extname(filePath);
+	const fileName = path.basename(filePath, extension);
 
 	if (ALLOWED_EXTENSIONS.includes(extension)) {
 		return { extension, fileName };
@@ -57,57 +58,62 @@ const getPathData = (data, filePath) => {
 };
 
 const handleErrorObject = (error, title) => {
-    return Object.assign({ title}, Object.getOwnPropertyNames(error).reduce((accumulator, key) => {
-        return Object.assign(accumulator, {
-            [key]: error[key]
-        })
-    }, {}));
+	return Object.assign(
+		{ title },
+		Object.getOwnPropertyNames(error).reduce((accumulator, key) => {
+			return Object.assign(accumulator, {
+				[key]: error[key],
+			});
+		}, {}),
+	);
 };
 
-const convertYamlToJson = (fileData) => {
-    return yaml.load(fileData, { schema: yaml.JSON_SCHEMA });
+const convertYamlToJson = fileData => {
+	return yaml.load(fileData, { schema: yaml.JSON_SCHEMA });
 };
 
 const getNewId = () => uuid.v1();
 
 const reorderFields = (data, filedOrder) => {
-    if (filedOrder === 'field') {
-        return data;
-    } else {
-        return sortObject(data);
-    }
+	if (filedOrder === 'field') {
+		return data;
+	} else {
+		return sortObject(data);
+	}
 };
 
-const sortObject = (obj) => {
-    if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
-        return obj;
-    }
-    return Object.keys(obj || {}).sort().reduce((acc,key)=>{
-        if (Array.isArray(obj[key])){
-            acc[key] = obj[key].map(sortObject);
-        } else if (typeof obj[key] === 'object'){
-            acc[key]= sortObject(obj[key]);
-        } else {
-            acc[key] = obj[key];
-        }
-        return acc;
-    },{});
+const sortObject = obj => {
+	if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
+		return obj;
+	}
+	return Object.keys(obj || {})
+		.sort()
+		.reduce((acc, key) => {
+			if (Array.isArray(obj[key])) {
+				acc[key] = obj[key].map(sortObject);
+			} else if (typeof obj[key] === 'object') {
+				acc[key] = sortObject(obj[key]);
+			} else {
+				acc[key] = obj[key];
+			}
+			return acc;
+		}, {});
 };
 
-const stringify = (value) => {
-    try {
-        return JSON.stringify(value, null, 4);
-    } catch (err) {
-        return '';
-    }
+const stringify = value => {
+	try {
+		return JSON.stringify(value, null, 4);
+	} catch (err) {
+		return '';
+	}
 };
 
 module.exports = {
 	getFileData,
 	getPathData,
-    handleErrorObject,
-    convertYamlToJson,
-    getNewId,
-    reorderFields,
-    stringify
+	handleErrorObject,
+	convertYamlToJson,
+	getNewId,
+	reorderFields,
+	stringify,
 };

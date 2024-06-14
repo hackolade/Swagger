@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const commonHelper = require('./helpers/commonHelper');
 const dataHelper = require('./helpers/dataHelper');
@@ -9,115 +9,134 @@ const resolveExternalDefinitionPathHelper = require('./helpers/resolveExternalDe
 
 module.exports = {
 	reFromFile(data, logger, callback) {
-        commonHelper.getFileData(data.filePath).then(fileData => {
-            return getSwaggerSchema(fileData, data.filePath);
-        }).then(swaggerSchema => {
-            const fieldOrder = data.fieldInference.active;
-            return handleSwaggerData(swaggerSchema, fieldOrder);
-        }).then(reversedData => {
-            return callback(null, reversedData.hackoladeData, reversedData.modelData, [], 'multipleSchema');
-        }, ({ error, swaggerSchema }) => {
-			if (!swaggerSchema) {
-				return this.handleErrors(error, logger, callback);
-			}
-
-			validationHelper.validate(filterSchema(swaggerSchema), { resolve: { external: false }})
-				.then((messages) => {
-					if (!Array.isArray(messages) || !messages.length) {
-						this.handleErrors(error, logger, callback);
+		commonHelper
+			.getFileData(data.filePath)
+			.then(fileData => {
+				return getSwaggerSchema(fileData, data.filePath);
+			})
+			.then(swaggerSchema => {
+				const fieldOrder = data.fieldInference.active;
+				return handleSwaggerData(swaggerSchema, fieldOrder);
+			})
+			.then(
+				reversedData => {
+					return callback(null, reversedData.hackoladeData, reversedData.modelData, [], 'multipleSchema');
+				},
+				({ error, swaggerSchema }) => {
+					if (!swaggerSchema) {
+						return this.handleErrors(error, logger, callback);
 					}
 
-					const message = `${messages[0].label}: ${messages[0].title}`;
-					const errorData = error.error || {};
+					validationHelper
+						.validate(filterSchema(swaggerSchema), { resolve: { external: false } })
+						.then(messages => {
+							if (!Array.isArray(messages) || !messages.length) {
+								this.handleErrors(error, logger, callback);
+							}
 
-					this.handleErrors(errorHelper.getValidationError({ stack: errorData.stack, message }), logger, callback);
-				})
-				.catch(err => {
-					this.handleErrors(error, logger, callback);
-				});
-		}).catch(errorObject => {
-            this.handleErrors(errorObject, logger, callback);
-		});
-    },
+							const message = `${messages[0].label}: ${messages[0].title}`;
+							const errorData = error.error || {};
+
+							this.handleErrors(
+								errorHelper.getValidationError({ stack: errorData.stack, message }),
+								logger,
+								callback,
+							);
+						})
+						.catch(err => {
+							this.handleErrors(error, logger, callback);
+						});
+				},
+			)
+			.catch(errorObject => {
+				this.handleErrors(errorObject, logger, callback);
+			});
+	},
 
 	handleErrors(errorObject, logger, callback) {
 		const { error, title } = errorObject;
-		const handledError =  commonHelper.handleErrorObject(error, title);
+		const handledError = commonHelper.handleErrorObject(error, title);
 		logger.log('error', handledError, title);
 		callback(handledError);
 	},
 
-    adaptJsonSchema,
+	adaptJsonSchema,
 
 	resolveExternalDefinitionPath(data, logger, callback) {
 		resolveExternalDefinitionPathHelper.resolvePath(data, callback);
-	}
+	},
 };
 
 const convertSwaggerSchemaToHackolade = (swaggerSchema, fieldOrder) => {
-    const modelData = dataHelper.getModelData(swaggerSchema);
-    const definitions = dataHelper.getDefinitions(swaggerSchema.definitions, fieldOrder);
-    const modelContent = dataHelper.getModelContent(swaggerSchema.paths || {}, fieldOrder);
-    return { modelData, modelContent, definitions };
+	const modelData = dataHelper.getModelData(swaggerSchema);
+	const definitions = dataHelper.getDefinitions(swaggerSchema.definitions, fieldOrder);
+	const modelContent = dataHelper.getModelContent(swaggerSchema.paths || {}, fieldOrder);
+	return { modelData, modelContent, definitions };
 };
 
-const getSwaggerSchema = (data, filePath) => new Promise((resolve, reject) => {
-    const { extension, fileName } = commonHelper.getPathData(data, filePath);
+const getSwaggerSchema = (data, filePath) =>
+	new Promise((resolve, reject) => {
+		const { extension, fileName } = commonHelper.getPathData(data, filePath);
 
-    try {
-        const swaggerSchemaWithModelName = dataHelper.getSwaggerJsonSchema(data, fileName, extension);
-        const isValidSwaggerSchema = dataHelper.validateSwaggerSchema(swaggerSchemaWithModelName);
+		try {
+			const swaggerSchemaWithModelName = dataHelper.getSwaggerJsonSchema(data, fileName, extension);
+			const isValidSwaggerSchema = dataHelper.validateSwaggerSchema(swaggerSchemaWithModelName);
 
-        if (isValidSwaggerSchema) {
-            return resolve(swaggerSchemaWithModelName);
-        } else {
-            return reject({ error: errorHelper.getValidationError(new Error('Selected file is not a valid Swagger 2.0 schema')) });
-        }
-    } catch (error) {
-        return reject({ error: errorHelper.getParseError(error) });
-    }
-});
-
-const handleSwaggerData = (swaggerSchema, fieldOrder) => new Promise((resolve, reject) => {
-    try {
-        const convertedData = convertSwaggerSchemaToHackolade(swaggerSchema, fieldOrder);
-        const { modelData, modelContent, definitions } = convertedData;
-        const hackoladeData = modelContent.containers.reduce((accumulator, container) => {
-            const currentEntities = modelContent.entities[container.name];
-            return [
-                ...accumulator, 
-                ...currentEntities.map(entity => {
-                    const packageData = {
-                        objectNames: {
-                            collectionName: entity.collectionName
-                        },
-                        doc: {
-                            dbName: container.name,
-                            collectionName: entity.collectionName,
-                            modelDefinitions: definitions,
-                            bucketInfo: container
-                        },
-                        jsonSchema: entity
-                    };
-                    return packageData;
-                })
-            ];
-        }, []);
-		if (hackoladeData.length) {
-			return resolve({ hackoladeData, modelData });
+			if (isValidSwaggerSchema) {
+				return resolve(swaggerSchemaWithModelName);
+			} else {
+				return reject({
+					error: errorHelper.getValidationError(new Error('Selected file is not a valid Swagger 2.0 schema')),
+				});
+			}
+		} catch (error) {
+			return reject({ error: errorHelper.getParseError(error) });
 		}
+	});
 
-		return resolve({
-			hackoladeData: [{
-				objectNames: {},
-				doc: { modelDefinitions: definitions }
-			}],
-			modelData
-		});
-    } catch (error) {
-        return reject({ error: errorHelper.getConvertError(error), swaggerSchema });
-    }
-});
+const handleSwaggerData = (swaggerSchema, fieldOrder) =>
+	new Promise((resolve, reject) => {
+		try {
+			const convertedData = convertSwaggerSchemaToHackolade(swaggerSchema, fieldOrder);
+			const { modelData, modelContent, definitions } = convertedData;
+			const hackoladeData = modelContent.containers.reduce((accumulator, container) => {
+				const currentEntities = modelContent.entities[container.name];
+				return [
+					...accumulator,
+					...currentEntities.map(entity => {
+						const packageData = {
+							objectNames: {
+								collectionName: entity.collectionName,
+							},
+							doc: {
+								dbName: container.name,
+								collectionName: entity.collectionName,
+								modelDefinitions: definitions,
+								bucketInfo: container,
+							},
+							jsonSchema: entity,
+						};
+						return packageData;
+					}),
+				];
+			}, []);
+			if (hackoladeData.length) {
+				return resolve({ hackoladeData, modelData });
+			}
+
+			return resolve({
+				hackoladeData: [
+					{
+						objectNames: {},
+						doc: { modelDefinitions: definitions },
+					},
+				],
+				modelData,
+			});
+		} catch (error) {
+			return reject({ error: errorHelper.getConvertError(error), swaggerSchema });
+		}
+	});
 
 const filterSchema = schema => {
 	delete schema.modelName;

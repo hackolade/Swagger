@@ -1,32 +1,32 @@
 const mapJsonSchema = require('./mapJsonSchema');
 const commonHelper = require('../commonHelper');
 
-const convertToString = (jsonSchema) => {
+const convertToString = jsonSchema => {
 	return Object.assign({}, jsonSchema, {
 		type: 'string',
 	});
 };
 
-const handleNumericType = (jsonSchema) => {
+const handleNumericType = jsonSchema => {
 	if (jsonSchema.mode === 'int') {
 		return {
 			...jsonSchema,
-			type: 'integer'
-		}
+			type: 'integer',
+		};
 	}
 	if (jsonSchema.mode === 'decimal') {
 		return {
 			...jsonSchema,
 			type: 'number',
-			mode: 'double'
-		}
+			mode: 'double',
+		};
 	}
 
 	return jsonSchema;
 };
 
-const adaptSchema = (jsonSchema) => {
-	return mapJsonSchema(jsonSchema, (jsonSchemaItem) => {
+const adaptSchema = jsonSchema => {
+	return mapJsonSchema(jsonSchema, jsonSchemaItem => {
 		if (jsonSchemaItem.type === 'number') {
 			return handleNumericType(jsonSchemaItem);
 		} else if (jsonSchemaItem.type !== 'null') {
@@ -47,9 +47,9 @@ const adaptJsonSchema = (data, logger, callback) => {
 		logger.log('info', 'Adaptation of JSON Schema finished.', 'Adapt JSON Schema');
 
 		callback(null, {
-			jsonSchema: JSON.stringify(adaptedJsonSchema)
+			jsonSchema: JSON.stringify(adaptedJsonSchema),
 		});
-	} catch(e) {
+	} catch (e) {
 		callback(commonHelper.handleErrorObject(e, 'Adapt JSON Schema'), data);
 	}
 };

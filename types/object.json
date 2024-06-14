@@ -21,16 +21,7 @@
 	},
 	"subtypes": {
 		"noFile": {
-			"childValueType": [
-				"string",
-				"number",
-				"integer",
-				"boolean",
-				"array",
-				"object",
-				"reference",
-				"multiple"
-			]
+			"childValueType": ["string", "number", "integer", "boolean", "array", "object", "reference", "multiple"]
 		}
 	}
 }

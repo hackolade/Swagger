@@ -166,14 +166,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Format",
 				"propertyKeyword": "format",
 				"propertyType": "select",
-				"options": [
-					"",
-					"byte",
-					"binary",
-					"date",
-					"date-time",
-					"password"
-				]
+				"options": ["", "byte", "binary", "date", "date-time", "password"]
 			},
 			{
 				"propertyName": "Primary key",
@@ -207,7 +200,7 @@ making sure that you maintain a proper JSON format.
 									"key": "name",
 									"value": "query"
 								},
-								{ 
+								{
 									"level": "parent",
 									"key": "name",
 									"value": "formData"
@@ -369,7 +362,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -517,10 +510,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Format",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"float",
-					"double"
-				]
+				"options": ["float", "double"]
 			},
 			{
 				"propertyName": "Primary key",
@@ -629,7 +619,8 @@ making sure that you maintain a proper JSON format.
 							"key": "entityType",
 							"value": "request"
 						}
-					]},
+					]
+				},
 				"enableForReference": true
 			},
 			{
@@ -719,9 +710,9 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"level": "parent",
-							
+
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -869,11 +860,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Format",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"",
-					"int32",
-					"int64"
-				]
+				"options": ["", "int32", "int64"]
 			},
 			{
 				"propertyName": "Primary key",
@@ -1074,7 +1061,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -1348,11 +1335,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "example",
 				"propertyKeyword": "sample",
 				"propertyType": "select",
-				"options": [
-					"",
-					"true",
-					"false"
-				]
+				"options": ["", "true", "false"]
 			},
 			"comments"
 		],
@@ -1397,7 +1380,8 @@ making sure that you maintain a proper JSON format.
 							"key": "structureType",
 							"value": true
 						}
-					]},
+					]
+				},
 				"enableForReference": true
 			},
 			"default",
@@ -1477,7 +1461,8 @@ making sure that you maintain a proper JSON format.
 							"key": "structureType",
 							"value": true
 						}
-					]},
+					]
+				},
 				"enableForReference": true
 			},
 			{
@@ -1502,7 +1487,8 @@ making sure that you maintain a proper JSON format.
 							"key": "entityType",
 							"value": "request"
 						}
-					]},
+					]
+				},
 				"enableForReference": true
 			},
 			{
@@ -1516,7 +1502,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -1650,12 +1636,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collectionFormat",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"csv",
-					"ssv",
-					"tsv",
-					"pipes"
-				],
+				"options": ["csv", "ssv", "tsv", "pipes"],
 				"dependency": {
 					"type": "and",
 					"values": [
@@ -1693,13 +1674,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collectionFormat",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"csv",
-					"ssv",
-					"tsv",
-					"pipes",
-					"multi"
-				],
+				"options": ["csv", "ssv", "tsv", "pipes", "multi"],
 				"dependency": {
 					"type": "and",
 					"values": [
@@ -1766,7 +1741,7 @@ making sure that you maintain a proper JSON format.
 									"key": "name",
 									"value": "query"
 								},
-								{ 
+								{
 									"level": "parent",
 									"key": "name",
 									"value": "formData"
@@ -1796,7 +1771,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -1827,7 +1802,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -1865,7 +1840,7 @@ making sure that you maintain a proper JSON format.
 							"level": "parent",
 							"inDepthParentSearch": true,
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -1949,7 +1924,7 @@ making sure that you maintain a proper JSON format.
 						{
 							"level": "parent",
 							"key": "type",
-							"value": "definitions" 
+							"value": "definitions"
 						},
 						{
 							"type": "and",
@@ -2035,13 +2010,13 @@ making sure that you maintain a proper JSON format.
 			},
 			"comments"
 		],
-		"choice": [{
-			"fieldName": "choice",
-			"fieldKeyword": "choice",
-			"fieldType": "select",
-			"options": [
-				"allOf"
-			]
-		}]
+		"choice": [
+			{
+				"fieldName": "choice",
+				"fieldKeyword": "choice",
+				"fieldType": "select",
+				"options": ["allOf"]
+			}
+		]
 	}
 }

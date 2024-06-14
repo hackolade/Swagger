@@ -18,20 +18,11 @@
 		"minItems": "",
 		"maxItems": "",
 		"uniqueItems": false,
-		"subtype": "noFile" 
+		"subtype": "noFile"
 	},
 	"subtypes": {
 		"noFile": {
-			"childValueType": [
-				"string",
-				"number",
-				"integer",
-				"boolean",
-				"array",
-				"object",
-				"reference",
-				"multiple"
-			]
+			"childValueType": ["string", "number", "integer", "boolean", "array", "object", "reference", "multiple"]
 		}
 	}
 }

@@ -3,45 +3,45 @@ const info = {
 	hasPatternedObjects: true,
 	props: {
 		title: {
-			required: true
+			required: true,
 		},
 		description: {
-			required: false
+			required: false,
 		},
 		termsOfService: {
-			required: false
+			required: false,
 		},
 		contact: {
 			required: false,
 			hasPatternedObjects: true,
 			props: {
 				name: {
-					required: false
+					required: false,
 				},
 				url: {
-					required: false
+					required: false,
 				},
 				email: {
-					required: false
+					required: false,
 				},
-			}
+			},
 		},
 		license: {
 			required: false,
 			hasPatternedObjects: true,
 			props: {
 				name: {
-					required: true
+					required: true,
 				},
 				url: {
-					required: false
-				}
-			}
+					required: false,
+				},
+			},
 		},
 		version: {
-			required: true
-		}
-	}
+			required: true,
+		},
+	},
 };
 
 const responses = {
@@ -51,11 +51,11 @@ const responses = {
 			required: true,
 			props: {
 				description: {
-					required: true
-				}
-			}
-		}
-	}
+					required: true,
+				},
+			},
+		},
+	},
 };
 
 const paths = {
@@ -67,15 +67,13 @@ const paths = {
 				any: {
 					required: true,
 					props: {
-						responses
-					}
-				}
-			}
-		}
-	}
+						responses,
+					},
+				},
+			},
+		},
+	},
 };
-
-
 
 const securityDefinitions = {
 	required: false,
@@ -84,29 +82,29 @@ const securityDefinitions = {
 			required: false,
 			props: {
 				type: {
-					required: true
+					required: true,
 				},
 				name: {
-					required: true
+					required: true,
 				},
 				authorizationUrl: {
-					required: true
+					required: true,
 				},
 				tokenUrl: {
-					required: true
-				}
-			}
-		}
-	}
-}
+					required: true,
+				},
+			},
+		},
+	},
+};
 
 const filtrationConfig = {
 	swagger: {
-		required: true
+		required: true,
 	},
 	info,
 	paths,
-	securityDefinitions
-}
+	securityDefinitions,
+};
 
 module.exports = filtrationConfig;

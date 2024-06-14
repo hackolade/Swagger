@@ -134,9 +134,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "DB vendor",
 				"propertyType": "select",
-				"options": [
-					"Swagger"
-				],
+				"options": ["Swagger"],
 				"disabledOption": true
 			},
 			{
@@ -145,9 +143,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "DB version",
 				"propertyType": "select",
-				"options": [
-					"2.0"
-				],
+				"options": ["2.0"],
 				"disabledOption": false
 			},
 			{
@@ -309,7 +305,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "basePath",
 				"shouldValidate": true,
 				"propertyType": "text",
-				"regex": "^\/[\\w\/%-]*$"
+				"regex": "^/[\\w/%-]*$"
 			},
 			{
 				"propertyName": "schemes",
@@ -317,12 +313,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "multipleCheckboxSelect",
-				"options": [
-					"http",
-					"https",
-					"ws",
-					"wss"
-				]
+				"options": ["http", "https", "ws", "wss"]
 			},
 			{
 				"propertyName": "consumes",
@@ -373,11 +364,7 @@ making sure that you maintain a proper JSON format.
 						"shouldValidate": false,
 						"propertyTooltip": "Select from list of options",
 						"propertyType": "select",
-						"options": [
-							"basic",
-							"apiKey",
-							"oauth2"
-						]
+						"options": ["basic", "apiKey", "oauth2"]
 					},
 					{
 						"propertyName": "description",
@@ -405,10 +392,7 @@ making sure that you maintain a proper JSON format.
 						"shouldValidate": false,
 						"propertyTooltip": "Select from list of options",
 						"propertyType": "select",
-						"options": [
-							"query",
-							"header"
-						],
+						"options": ["query", "header"],
 						"dependency": {
 							"key": "securitySchemeType",
 							"value": "apiKey"
@@ -420,12 +404,7 @@ making sure that you maintain a proper JSON format.
 						"shouldValidate": false,
 						"propertyTooltip": "Select from list of options",
 						"propertyType": "select",
-						"options": [
-							"implicit",
-							"password",
-							"application",
-							"accessCode"
-						],
+						"options": ["implicit", "password", "application", "accessCode"],
 						"dependency": {
 							"key": "securitySchemeType",
 							"value": "oauth2"
@@ -442,12 +421,12 @@ making sure that you maintain a proper JSON format.
 							"values": [
 								{
 									"type": "or",
-									"values" : [
-										{	
+									"values": [
+										{
 											"key": "securitySchemeFlow",
 											"value": "implicit"
 										},
-										{	
+										{
 											"key": "securitySchemeFlow",
 											"value": "accessCode"
 										}
@@ -457,7 +436,6 @@ making sure that you maintain a proper JSON format.
 									"key": "securitySchemeType",
 									"value": "oauth2"
 								}
-								
 							]
 						}
 					},

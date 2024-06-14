@@ -24,7 +24,7 @@ module.exports = {
 				externalDocs: modelExternalDocs,
 				tags: modelTags,
 				security: modelSecurity,
-				securityDefinitions: modelSecurityDefinitions
+				securityDefinitions: modelSecurityDefinitions,
 			} = data.modelData[0];
 
 			const resolveApiExternalRefs = data.options?.additionalOptions?.find(
@@ -40,7 +40,10 @@ module.exports = {
 			const produces = commonHelper.mapArrayFieldByName(modelProduces, 'producesMimeTypeDef');
 
 			const modelDefinitions = JSON.parse(data.modelDefinitions) || {};
-			const definitionsWithHandledReferences = mapJsonSchema(modelDefinitions, handleRef(externalDefinitions, resolveApiExternalRefs));
+			const definitionsWithHandledReferences = mapJsonSchema(
+				modelDefinitions,
+				handleRef(externalDefinitions, resolveApiExternalRefs),
+			);
 
 			const definitions = getDefinitions(definitionsWithHandledReferences, containers);
 			const externalDocs = commonHelper.mapExternalDocs(modelExternalDocs);
@@ -61,12 +64,15 @@ module.exports = {
 				tags,
 				externalDocs,
 				paths,
-				definitions
+				definitions,
 			};
 
 			const extensions = getExtensions(data.modelData[0].scopesExtensions);
-			const filteredSwaggerSchema = utils.removeEmptyObjectFields(Object.assign({}, swaggerSchema, extensions), filtrationConfig);
-			
+			const filteredSwaggerSchema = utils.removeEmptyObjectFields(
+				Object.assign({}, swaggerSchema, extensions),
+				filtrationConfig,
+			);
+
 			switch (data.targetScriptOptions.format) {
 				case 'yaml': {
 					const schema = yaml.safeDump(filteredSwaggerSchema, { skipInvalid: true });
@@ -88,8 +94,8 @@ module.exports = {
 			const preparedError = {
 				message: err.message,
 				stack: err.stack,
-			}
-			logger.log('error', preparedError, 'FE error')
+			};
+			logger.log('error', preparedError, 'FE error');
 			cb(preparedError);
 		}
 	},
@@ -110,8 +116,9 @@ module.exports = {
 					parsedScript = JSON.parse(filteredScript);
 			}
 
-			validationHelper.validate(parsedScript)
-				.then((messages) => {
+			validationHelper
+				.validate(parsedScript)
+				.then(messages => {
 					cb(null, messages);
 				})
 				.catch(err => {
@@ -122,7 +129,7 @@ module.exports = {
 
 			cb(e.message);
 		}
-	}
+	},
 };
 
 const addCommentsSigns = (string, format) => {
@@ -131,39 +138,46 @@ const addCommentsSigns = (string, format) => {
 	const innerCommentStart = /hackoladeInnerCommentStart/i;
 	const innerCommentEnd = /hackoladeInnerCommentEnd/i;
 	const innerCommentStartYamlArrayItem = /- hackoladeInnerCommentStart/i;
-	
-	const { result } = string.split('\n').reduce(({ isCommented, result }, line, index, array) => {
-		if (commentsStart.test(line) || innerCommentStart.test(line)) {
-			if (innerCommentStartYamlArrayItem.test(line)) {
-				const lineBeginsAt = array[index + 1].search(/\S/);
-				array[index + 1] = array[index + 1].slice(0, lineBeginsAt) + '- ' + array[index + 1].slice(lineBeginsAt);
-			}
-			return { isCommented: true, result: result };
-		}
-		if (commentsEnd.test(line)) {
-			return { isCommented: false, result };
-		}
-		if (innerCommentEnd.test(line)) {
-			if (format === 'json') {
-				array[index + 1] = '# ' + array[index + 1];
-			}
-			return { isCommented: false, result };
-		}
 
-		const isNextLineInnerCommentStart = index + 1 < array.length && innerCommentStart.test(array[index + 1]);
-		if ((isCommented || isNextLineInnerCommentStart) && !innerCommentStartYamlArrayItem.test(array[index + 1])) {
-			result = result + '# ' + line + '\n';
-		} else {
-			result = result + line + '\n';
-		}
+	const { result } = string.split('\n').reduce(
+		({ isCommented, result }, line, index, array) => {
+			if (commentsStart.test(line) || innerCommentStart.test(line)) {
+				if (innerCommentStartYamlArrayItem.test(line)) {
+					const lineBeginsAt = array[index + 1].search(/\S/);
+					array[index + 1] =
+						array[index + 1].slice(0, lineBeginsAt) + '- ' + array[index + 1].slice(lineBeginsAt);
+				}
+				return { isCommented: true, result: result };
+			}
+			if (commentsEnd.test(line)) {
+				return { isCommented: false, result };
+			}
+			if (innerCommentEnd.test(line)) {
+				if (format === 'json') {
+					array[index + 1] = '# ' + array[index + 1];
+				}
+				return { isCommented: false, result };
+			}
 
-		return { isCommented, result };
-	}, { isCommented: false, result: '' });
+			const isNextLineInnerCommentStart = index + 1 < array.length && innerCommentStart.test(array[index + 1]);
+			if (
+				(isCommented || isNextLineInnerCommentStart) &&
+				!innerCommentStartYamlArrayItem.test(array[index + 1])
+			) {
+				result = result + '# ' + line + '\n';
+			} else {
+				result = result + line + '\n';
+			}
+
+			return { isCommented, result };
+		},
+		{ isCommented: false, result: '' },
+	);
 
 	return result;
-}
+};
 
-const removeCommentLines = (scriptString) => {
+const removeCommentLines = scriptString => {
 	const isCommentedLine = /^\s*#\s+/i;
 
 	return scriptString
@@ -171,7 +185,7 @@ const removeCommentLines = (scriptString) => {
 		.filter(line => !isCommentedLine.test(line))
 		.join('\n')
 		.replace(/(.*?),\s*(\}|])/g, '$1$2');
-}
+};
 
 const handleRefInContainers = (containers, externalDefinitions, resolveApiExternalRefs) => {
 	return containers.map(container => {
@@ -179,27 +193,29 @@ const handleRefInContainers = (containers, externalDefinitions, resolveApiExtern
 			const updatedSchemas = Object.keys(container.jsonSchema).reduce((schemas, id) => {
 				const json = container.jsonSchema[id];
 				try {
-					const updatedSchema = mapJsonSchema(JSON.parse(json), handleRef(externalDefinitions, resolveApiExternalRefs));
+					const updatedSchema = mapJsonSchema(
+						JSON.parse(json),
+						handleRef(externalDefinitions, resolveApiExternalRefs),
+					);
 
 					return {
 						...schemas,
-						[id]: JSON.stringify(updatedSchema)
+						[id]: JSON.stringify(updatedSchema),
 					};
 				} catch (err) {
-					return { ...schemas, [id]: json }
+					return { ...schemas, [id]: json };
 				}
 			}, {});
 
 			return {
 				...container,
-				jsonSchema: updatedSchemas
+				jsonSchema: updatedSchemas,
 			};
 		} catch (err) {
 			return container;
 		}
 	});
 };
-
 
 const handleRef = (externalDefinitions, resolveApiExternalRefs) => field => {
 	if (!field.$ref) {
@@ -211,5 +227,5 @@ const handleRef = (externalDefinitions, resolveApiExternalRefs) => field => {
 		return ref;
 	}
 
-	return { ...field, ...ref }; 
+	return { ...field, ...ref };
 };

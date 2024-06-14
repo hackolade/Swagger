@@ -11,9 +11,13 @@ function getPaths(containers) {
 		const containerExtensions = getExtensions(extensions);
 
 		if (!isActivated) {
-			paths[`hackoladeCommentStart${index}`] = true; 
+			paths[`hackoladeCommentStart${index}`] = true;
 		}
-		paths[name] = Object.assign({}, getRequestData(collections, container.jsonData, isActivated), containerExtensions);
+		paths[name] = Object.assign(
+			{},
+			getRequestData(collections, container.jsonData, isActivated),
+			containerExtensions,
+		);
 		if (!isActivated) {
 			paths[`hackoladeCommentEnd${index}`] = true;
 		}
@@ -41,23 +45,28 @@ function getRequestData(collections, jsonData, isPathActivated = true) {
 				security,
 				GUID: collectionId,
 				operationExtensions,
-				isActivated
-			}) => Object.assign({}, {
-				tags: commonHelper.mapArrayFieldByName(tags, 'tag'),
-				summary,
-				description,
-				externalDocs: commonHelper.mapExternalDocs(externalDocs),
-				operationId,
-				consumes: commonHelper.mapArrayFieldByName(consumes, 'consumesMimeTypeDef'),
-				produces: commonHelper.mapArrayFieldByName(produces, 'producesMimeTypeDef'),
-				schemes,
-				deprecated,
-				parameters: mapParameters(properties, collectionId, jsonData, isPathActivated && isActivated),
-				responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
-				security: commonHelper.mapSecurity(security),
-				methodName: collectionName,
-				isActivated
-			}, getExtensions(operationExtensions))
+				isActivated,
+			}) =>
+				Object.assign(
+					{},
+					{
+						tags: commonHelper.mapArrayFieldByName(tags, 'tag'),
+						summary,
+						description,
+						externalDocs: commonHelper.mapExternalDocs(externalDocs),
+						operationId,
+						consumes: commonHelper.mapArrayFieldByName(consumes, 'consumesMimeTypeDef'),
+						produces: commonHelper.mapArrayFieldByName(produces, 'producesMimeTypeDef'),
+						schemes,
+						deprecated,
+						parameters: mapParameters(properties, collectionId, jsonData, isPathActivated && isActivated),
+						responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
+						security: commonHelper.mapSecurity(security),
+						methodName: collectionName,
+						isActivated,
+					},
+					getExtensions(operationExtensions),
+				),
 		)
 		.reduce((acc, collection, index) => {
 			const { methodName, isActivated } = collection;
@@ -66,11 +75,11 @@ function getRequestData(collections, jsonData, isPathActivated = true) {
 
 			const shouldCommentedFlagBeInserted = !isActivated && isPathActivated;
 			if (shouldCommentedFlagBeInserted) {
-				acc[`hackoladeCommentStart${index}`] = true; 
+				acc[`hackoladeCommentStart${index}`] = true;
 			}
 			acc[methodName] = collection;
 			if (shouldCommentedFlagBeInserted) {
-				acc[`hackoladeCommentEnd${index}`] = true; 
+				acc[`hackoladeCommentEnd${index}`] = true;
 			}
 			return acc;
 		}, {});
@@ -85,7 +94,7 @@ function mapParameters(parameters, collectionId, jsonData, isParentActivated) {
 			return getParameterProps(parameterType, parameters, collectionId, jsonData, isParentActivated);
 		})
 		.filter(param => param)
-		.reduce((acc, param) => acc.concat(param), [])
+		.reduce((acc, param) => acc.concat(param), []);
 }
 
 function getParameterProps(parameterType, parameters, collectionId, jsonData, isParentActivated) {
@@ -98,18 +107,30 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData, is
 			name: propName,
 			in: parameterType,
 			description: parameters[parameterType].properties[propName].description,
-			required: (parameters[parameterType].required && parameters[parameterType].required.includes(propName)) || false
+			required:
+				(parameters[parameterType].required && parameters[parameterType].required.includes(propName)) || false,
 		};
-	const isActivated = parameters[parameterType].properties[propName].isActivated;
-		const typeProps = typeHelper.getType(parameters[parameterType].properties[propName], isActivated && isParentActivated);
+		const isActivated = parameters[parameterType].properties[propName].isActivated;
+		const typeProps = typeHelper.getType(
+			parameters[parameterType].properties[propName],
+			isActivated && isParentActivated,
+		);
 
 		if (parameterType === 'body') {
-			return commentDeactivatedItemInner(Object.assign({}, parameterProps, {
-				schema: Object.assign({}, typeProps)
-			}), isActivated, isParentActivated);
+			return commentDeactivatedItemInner(
+				Object.assign({}, parameterProps, {
+					schema: Object.assign({}, typeProps),
+				}),
+				isActivated,
+				isParentActivated,
+			);
 		}
 
-		return commentDeactivatedItemInner(Object.assign({}, parameterProps, typeProps), isActivated, isParentActivated);
+		return commentDeactivatedItemInner(
+			Object.assign({}, parameterProps, typeProps),
+			isActivated,
+			isParentActivated,
+		);
 	});
 }
 
@@ -128,13 +149,10 @@ function mapResponses(collections, collectionId, isParentActivated) {
 				{
 					description: collection.description || '',
 					headers: mapResponseHeaders(collection.properties.headers, isResponseActivated),
-					schema: typeHelper.getType(
-							collection.properties.body,
-							isResponseActivated
-						),
+					schema: typeHelper.getType(collection.properties.body, isResponseActivated),
 					examples: getResponseExamples(collection.examples),
 				},
-				getExtensions(collection.operationExtensions)
+				getExtensions(collection.operationExtensions),
 			);
 			if (shouldResponseBeCommented) {
 				response[`hackoladeInnerCommentEnd`] = true;
@@ -160,13 +178,10 @@ function mapResponseHeaders(data, isParentActivated) {
 			Object.assign(
 				{},
 				{ description: data.properties[name].description },
-				typeHelper.getType(
-					data.properties[name],
-					isActivated && isParentActivated
-				)
+				typeHelper.getType(data.properties[name], isActivated && isParentActivated),
 			),
 			isActivated,
-			isParentActivated
+			isParentActivated,
 		);
 		return headers;
 	}, {});
