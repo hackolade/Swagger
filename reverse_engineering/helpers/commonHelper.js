@@ -87,7 +87,7 @@ const sortObject = obj => {
 		return obj;
 	}
 	return Object.keys(obj || {})
-		.sort()
+		.sort((a, b) => a?.localeCompare?.(b))
 		.reduce((acc, key) => {
 			if (Array.isArray(obj[key])) {
 				acc[key] = obj[key].map(sortObject);
