@@ -341,7 +341,7 @@ const getEntities = (pathData, containers, fieldOrder) => {
 		const entitiesNames = Object.keys(containerData).filter(item => REQUEST_TYPE.includes(item));
 		const entities = entitiesNames.reduce((accumulator, request) => {
 			const requestData = containerData[request];
-			const { jsonSchema, responses } = handleRequestData(requestData, request, container.name, fieldOrder);
+			const { jsonSchema, responses } = handleRequestData(requestData, request, fieldOrder);
 			const responseSchemas = Object.keys(responses).map(response => {
 				return handleResponseData(responses[response], response, request, fieldOrder);
 			});
