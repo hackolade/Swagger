@@ -26,6 +26,8 @@ module.exports = {
 				security: modelSecurity,
 				securityDefinitions: modelSecurityDefinitions,
 			} = data.modelData[0];
+			const appTargetVersion = data?.options?.appTargetVersion;
+			const specVersion = appTargetVersion ?? dbVersion;
 
 			const resolveApiExternalRefs = data.options?.additionalOptions?.find(
 				option => option.id === 'resolveApiExternalRefs',
@@ -52,7 +54,7 @@ module.exports = {
 			const securityDefinitions = commonHelper.mapSecurityDefinitions(modelSecurityDefinitions);
 
 			const swaggerSchema = {
-				swagger: dbVersion,
+				swagger: specVersion,
 				info,
 				host,
 				basePath,
