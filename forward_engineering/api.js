@@ -26,8 +26,8 @@ module.exports = {
 				security: modelSecurity,
 				securityDefinitions: modelSecurityDefinitions,
 			} = data.modelData[0];
-			const appTargetVersion = data?.options?.appTargetVersion;
-			const specVersion = appTargetVersion ?? dbVersion;
+			const apiTargetVersion = data?.options?.apiTargetVersion;
+			const specVersion = apiTargetVersion ?? dbVersion;
 
 			const resolveApiExternalRefs = data.options?.additionalOptions?.find(
 				option => option.id === 'resolveApiExternalRefs',
