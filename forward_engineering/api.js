@@ -10,6 +10,7 @@ const utils = require('./utils/utils');
 const filtrationConfig = require('./utils/filtrationConfig');
 const mapJsonSchema = require('../reverse_engineering/helpers/adaptJsonSchema/mapJsonSchema');
 const handleReferencePath = require('./helpers/handleReferencePath');
+const versions = require('../package.json').contributes.target.versions;
 
 module.exports = {
 	generateModelScript(data, logger, cb) {
@@ -26,6 +27,8 @@ module.exports = {
 				security: modelSecurity,
 				securityDefinitions: modelSecurityDefinitions,
 			} = data.modelData[0];
+			const apiTargetVersion = data?.options?.apiTargetVersion;
+			const specVersion = apiTargetVersion && versions.includes(apiTargetVersion) ? apiTargetVersion : dbVersion;
 
 			const resolveApiExternalRefs = data.options?.additionalOptions?.find(
 				option => option.id === 'resolveApiExternalRefs',
@@ -52,7 +55,7 @@ module.exports = {
 			const securityDefinitions = commonHelper.mapSecurityDefinitions(modelSecurityDefinitions);
 
 			const swaggerSchema = {
-				swagger: dbVersion,
+				swagger: specVersion,
 				info,
 				host,
 				basePath,
