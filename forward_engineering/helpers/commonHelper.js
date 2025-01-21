@@ -2,14 +2,11 @@ const getExtensions = require('./extensionsHelper');
 
 function mapExternalDocs(docs) {
 	if (docs) {
-		return Object.assign(
-			{},
-			{
-				description: docs.externalDocsDescription,
-				url: docs.externalDocsUrl,
-			},
-			getExtensions(docs.scopesExtensions),
-		);
+		return {
+			description: docs.externalDocsDescription,
+			url: docs.externalDocsUrl,
+			...getExtensions(docs.scopesExtensions),
+		};
 	}
 }
 
@@ -67,15 +64,12 @@ function mapSecurityDefinitions(securityDefinitions = []) {
 					in: data.securitySchemeIn,
 				};
 			case 'oauth2':
-				return Object.assign(
-					{},
-					{
-						description: data.securitySchemeDescription,
-						flow: data.securitySchemeFlow,
-						scopes: getScopes(data.securitySchemeScopes),
-					},
-					getParamsForFlow(data.securitySchemeFlow, data),
-				);
+				return {
+					description: data.securitySchemeDescription,
+					flow: data.securitySchemeFlow,
+					scopes: getScopes(data.securitySchemeScopes),
+					...getParamsForFlow(data.securitySchemeFlow, data),
+				};
 			default:
 				return null;
 		}
@@ -98,21 +92,18 @@ function mapSecurityDefinitions(securityDefinitions = []) {
 		}
 	};
 
-	const modelSecurityDefinitions = securityDefinitions.reduce((acc, secDef) => {
-		acc[secDef.securityDefinitionsName] = Object.assign(
-			{},
-			{ type: secDef.securitySchemeType },
-			getPropsForType(secDef.securitySchemeType, secDef),
-			getExtensions(secDef.scopesExtensions),
-		);
+	return securityDefinitions.reduce((acc, secDef) => {
+		acc[secDef.securityDefinitionsName] = {
+			type: secDef.securitySchemeType,
+			...getPropsForType(secDef.securitySchemeType, secDef),
+			...getExtensions(secDef.scopesExtensions),
+		};
 		return acc;
 	}, {});
-
-	return modelSecurityDefinitions;
 }
 
 function mapArrayFieldByName(dataArray, fieldName) {
-	return dataArray && dataArray.map(dataItem => dataItem[fieldName]);
+	return dataArray?.map(dataItem => dataItem[fieldName]);
 }
 
 function activateItem(item) {

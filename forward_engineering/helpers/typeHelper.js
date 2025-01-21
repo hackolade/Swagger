@@ -14,7 +14,7 @@ function getType(data, isParentActivated = false) {
 	}
 
 	if (Array.isArray(data.type)) {
-		return getType(Object.assign({}, data, { type: data.type[0] }), isParentActivated);
+		return getType({ ...data, type: data.type[0] }, isParentActivated);
 	}
 
 	if (data.$ref) {
@@ -61,7 +61,10 @@ function getTypeProps(data, isParentActivated) {
 				required,
 				title: data.title,
 				description: data.description,
-				properties: getObjectProperties(properties, isActivated && isParentActivated),
+				properties: getObjectProperties({
+					properties,
+					isParentActivated: isActivated && isParentActivated,
+				}),
 				minProperties: data.minProperties,
 				maxProperties: data.maxProperties,
 				additionalProperties: data.additionalProperties,
@@ -83,12 +86,12 @@ function getTypeProps(data, isParentActivated) {
 
 function getArrayItemsType(items, isParentActivated) {
 	if (Array.isArray(items)) {
-		return Object.assign({}, items.length > 0 ? getType(items[0], isParentActivated) : {});
+		return { ...(items.length > 0 ? getType(items[0], isParentActivated) : {}) };
 	}
-	return Object.assign({}, items ? getType(items, isParentActivated) : {});
+	return { ...(items ? getType(items, isParentActivated) : {}) };
 }
 
-function getObjectProperties(properties = {}, isParentActivated) {
+function getObjectProperties({ properties = {}, isParentActivated }) {
 	return Object.keys(properties).reduce((acc, propName) => {
 		acc[propName] = commentDeactivatedItemInner(
 			getType(properties[propName], isParentActivated),
@@ -104,17 +107,14 @@ function getXml(data) {
 		return undefined;
 	}
 
-	return Object.assign(
-		{},
-		{
-			name: data.xmlName,
-			namespace: data.xmlNamespace,
-			prefix: data.xmlPrefix,
-			attribute: data.xmlAttribute,
-			wrapped: data.xmlWrapped,
-		},
-		getExtensions(data.scopesExtensions),
-	);
+	return {
+		name: data.xmlName,
+		namespace: data.xmlNamespace,
+		prefix: data.xmlPrefix,
+		attribute: data.xmlAttribute,
+		wrapped: data.xmlWrapped,
+		...getExtensions(data.scopesExtensions),
+	};
 }
 
 function getPrimitiveTypeProps(data) {

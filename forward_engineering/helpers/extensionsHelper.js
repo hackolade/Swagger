@@ -13,7 +13,7 @@ function getExtensions(data = []) {
 }
 
 function filterExtensionsByPrefix({ extensionPattern }) {
-	return extensionPattern && extensionPattern.startsWith('x-');
+	return extensionPattern?.startsWith('x-');
 }
 
 module.exports = getExtensions;

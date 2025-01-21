@@ -58,14 +58,14 @@ const getPathData = (data, filePath) => {
 };
 
 const handleErrorObject = (error, title) => {
-	return Object.assign(
-		{ title },
-		Object.getOwnPropertyNames(error).reduce((accumulator, key) => {
+	return {
+		title,
+		...Object.getOwnPropertyNames(error).reduce((accumulator, key) => {
 			return Object.assign(accumulator, {
 				[key]: error[key],
 			});
 		}, {}),
-	);
+	};
 };
 
 const convertYamlToJson = fileData => {

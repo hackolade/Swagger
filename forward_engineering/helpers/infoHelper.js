@@ -10,7 +10,7 @@ function getInfo(data) {
 		version: data.modelVersion || '',
 	};
 	const extensions = getExtensions(data.infoExtensions);
-	return Object.assign({}, info, extensions);
+	return { ...info, ...extensions };
 }
 
 function getContact(contact) {
@@ -18,15 +18,12 @@ function getContact(contact) {
 		return null;
 	}
 
-	return Object.assign(
-		{},
-		{
-			name: contact.contactName,
-			url: contact.contactURL,
-			email: contact.contactemail,
-		},
-		getExtensions(contact.contactExtensions),
-	);
+	return {
+		name: contact.contactName,
+		url: contact.contactURL,
+		email: contact.contactemail,
+		...getExtensions(contact.contactExtensions),
+	};
 }
 
 function getLicense(license) {
@@ -34,14 +31,11 @@ function getLicense(license) {
 		return null;
 	}
 
-	return Object.assign(
-		{},
-		{
-			name: license.licenseName,
-			url: license.licenseURL,
-		},
-		getExtensions(license.contactExtensions),
-	);
+	return {
+		name: license.licenseName,
+		url: license.licenseURL,
+		...getExtensions(license.contactExtensions),
+	};
 }
 
 module.exports = getInfo;

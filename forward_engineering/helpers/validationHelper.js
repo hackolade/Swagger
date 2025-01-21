@@ -21,7 +21,7 @@ const getError = errorItem => {
 };
 
 const at = message => {
-	if (message.path && message.path.length) {
+	if (message.path?.length) {
 		return ' at #/' + message.path.join('/');
 	} else {
 		return '';
@@ -46,10 +46,10 @@ const getInnerErrors = (inner, depth = 0) => {
 	).join('\n');
 };
 
-const uniqStrings = items => Object.keys(items.reduce((result, item) => Object.assign({}, result, { [item]: '' }), {}));
+const uniqStrings = items => Object.keys(items.reduce((result, item) => ({ ...result, [item]: '' }), {}));
 
 const validate = (script, options = {}) =>
-	new Promise((resolve, reject) => {
+	new Promise(resolve => {
 		SwaggerParser.validate(script, options, (err, api) => {
 			if (!err) {
 				return resolve([
