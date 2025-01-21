@@ -184,7 +184,7 @@ const removeCommentLines = scriptString => {
 		.split('\n')
 		.filter(line => !isCommentedLine.test(line))
 		.join('\n')
-		.replace(/(.*?),\s*(}|])/g, '$1$2');
+		.replace(/(.*?),\s*([}\]])/g, '$1$2');
 };
 
 const handleRefInContainers = (containers, externalDefinitions, resolveApiExternalRefs) => {
