@@ -1,17 +1,17 @@
 const cloneDeep = require('lodash.clonedeep');
 
-const add = (obj, name, value) => Object.assign({}, obj, { [name]: value });
+const add = (obj, name, value) => ({ ...obj, [name]: value });
 
 const getDefinition = (reference, definitions) => {
-	const isModel = /\#model/i.test(reference.$ref || '');
-	const isInternal = /^\#\/definitions/i.test(reference.$ref || '');
+	const isModel = /#model/i.test(reference.$ref || '');
+	const isInternal = /^#\/definitions/i.test(reference.$ref || '');
 
 	if (isModel) {
-		const definitionName = reference.$ref.replace(/\#model\/definitions\//i, '');
+		const definitionName = reference.$ref.replace(/#model\/definitions\//i, '');
 
 		return cloneDeep(definitions.model.properties[definitionName]);
 	} else if (isInternal) {
-		const definitionName = reference.$ref.replace(/\#\/definitions\//, '');
+		const definitionName = reference.$ref.replace(/#\/definitions\//, '');
 
 		return cloneDeep(definitions.internal.properties[definitionName]);
 	} else {
@@ -54,9 +54,7 @@ const replaceReferencesInParameters = (jsonSchema, definitions) => {
 		return add(properties, propertyName, updatedProperty);
 	}, {});
 
-	return Object.assign({}, jsonSchema, {
-		properties,
-	});
+	return { ...jsonSchema, properties };
 };
 
 const convertReferencesInEntities = ({ entities, jsonSchemas, definitions }) => {
@@ -65,21 +63,15 @@ const convertReferencesInEntities = ({ entities, jsonSchemas, definitions }) => 
 		const internalDefinition = JSON.parse(definitions.internal[entityId]);
 
 		if (jsonSchema.entityType !== 'request') {
-			return Object.assign({}, result, {
-				[entityId]: jsonSchemas[entityId],
-			});
+			return { ...result, [entityId]: jsonSchemas[entityId] };
 		}
 
-		const replacedReferences = replaceReferencesInParameters(
-			jsonSchema,
-			Object.assign({}, definitions, {
-				internal: internalDefinition,
-			}),
-		);
-
-		return Object.assign({}, result, {
-			[entityId]: JSON.stringify(replacedReferences),
+		const replacedReferences = replaceReferencesInParameters(jsonSchema, {
+			...definitions,
+			internal: internalDefinition,
 		});
+
+		return { ...result, [entityId]: JSON.stringify(replacedReferences) };
 	}, {});
 };
 
@@ -95,16 +87,10 @@ const convertReferences = data => {
 			},
 		});
 
-		return containers.concat(
-			Object.assign({}, container, {
-				jsonSchema,
-			}),
-		);
+		return containers.concat({ ...container, jsonSchema });
 	}, []);
 
-	return Object.assign({}, data, {
-		containers,
-	});
+	return { ...data, containers };
 };
 
 module.exports = convertReferences;

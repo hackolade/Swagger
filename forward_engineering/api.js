@@ -72,7 +72,7 @@ module.exports = {
 
 			const extensions = getExtensions(data.modelData[0].scopesExtensions);
 			const filteredSwaggerSchema = utils.removeEmptyObjectFields(
-				Object.assign({}, swaggerSchema, extensions),
+				{ ...swaggerSchema, ...extensions },
 				filtrationConfig,
 			);
 
@@ -87,7 +87,7 @@ module.exports = {
 				default: {
 					const schemaString = JSON.stringify(filteredSwaggerSchema, null, 2);
 					let schema = addCommentsSigns(schemaString, 'json');
-					if (!(data.options && data.options.isCalledFromFETab)) {
+					if (!data.options?.isCalledFromFETab) {
 						schema = removeCommentLines(schema);
 					}
 					cb(null, schema);
@@ -187,7 +187,7 @@ const removeCommentLines = scriptString => {
 		.split('\n')
 		.filter(line => !isCommentedLine.test(line))
 		.join('\n')
-		.replace(/(.*?),\s*(\}|])/g, '$1$2');
+		.replace(/(.*?),\s*([}\]])/g, '$1$2');
 };
 
 const handleRefInContainers = (containers, externalDefinitions, resolveApiExternalRefs) => {

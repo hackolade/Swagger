@@ -1,9 +1,7 @@
 function removeEmptyObjectFields(inputObj, filtrationConfig = {}) {
 	const obj = JSON.parse(JSON.stringify(inputObj));
 
-	const isRequiredField = key =>
-		(filtrationConfig[key] && filtrationConfig[key].required) ||
-		(filtrationConfig.any && filtrationConfig.any.required);
+	const isRequiredField = key => filtrationConfig[key]?.required || filtrationConfig.any?.required;
 
 	const isNotEmptyValue = key => obj[key] !== null && obj[key] !== undefined;
 	const isNotEmptyArray = key => (Array.isArray(obj[key]) ? obj[key].length > 0 : true);
@@ -38,7 +36,7 @@ function removeEmptyObjectFields(inputObj, filtrationConfig = {}) {
 }
 
 const prepareName = name => {
-	return (name || '').replace(/\ /gi, '_');
+	return (name || '').replace(/ /gi, '_');
 };
 
 const prepareReferenceName = ref => {

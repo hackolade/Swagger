@@ -2,9 +2,7 @@ const mapJsonSchema = require('./mapJsonSchema');
 const commonHelper = require('../commonHelper');
 
 const convertToString = jsonSchema => {
-	return Object.assign({}, jsonSchema, {
-		type: 'string',
-	});
+	return { ...jsonSchema, type: 'string' };
 };
 
 const handleNumericType = jsonSchema => {

@@ -13,11 +13,10 @@ function getPaths(containers) {
 		if (!isActivated) {
 			paths[`hackoladeCommentStart${index}`] = true;
 		}
-		paths[name] = Object.assign(
-			{},
-			getRequestData(collections, container.jsonData, isActivated),
-			containerExtensions,
-		);
+		paths[name] = {
+			...getRequestData(collections, container.jsonData, isActivated),
+			...containerExtensions,
+		};
 		if (!isActivated) {
 			paths[`hackoladeCommentEnd${index}`] = true;
 		}
@@ -46,27 +45,23 @@ function getRequestData(collections, jsonData, isPathActivated = true) {
 				GUID: collectionId,
 				operationExtensions,
 				isActivated,
-			}) =>
-				Object.assign(
-					{},
-					{
-						tags: commonHelper.mapArrayFieldByName(tags, 'tag'),
-						summary,
-						description,
-						externalDocs: commonHelper.mapExternalDocs(externalDocs),
-						operationId,
-						consumes: commonHelper.mapArrayFieldByName(consumes, 'consumesMimeTypeDef'),
-						produces: commonHelper.mapArrayFieldByName(produces, 'producesMimeTypeDef'),
-						schemes,
-						deprecated,
-						parameters: mapParameters(properties, collectionId, jsonData, isPathActivated && isActivated),
-						responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
-						security: commonHelper.mapSecurity(security),
-						methodName: collectionName,
-						isActivated,
-					},
-					getExtensions(operationExtensions),
-				),
+			}) => ({
+				tags: commonHelper.mapArrayFieldByName(tags, 'tag'),
+				summary,
+				description,
+				externalDocs: commonHelper.mapExternalDocs(externalDocs),
+				operationId,
+				consumes: commonHelper.mapArrayFieldByName(consumes, 'consumesMimeTypeDef'),
+				produces: commonHelper.mapArrayFieldByName(produces, 'producesMimeTypeDef'),
+				schemes,
+				deprecated,
+				parameters: mapParameters(properties, collectionId, jsonData, isPathActivated && isActivated),
+				responses: mapResponses(collections, collectionId, isPathActivated && isActivated),
+				security: commonHelper.mapSecurity(security),
+				methodName: collectionName,
+				isActivated,
+				...getExtensions(operationExtensions),
+			}),
 		)
 		.reduce((acc, collection, index) => {
 			const { methodName, isActivated } = collection;
@@ -98,7 +93,6 @@ function mapParameters(parameters, collectionId, jsonData, isParentActivated) {
 }
 
 function getParameterProps(parameterType, parameters, collectionId, jsonData, isParentActivated) {
-	const isSchemaWithRef = (typeProps = {}) => typeProps.$ref || (typeProps.items && typeProps.items.$ref);
 	if (!parameters[parameterType].properties) {
 		return null;
 	}
@@ -107,8 +101,7 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData, is
 			name: propName,
 			in: parameterType,
 			description: parameters[parameterType].properties[propName].description,
-			required:
-				(parameters[parameterType].required && parameters[parameterType].required.includes(propName)) || false,
+			required: parameters[parameterType].required?.includes(propName) || false,
 		};
 		const isActivated = parameters[parameterType].properties[propName].isActivated;
 		const typeProps = typeHelper.getType(
@@ -118,24 +111,18 @@ function getParameterProps(parameterType, parameters, collectionId, jsonData, is
 
 		if (parameterType === 'body') {
 			return commentDeactivatedItemInner(
-				Object.assign({}, parameterProps, {
-					schema: Object.assign({}, typeProps),
-				}),
+				{ ...parameterProps, schema: { ...typeProps } },
 				isActivated,
 				isParentActivated,
 			);
 		}
 
-		return commentDeactivatedItemInner(
-			Object.assign({}, parameterProps, typeProps),
-			isActivated,
-			isParentActivated,
-		);
+		return commentDeactivatedItemInner({ ...parameterProps, ...typeProps }, isActivated, isParentActivated);
 	});
 }
 
 function mapResponses(collections, collectionId, isParentActivated) {
-	const result = collections
+	return collections
 		.filter(collection => collection.entityType === 'response' && collection.parentCollection === collectionId)
 		.map(collection => {
 			const shouldResponseBeCommented = !collection.isActivated && isParentActivated;
@@ -164,38 +151,25 @@ function mapResponses(collections, collectionId, isParentActivated) {
 			acc[responseCode] = response;
 			return acc;
 		}, {});
-	return result;
 }
 
 function mapResponseHeaders(data, isParentActivated) {
-	if (!data || !data.properties) {
+	if (!data?.properties) {
 		return null;
 	}
 
 	return Object.keys(data.properties).reduce((headers, name) => {
 		const isActivated = data.properties[name].isActivated;
 		headers[name] = commentDeactivatedItemInner(
-			Object.assign(
-				{},
-				{ description: data.properties[name].description },
-				typeHelper.getType(data.properties[name], isActivated && isParentActivated),
-			),
+			{
+				description: data.properties[name].description,
+				...typeHelper.getType(data.properties[name], isActivated && isParentActivated),
+			},
 			isActivated,
 			isParentActivated,
 		);
 		return headers;
 	}, {});
-}
-
-function getRequestExample(collectionId, jsonData) {
-	if (!jsonData || !jsonData[collectionId]) {
-		return null;
-	}
-	const { body } = JSON.parse(jsonData[collectionId]);
-	if (!body || Object.keys(body).length === 0) {
-		return null;
-	}
-	return body;
 }
 
 function getResponseExamples(data = []) {

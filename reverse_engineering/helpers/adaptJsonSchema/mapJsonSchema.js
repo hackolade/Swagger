@@ -1,7 +1,7 @@
 const isPlainObject = require('lodash.isplainobject');
 const partial = require('lodash.partial');
 
-const add = (obj, properties) => Object.assign({}, obj, properties);
+const add = (obj, properties) => ({ ...obj, ...properties });
 
 const mapJsonSchema = (jsonSchema, callback) => {
 	const mapProperties = (properties, mapper) =>
@@ -25,9 +25,7 @@ const mapJsonSchema = (jsonSchema, callback) => {
 				return jsonSchema;
 			}
 
-			return Object.assign({}, jsonSchema, {
-				[propertyName]: mapper(jsonSchema[propertyName]),
-			});
+			return { ...jsonSchema, [propertyName]: mapper(jsonSchema[propertyName]) };
 		}, jsonSchema);
 	};
 	if (!isPlainObject(jsonSchema)) {
@@ -37,7 +35,7 @@ const mapJsonSchema = (jsonSchema, callback) => {
 	const propertiesLike = ['properties', 'definitions', 'patternProperties'];
 	const itemsLike = ['items', 'oneOf', 'allOf', 'anyOf', 'not'];
 
-	const copyJsonSchema = Object.assign({}, jsonSchema);
+	const copyJsonSchema = { ...jsonSchema };
 	const jsonSchemaWithNewProperties = applyTo(
 		propertiesLike,
 		copyJsonSchema,

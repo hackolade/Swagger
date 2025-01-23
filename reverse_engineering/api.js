@@ -1,5 +1,3 @@
-'use strict';
-
 const commonHelper = require('./helpers/commonHelper');
 const dataHelper = require('./helpers/dataHelper');
 const errorHelper = require('./helpers/errorHelper');
@@ -104,7 +102,7 @@ const handleSwaggerData = (swaggerSchema, fieldOrder) =>
 				return [
 					...accumulator,
 					...currentEntities.map(entity => {
-						const packageData = {
+						return {
 							objectNames: {
 								collectionName: entity.collectionName,
 							},
@@ -116,7 +114,6 @@ const handleSwaggerData = (swaggerSchema, fieldOrder) =>
 							},
 							jsonSchema: entity,
 						};
-						return packageData;
 					}),
 				];
 			}, []);

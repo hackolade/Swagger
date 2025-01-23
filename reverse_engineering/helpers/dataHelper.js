@@ -161,7 +161,7 @@ const handleDataByConfig = (data, config) => {
 			if (!data[key]) {
 				return accumulator;
 			}
-			return Object.assign({}, accumulator, handleProperty(data[key], config, key));
+			return { ...accumulator, ...handleProperty(data[key], config, key) };
 		}, {}),
 	);
 };
@@ -173,7 +173,7 @@ const getEntityData = (schema, type = REQUEST) => {
 const getContainers = pathData => {
 	return Object.keys(pathData).map(key => {
 		const extensionsObject = getExtensionsObject(pathData[key], 'extensions');
-		return Object.assign({ name: key }, extensionsObject);
+		return { name: key, ...extensionsObject };
 	});
 };
 
@@ -248,10 +248,10 @@ const handleSchemaProps = (schema, fieldOrder) => {
 	}, {});
 };
 
-const getParametersData = (parameters = [], fieldOrder) => {
+const getParametersData = ({ parameters = [], fieldOrder }) => {
 	const reduceParameterSchema = parameter => {
 		const schema = handleSchemaProps(parameter.schema, fieldOrder);
-		const newParameter = Object.assign({}, parameter, schema);
+		const newParameter = { ...parameter, ...schema };
 		delete newParameter.schema;
 		return newParameter;
 	};
@@ -259,12 +259,10 @@ const getParametersData = (parameters = [], fieldOrder) => {
 	const parametersData = parameters.reduce((accumulator, parameter) => {
 		const newParameter = parameter.schema ? reduceParameterSchema(parameter) : parameter;
 		const inData = accumulator[parameter.in] ? accumulator[parameter.in] : [];
-		return Object.assign({}, accumulator, {
-			[parameter.in]: [...inData, newParameter],
-		});
+		return { ...accumulator, [parameter.in]: [...inData, newParameter] };
 	}, {});
 
-	const propertiesSchema = PARAMETER_TYPES.reduce((accumulator, paramType) => {
+	return PARAMETER_TYPES.reduce((accumulator, paramType) => {
 		const properties = (parametersData[paramType] || []).reduce((accumulator, item) => {
 			return Object.assign(accumulator, {
 				[item.name]: item,
@@ -279,31 +277,30 @@ const getParametersData = (parameters = [], fieldOrder) => {
 			},
 		});
 	}, {});
-
-	return propertiesSchema;
 };
 
 const handleRequestData = (requestData, request, fieldOrder) => {
 	const responses = requestData.responses;
 	const entityData = getEntityData(requestData, REQUEST);
-	const parametersData = getParametersData(requestData.parameters, fieldOrder);
-	const jsonSchema = Object.assign(
-		{
-			type: 'object',
-			entityType: REQUEST,
-			collectionName: request,
-			properties: parametersData,
-			isActivated: true,
-		},
-		entityData,
-	);
+	const parametersData = getParametersData({
+		parameters: requestData.parameters,
+		fieldOrder,
+	});
+	const jsonSchema = {
+		type: 'object',
+		entityType: REQUEST,
+		collectionName: request,
+		properties: parametersData,
+		isActivated: true,
+		...entityData,
+	};
 	return { jsonSchema, responses };
 };
 
 const getResponseData = (responseObj, fieldOrder) => {
 	const headersData = responseObj.headers || {};
 	const schemaData = responseObj.schema ? { schema: handleSchemaProps(responseObj.schema, fieldOrder) } : {};
-	const propertiesSchema = {
+	return {
 		headers: {
 			type: PARAMETER,
 			subtype: SUBTYPE_NO_FILE,
@@ -315,24 +312,20 @@ const getResponseData = (responseObj, fieldOrder) => {
 			properties: schemaData,
 		},
 	};
-	return propertiesSchema;
 };
 
 const handleResponseData = (responseObj, response, request, fieldOrder) => {
 	const entityData = getEntityData(responseObj, RESPONSE);
 	const responseData = getResponseData(responseObj, fieldOrder);
-	const jsonSchema = Object.assign(
-		{
-			type: 'object',
-			entityType: RESPONSE,
-			collectionName: response,
-			parentCollection: request,
-			properties: responseData,
-			isActivated: true,
-		},
-		entityData,
-	);
-	return jsonSchema;
+	return {
+		type: 'object',
+		entityType: RESPONSE,
+		collectionName: response,
+		parentCollection: request,
+		properties: responseData,
+		isActivated: true,
+		...entityData,
+	};
 };
 
 const getEntities = (pathData, containers, fieldOrder) => {
@@ -372,15 +365,11 @@ const getModelContent = (pathData, fieldOrder) => {
 const getSwaggerJsonSchema = (data, fileName, extension) => {
 	const schema = extension !== '.json' ? commonHelper.convertYamlToJson(data) : data;
 	const swaggerSchema = typeof schema === 'string' ? jsonComment.parse(schema.replace(/^\s*#.+$/gm, '')) : schema;
-	const swaggerSchemaWithModelName = Object.assign({}, swaggerSchema, {
-		modelName: fileName,
-	});
-	return swaggerSchemaWithModelName;
+	return { ...swaggerSchema, modelName: fileName };
 };
 
 const validateSwaggerSchema = schema => {
-	const isCorrectVersion = schema.swagger === '2.0';
-	return isCorrectVersion;
+	return schema.swagger === '2.0';
 };
 
 module.exports = {

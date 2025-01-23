@@ -6,7 +6,7 @@ function getDefinitions(definitions, containers) {
 	const internalDefinitions = getInternalDefinitions(containers);
 	const modelDefinitions = getModelDefinitions(JSON.stringify(definitions));
 
-	return Object.assign({}, internalDefinitions, modelDefinitions);
+	return { ...internalDefinitions, ...modelDefinitions };
 }
 
 function getModelDefinitions(definitions) {
@@ -34,7 +34,7 @@ function getInternalDefinitions(containers) {
 	}
 
 	return containers.reduce((acc, container) => {
-		return Object.assign({}, acc, getContainerInternalDefinitions(container));
+		return { ...acc, ...getContainerInternalDefinitions(container) };
 	}, {});
 }
 
@@ -42,19 +42,17 @@ function getContainerInternalDefinitions(container) {
 	return Object.keys(container.internalDefinitions)
 		.map(key => getCollectionInternalDefinitions(JSON.parse(container.internalDefinitions[key])))
 		.filter(containerDefinition => containerDefinition)
-		.reduce((acc, containerDefinition) => Object.assign({}, acc, containerDefinition), {});
+		.reduce((acc, containerDefinition) => ({ ...acc, ...containerDefinition }), {});
 }
 
 function getCollectionInternalDefinitions(definitions) {
-	if (!definitions || !definitions.properties) {
+	if (!definitions?.properties) {
 		return null;
 	}
-	Object.keys(definitions.properties).reduce((acc, key) => {
+	return Object.keys(definitions.properties).reduce((acc, key) => {
 		const name = prepareName(key);
 
-		return Object.assign({}, acc, {
-			[name]: typeHelper.getType(activateItem(definitions.properties[key]), true),
-		});
+		return { ...acc, [name]: typeHelper.getType(activateItem(definitions.properties[key]), true) };
 	}, {});
 }
 
