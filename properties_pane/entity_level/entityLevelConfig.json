@@ -467,6 +467,12 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "$ref",
+				"propertyKeyword": "refPath",
+				"propertyType": "details",
+				"hidden": true
+			},
+			{
 				"propertyName": "Activated",
 				"propertyKeyword": "isActivated",
 				"propertyType": "checkbox",
