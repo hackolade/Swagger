@@ -467,9 +467,7 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
-				"fieldName": "$ref",
 				"fieldKeyword": "refPath",
-				"shouldValidate": true,
 				"fieldTooltip": "ref path",
 				"fieldType": "details",
 				"disabled": true
