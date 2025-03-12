@@ -468,9 +468,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"fieldKeyword": "refPath",
-				"fieldTooltip": "ref path",
-				"fieldType": "details",
-				"disabled": true
+				"hidden": true
 			},
 			{
 				"propertyName": "Activated",
