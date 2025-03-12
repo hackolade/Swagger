@@ -598,6 +598,36 @@ making sure that you maintain a proper JSON format.
 				"changeAction": "changeReferencePath"
 			},
 			{
+				"fieldName": "Reference description",
+				"fieldKeyword": "refDescription",
+				"shouldValidate": false,
+				"fieldTooltip": "This description is specific to this instance of the definition",
+				"skipTooltipPrefix": true,
+				"fieldType": "details",
+				"template": "textarea",
+				"changeAction": "changeCollectionProperty",
+				"valueType": "string",
+				"enableForReference": true,
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "type",
+							"value": "reference"
+						},
+						{
+							"type": "not",
+							"values": [
+								{
+									"key": "entityType",
+									"value": "response"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
 				"propertyName": "Activated",
 				"propertyKeyword": "isActivated",
 				"propertyType": "checkbox",
