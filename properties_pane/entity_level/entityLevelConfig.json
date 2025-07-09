@@ -473,6 +473,12 @@ making sure that you maintain a proper JSON format.
 				"hidden": true
 			},
 			{
+				"propertyKeyword": "additionalProperties",
+				"propertyName": "Additional Properties",
+				"propertyType": "checkbox",
+				"hidden": true
+			},
+			{
 				"propertyName": "Activated",
 				"propertyKeyword": "isActivated",
 				"propertyType": "checkbox",
