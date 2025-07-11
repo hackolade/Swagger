@@ -1,6 +1,6 @@
 {
     "name": "Swagger",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "author": "hackolade",
     "engines": {
         "hackolade": "3.6.8",
@@ -37,7 +37,7 @@
                     "model_definitions": true
                 },
                 "powerDesigner": false,
-				"mermaid": false,
+                "mermaid": false,
                 "plugin": true
             },
             "disableDenormalization": true,
