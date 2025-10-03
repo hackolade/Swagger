@@ -150,5 +150,20 @@
 	"CENTRAL_PANE___FE_SCRIPT": "Swagger File",
 	"CENTRAL_PANE___SPLIT_MODEL_LEVEL_FE_VIEW": "Show Interactive API pane",
 	"MODAL_WINDOW___FE_SCRIPT_OPTION_UPDATE": "CURL Script",
-	"MODAL_WINDOW___FE_SCRIPT_OPTION_CREATE": "Kibana Script"
+	"MODAL_WINDOW___FE_SCRIPT_OPTION_CREATE": "Kibana Script",
+
+	"MAIN_MENU___ATTRIBUTES": "Attribute in Request Boxes",
+	"MAIN_MENU___DESCRIPTIONS": "Description in Request Boxes",
+	"MAIN_MENU___HIDE_ALL_ATTRIBUTES": "Empty Request Boxes",
+	"MAIN_MENU___REQUIRED_ATTRIBUTES": "Required Attributes",
+	"MAIN_MENU___NULLABLE_ATTRIBUTES": "Nullable Attributes",
+	"TOOLBAR___ATTRIBUTES": "Attribute in request boxes",
+	"TOOLBAR___DESCRIPTIONS": "Description in request boxes",
+	"TOOLBAR___HIDE_ALL_ATTRIBUTES": "Empty request boxes",
+	"TOOLBAR___REQUIRED_ATTRIBUTES": "Required attributes",
+	"TOOLBAR___NULLABLE_ATTRIBUTES": "Nullable attributes",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_ERD_V_ENTITY_BOX_CONTENT": "Display of request box content",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_ERD_V_FIELDS": "Attributes",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_REQUIRED_ATTRIBUTES": "Required attributes",
+	"MODAL_WINDOW___OPTIONS_DISPLAY_NULLABLE_ATTRIBUTES": "Nullable attributes"
 }
