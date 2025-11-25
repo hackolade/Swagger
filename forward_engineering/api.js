@@ -78,7 +78,7 @@ module.exports = {
 
 			switch (data.targetScriptOptions.format) {
 				case 'yaml': {
-					const schema = yaml.safeDump(filteredSwaggerSchema, { skipInvalid: true });
+					const schema = yaml.dump(filteredSwaggerSchema, { skipInvalid: true });
 					const schemaWithComments = addCommentsSigns(schema, 'yaml');
 					cb(null, schemaWithComments);
 					break;
@@ -112,7 +112,7 @@ module.exports = {
 
 			switch (targetScriptOptions.format) {
 				case 'yaml':
-					parsedScript = yaml.safeLoad(filteredScript);
+					parsedScript = yaml.load(filteredScript);
 					break;
 				case 'json':
 				default:
