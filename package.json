@@ -104,18 +104,16 @@
         "node-uuid": "1.4.7",
         "swagger-parser": "8.0.4"
     },
-    "lint-staged": {
-        "*.{js,json}": "prettier --write"
-    },
     "simple-git-hooks": {
-        "pre-commit": "npm run package && npx lint-staged",
+        "pre-commit": "npm run package && npx lint-staged --config lint-staged.config.js",
         "pre-push": "npm run lint"
     },
     "scripts": {
         "lint": "oxlint . || true",
         "package": "node esbuild.package.js",
         "postinstall": "npx simple-git-hooks",
-        "lint:check": "oxlint --type-aware --type-check . || true"
+        "lint:check": "oxlint --type-aware --type-check . || true",
+        "format": "prettier --write ."
     },
     "devDependencies": {
         "@hackolade/hck-esbuild-plugins-pack": "0.0.1",
