@@ -102,7 +102,7 @@
         "lodash.isplainobject": "4.0.6",
         "lodash.partial": "4.2.1",
         "node-uuid": "1.4.7",
-        "swagger-parser": "8.0.4"
+        "swagger-parser": "10.0.3"
     },
     "simple-git-hooks": {
         "pre-commit": "npm run package && npx lint-staged --config lint-staged.config.js",
@@ -118,7 +118,7 @@
     "devDependencies": {
         "@hackolade/hck-esbuild-plugins-pack": "0.0.1",
         "@ianvs/prettier-plugin-sort-imports": "4.7.1",
-        "esbuild": "0.27.3",
+        "esbuild": "0.28.1",
         "esbuild-node-externals": "1.20.1",
         "esbuild-plugin-clean": "1.0.1",
         "esbuild-plugin-copy": "2.1.1",
