@@ -1,135 +1,135 @@
 {
-    "name": "Swagger",
-    "version": "0.2.12",
-    "author": "hackolade",
-    "engines": {
-        "hackolade": "3.6.8",
-        "hackoladePlugin": "1.0.0"
-    },
-    "contributes": {
-        "target": {
-            "applicationTarget": "SWAGGER",
-            "title": "Swagger",
-            "versions": [
-                "2.0"
-            ]
-        },
-        "features": {
-            "nestedCollections": {
-                "level": 1
-            },
-            "disableMultipleTypes": true,
-            "enableReverseEngineering": {
-                "jsonDocument": {
-                    "entities": false,
-                    "model_definitions": true
-                },
-                "jsonSchema": {
-                    "entities": false,
-                    "model_definitions": true
-                },
-                "ddl": {
-                    "entities": false,
-                    "model_definitions": true
-                },
-                "xsd": {
-                    "entities": false,
-                    "model_definitions": true
-                },
-                "powerDesigner": false,
-                "mermaid": false,
-                "plugin": true
-            },
-            "disableDenormalization": true,
-            "enableForwardEngineering": {
-                "jsonDocument": true,
-                "jsonSchema": true,
-                "plugin": true,
-                "apiSchema": false
-            },
-            "forwardEngineering": {
-                "jsonSchema": {
-                    "keepParentType": {
-                        "integer": "integer"
-                    }
-                }
-            },
-            "disablePatternField": false,
-            "disableChoices": {
-                "anyOf": true,
-                "oneOf": true,
-                "not": true
-            },
-            "enableJsonType": false,
-            "disableNamingConvention": {
-                "entityLevel": true,
-                "containerLevel": true,
-                "fieldLevel": {
-                    "parameter": true
-                }
-            },
-            "disableChildren": {
-                "entityLevel": true
-            },
-            "disableDefinitions": {
-                "internal": true
-            },
-            "disableRelationships": false,
-            "relationships": {
-                "definitionRelationships": true
-            },
-            "disableJsonPreview": false,
-            "enableErdToggle": true,
-            "enableStackedNestedCollections": true,
-            "externalDefinitionsFromTargetSchema": true,
-            "apiTarget": true,
-            "FEScriptCommentsSupported": true,
-            "openModelDefinitionsTabIfNoCollections": true,
-            "erdDefinitions": {
-                "enabled": true,
-                "propertyNames": []
-            }
-        }
-    },
-    "description": "Hackolade plugin for Swagger API",
-    "disabled": false,
-    "dependencies": {
-        "comment-json": "4.1.0",
-        "js-yaml": "4.3.1",
-        "lodash": "4.18.1",
-        "lodash.clonedeep": "4.5.0",
-        "lodash.get": "4.2.1",
-        "lodash.isplainobject": "4.0.6",
-        "lodash.partial": "4.2.1",
-        "node-uuid": "1.4.7",
-        "swagger-parser": "10.0.3"
-    },
-    "simple-git-hooks": {
-        "pre-commit": "npm run package && npx lint-staged --config lint-staged.config.js",
-        "pre-push": "npm run lint"
-    },
-    "scripts": {
-        "lint": "oxlint . || true",
-        "package": "node esbuild.package.js",
-        "postinstall": "npx simple-git-hooks",
-        "lint:check": "oxlint --type-aware --type-check . || true",
-        "format": "prettier --write ."
-    },
-    "devDependencies": {
-        "@hackolade/hck-esbuild-plugins-pack": "0.0.1",
-        "@ianvs/prettier-plugin-sort-imports": "4.7.1",
-        "esbuild": "0.28.1",
-        "esbuild-node-externals": "1.23.1",
-        "esbuild-plugin-clean": "1.0.1",
-        "esbuild-plugin-copy": "2.1.1",
-        "lint-staged": "17.0.7",
-        "oxlint": "1.70.0",
-        "oxlint-tsgolint": "0.23.0",
-        "prettier": "3.8.4",
-        "simple-git-hooks": "2.13.1"
-    },
-    "overrides": {
-        "minimatch": "10.2.6",
-        "brace-expansion": "5.0.9"
-    }
+	"name": "Swagger",
+	"version": "0.2.12",
+	"author": "hackolade",
+	"engines": {
+		"hackolade": "3.6.8",
+		"hackoladePlugin": "1.0.0"
+	},
+	"contributes": {
+		"target": {
+			"applicationTarget": "SWAGGER",
+			"title": "Swagger",
+			"versions": [
+				"2.0"
+			]
+		},
+		"features": {
+			"nestedCollections": {
+				"level": 1
+			},
+			"disableMultipleTypes": true,
+			"enableReverseEngineering": {
+				"jsonDocument": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"jsonSchema": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"ddl": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"xsd": {
+					"entities": false,
+					"model_definitions": true
+				},
+				"powerDesigner": false,
+				"mermaid": false,
+				"plugin": true
+			},
+			"disableDenormalization": true,
+			"enableForwardEngineering": {
+				"jsonDocument": true,
+				"jsonSchema": true,
+				"plugin": true,
+				"apiSchema": false
+			},
+			"forwardEngineering": {
+				"jsonSchema": {
+					"keepParentType": {
+						"integer": "integer"
+					}
+				}
+			},
+			"disablePatternField": false,
+			"disableChoices": {
+				"anyOf": true,
+				"oneOf": true,
+				"not": true
+			},
+			"enableJsonType": false,
+			"disableNamingConvention": {
+				"entityLevel": true,
+				"containerLevel": true,
+				"fieldLevel": {
+					"parameter": true
+				}
+			},
+			"disableChildren": {
+				"entityLevel": true
+			},
+			"disableDefinitions": {
+				"internal": true
+			},
+			"disableRelationships": false,
+			"relationships": {
+				"definitionRelationships": true
+			},
+			"disableJsonPreview": false,
+			"enableErdToggle": true,
+			"enableStackedNestedCollections": true,
+			"externalDefinitionsFromTargetSchema": true,
+			"apiTarget": true,
+			"FEScriptCommentsSupported": true,
+			"openModelDefinitionsTabIfNoCollections": true,
+			"erdDefinitions": {
+				"enabled": true,
+				"propertyNames": []
+			}
+		}
+	},
+	"description": "Hackolade plugin for Swagger API",
+	"disabled": false,
+	"dependencies": {
+		"comment-json": "4.1.0",
+		"js-yaml": "4.3.2",
+		"lodash": "4.18.1",
+		"lodash.clonedeep": "4.5.0",
+		"lodash.get": "4.2.1",
+		"lodash.isplainobject": "4.0.6",
+		"lodash.partial": "4.2.1",
+		"node-uuid": "1.4.7",
+		"swagger-parser": "10.0.3"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "npm run package && npx lint-staged --config lint-staged.config.js",
+		"pre-push": "npm run lint"
+	},
+	"scripts": {
+		"lint": "oxlint . || true",
+		"package": "node esbuild.package.js",
+		"postinstall": "npx simple-git-hooks",
+		"lint:check": "oxlint --type-aware --type-check . || true",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@hackolade/hck-esbuild-plugins-pack": "0.0.1",
+		"@ianvs/prettier-plugin-sort-imports": "4.7.1",
+		"esbuild": "0.28.1",
+		"esbuild-node-externals": "1.23.1",
+		"esbuild-plugin-clean": "1.0.1",
+		"esbuild-plugin-copy": "2.1.1",
+		"lint-staged": "17.0.7",
+		"oxlint": "1.70.0",
+		"oxlint-tsgolint": "0.23.0",
+		"prettier": "3.8.4",
+		"simple-git-hooks": "2.13.1"
+	},
+	"overrides": {
+		"minimatch": "10.2.6",
+		"brace-expansion": "5.0.9"
+	}
 }
